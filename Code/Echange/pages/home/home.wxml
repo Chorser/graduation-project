@@ -1,0 +1,5 @@
+<!--pages/home/home.wxml-->
+<text>主页</text>
+<text>商品列表 </text>
+<text>搜索</text>
+<text>轮播</text>

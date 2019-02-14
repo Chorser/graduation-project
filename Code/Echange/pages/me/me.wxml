@@ -1,0 +1,4 @@
+<!--pages/me/me.wxml-->
+<text>个人中心 </text>
+<text>个人信息 查看&修改</text>
+<text>商品发布&招募记录</text>
