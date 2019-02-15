@@ -1,5 +1,20 @@
-<!--pages/home/home.wxml-->
-<text>主页</text>
-<text>商品列表 </text>
-<text>搜索</text>
-<text>轮播</text>
+<view class='container'>
+  <view class='header'> 
+    <text style='padding-right:40rpx;'>定位</text>
+    <view class='search-row'>
+      <input class='search' value="{{  }}" placeholder='搜索...' />
+      <image class='search-icon' src='/images/search.png'></image>
+    </view>
+  </view>
+
+  <swiper indicator-dots='{{true}}'>
+    <swiper-item>
+        <text>轮播 · 商品1 </text>
+    </swiper-item>
+    <swiper-item>
+        <text>轮播 · 商品2 </text>
+    </swiper-item>
+  </swiper>
+
+  <text>商品列表 </text>
+</view>

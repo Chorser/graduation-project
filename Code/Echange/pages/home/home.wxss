@@ -1,1 +1,24 @@
 /* pages/home/home.wxss */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.search-row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border: 1rpx solid #DDD;
+  padding: 15rpx;
+  color: #9B9B9B;
+}
+
+.search {
+  flex: 1;
+  font-size: 30rpx;
+}
+.search-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
