@@ -5,10 +5,15 @@
   <view class="name">{{ name }}</view>
   <view class="item" data-target="user" bindtap="navTo">
     <text>个人信息</text>
-    <text>→</text>
+    <image src='/images/right.png'> </image>
   </view>
   <view class="item" data-target="setting" bindtap="navTo">
     <text>设置</text>
-    <text>→</text>
+    <image src='/images/right.png'> </image>
+  </view>
+  <view class="item" data-target="publish" bindtap="navTo">
+    <image src='/images/publish.png'></image>
+    <text>我的发布和招募</text>
+    <image src='/images/right.png'> </image>
   </view>
 </view>

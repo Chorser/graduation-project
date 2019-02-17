@@ -33,3 +33,7 @@
 .item text:last-child {
   width: 50rpx;
 }
+.item image{
+  width: 50rpx;
+  height: 50rpx;
+}
