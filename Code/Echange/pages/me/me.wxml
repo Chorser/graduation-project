@@ -4,16 +4,32 @@
   </view>
   <view class="name">{{ name }}</view>
   <view class="item" data-target="user" bindtap="navTo">
+    <image src='/images/my.png'></image>
     <text>个人信息</text>
     <image src='/images/right.png'> </image>
   </view>
   <view class="item" data-target="setting" bindtap="navTo">
+    <image src='/images/settings.png'></image>
     <text>设置</text>
     <image src='/images/right.png'> </image>
   </view>
+
   <view class="item" data-target="publish" bindtap="navTo">
     <image src='/images/publish.png'></image>
     <text>我的发布和招募</text>
     <image src='/images/right.png'> </image>
   </view>
+
+  <view class="item" data-target="share" bindtap="navTo">
+    <image src='/images/share.png'></image>
+    <text>分享给朋友</text>
+    <image src='/images/right.png'> </image>
+  </view>
+
+  <view class="item" data-target="server" bindtap="navTo">
+    <image src='/images/server.png'></image>
+    <text>意见反馈</text>
+    <image src='/images/right.png'> </image>
+  </view>
+
 </view>

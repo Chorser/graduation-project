@@ -13,8 +13,9 @@
 
 .name {
   text-align: center;
-  color: #9B9B9B;
+  color: #000;
   font-size: 40rpx;
+  font-weight: bold;
   margin: 10rpx 0 60rpx;
 }
 
@@ -26,14 +27,12 @@
   font-size: 36rpx;
 }
 
-.item text:first-child {
+.item text:nth-child(2) {
   flex: 1;
 }
 
-.item text:last-child {
-  width: 50rpx;
-}
 .item image{
   width: 50rpx;
   height: 50rpx;
+  margin: 0 30rpx;
 }
