@@ -1,24 +1,18 @@
-// pages/me/me.js
+// pages/user.js
 Page({
 
+  /**
+   * 页面的初始数据
+   */
   data: {
-    avatar: '',
-    nickName: ''
+
   },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
-    this.setData({
-      avatar: wx.getStorageSync('avatar') ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
-      name: wx.getStorageSync('name') || '用户A'
-    });
-  },
 
-  navTo: function (e) {
-    var target = e.currentTarget.dataset.target;
-    var _url = '/pages/' + target + '/' + target;
-    wx.navigateTo({
-      url: _url
-    })
   },
 
   /**

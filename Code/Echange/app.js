@@ -1,10 +1,13 @@
-//app.js
 App({
+  
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+
+    var Bmob = require('utils/Bmob-1.6.7.min.js');
+    Bmob.initialize("9a68cce6689ca69dcd286c4e4eba7d07", "9a68cce6689ca69dcd286c4e4eba7d07");
 
     // 登录
     wx.login({
