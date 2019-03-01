@@ -1,4 +1,6 @@
-// pages/me/me.js
+var Bmob = require('../../utils/Bmob-1.6.7.min.js');
+var app = getApp()
+
 Page({
 
   data: {
@@ -11,6 +13,13 @@ Page({
       avatar: wx.getStorageSync('avatar') ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
       name: wx.getStorageSync('name') || '用户A'
     });
+
+    Bmob.User.login('username', 'password').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    });
+    console.log(Bmob);
   },
 
   navTo: function (e) {
