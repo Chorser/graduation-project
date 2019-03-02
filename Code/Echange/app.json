@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/index/index",
     "pages/logs/logs",
     "pages/me/me",
     "pages/user/user",
+    "pages/index/index",
     "pages/edit/edit"
-  ],
+    ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1296db",

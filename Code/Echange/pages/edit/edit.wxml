@@ -1,2 +1,3 @@
 <!--pages/edit/edit.wxml-->
-<text>pages/edit/edit.wxml</text>
+
+<view>发布与编辑</view>

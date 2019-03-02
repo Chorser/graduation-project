@@ -1,5 +1,5 @@
 <view class='container'>
-  <view class='header'> 
+  <view class='header'>
     <text style='padding-right:40rpx;'>定位</text>
     <view class='search-row'>
       <input class='search' value="{{  }}" placeholder='搜索...' />
@@ -9,13 +9,13 @@
 
   <swiper indicator-dots='{{true}}'>
     <swiper-item>
-        <text>轮播 · 商品1 </text>
+      <text>轮播 · 商品1 </text>
     </swiper-item>
     <swiper-item>
-        <text>轮播 · 商品2 </text>
+      <text>轮播 · 商品2 </text>
     </swiper-item>
     <swiper-item>
-        <text>轮播 · 商品3 </text>
+      <text>轮播 · 商品3 </text>
     </swiper-item>
   </swiper>
 
