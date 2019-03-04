@@ -1,8 +1,10 @@
-<view class="container">
-  <view class="avatar">
-    <image src="{{ avatar }}" />
+<view class="page">
+  <view class='page__hd i-header'>
+    <view class="avatar">
+      <image src="{{ avatar }}" />
+    </view>
+    <view class="name">{{ name }}</view>
   </view>
-  <view class="name">{{ name }}</view>
   <view class="item" data-target="user" bindtap="navTo">
     <image src='/images/my.png'></image>
     <text>个人信息</text>
@@ -26,7 +28,7 @@
     <image src='/images/right.png'> </image>
   </view>
 
-  <view class="item" data-target="server" bindtap="navTo">
+  <view class="item" data-target="feedback" bindtap="navTo">
     <image src='/images/server.png'></image>
     <text>意见反馈</text>
     <image src='/images/right.png'> </image>

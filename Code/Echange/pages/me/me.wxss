@@ -2,7 +2,7 @@
 .avatar {
   display: flex;
   justify-content:center;
-  margin-top: 60rpx;
+  padding-top: 60rpx;
 }
 
 .avatar image {

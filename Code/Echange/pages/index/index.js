@@ -34,7 +34,6 @@ Page({
   },
 
   bindGetUserInfo: function (e) {
-    console.log(1)
     if (e.detail.userInfo) {
       //用户按了允许授权按钮后需要处理的逻辑方法体
       //var that = this;
