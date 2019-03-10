@@ -1,17 +1,15 @@
-var Bmob = require('../../utils/bmob.js');
 var app = getApp()
 
 Page({
-
   data: {
     avatar: '',
     nickName: ''
   },
 
-  onLoad: function (options) {
+  onLoad: function (options) {    
     this.setData({
-      avatar: wx.getStorageSync('avatar') ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
-      name: wx.getStorageSync('name') || ''
+      avatar: app.globalData.userInfo.avatarUrl ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
+      nickName: app.globalData.userInfo.nickName || ''
     });
   },
 

@@ -3,8 +3,9 @@
     <view class="avatar">
       <image src="{{ avatar }}" />
     </view>
-    <view class="name">{{ name }}</view>
+    <view class="name">{{nickName}}</view>
   </view>
+  
   <view class="item" data-target="user" bindtap="navTo">
     <image src='/images/my.png'></image>
     <text>个人信息</text>
