@@ -5,6 +5,15 @@
   </view>
   <view class="section">
     <text>设置用户名</text>
-    <input value="{{ name }}" bindblur="blurName" bindconfirm="changeName" auto-focus />
+    <input value="{{ nickName }}" bindblur="blurName" bindconfirm="changeName" auto-focus />
+  </view>
+
+  <view class='section'>
+    <text>设置性别</text>
+    <radio-group bindchange="radioChange">
+      <label class='radio' wx:for='{{items}}'>
+        <radio value="{{item.value}}" checked='{{item.checked}}'/> {{item.name}}
+      </label>
+    </radio-group>
   </view>
 </view>

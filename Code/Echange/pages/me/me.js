@@ -9,7 +9,7 @@ Page({
   onLoad: function (options) {    
     this.setData({
       avatar: app.globalData.userInfo.avatarUrl ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
-      nickName: app.globalData.userInfo.nickName || ''
+      nickName: app.globalData.userInfo.nickName || '未设置昵称'
     });
   },
 

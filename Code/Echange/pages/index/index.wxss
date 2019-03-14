@@ -3,7 +3,7 @@
     margin: 90rpx 0 90rpx 50rpx;
     border-bottom: 1px solid #ccc;
     text-align: center;
-    width: 650rpx;
+    width: 600rpx;
     height: 300rpx;
     line-height: 450rpx;
 }

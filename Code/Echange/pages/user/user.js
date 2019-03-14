@@ -1,66 +1,61 @@
-// pages/user.js
+var app = getApp()
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    avatar: '',
+    nickName: '',
+    items: [
+      { name: '男', value: 'man', checked: 'true' },
+      { name: '女', value: 'woman' },
+    ],
+    gender: ''
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onShow: function (options) {
+    if (app.globalData.userInfo) {
+      this.setData({
+        avatar: app.globalData.userInfo.avatarUrl || '',
+        nickName: app.globalData.userInfo.nickName || '',
+        gender: app.globalData.userInfo.gender || 'man'
+      })
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  //未点完成失去焦点复原（change优先于blur触发）
+  blurName: function (e) {
+    this.setData({ nickName: app.globalData.userInfo.nickName || '' });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  changeName: function (e) {
+    var name = e.detail.value.trim();
+    if (name) {
+      app.globalData.userInfo.nickName = name;
+      // wx.setStorageSync('nickName', name);
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  changeAvatar: function (e) {
+    var that = this;
+    wx.chooseImage({
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths;
+        wx.saveFile({
+          tempFilePath: tempFilePaths[0],
+          success: function (res) {
+            var savedFilePath = res.savedFilePath;
+            // wx.setStorageSync('avatar', savedFilePath);
+            app.globalData.userInfo.avatarUrl = savedFilePath;
+            that.setData({ avatar: savedFilePath });
+          }
+        });
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  radioChange(e) {
+    // console.log('radio发生change事件，携带value值为：', e.detail.value)
+    this.setData({
+      gender: e.detail.value
+    });
   }
 })
