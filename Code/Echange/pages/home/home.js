@@ -1,12 +1,13 @@
-var Bmob = require('../../utils/Bmob-1.6.7.min.js');
+var Bmob = require('../../utils/bmob.js');
 const app = getApp()
 
 Page({
   data: {
   },
 
-  onLoad: function () {
-    
+  onShow: function () {
+    // var currentUser = Bmob.User.current();//当前用户
+    // console.log(currentUser)
   },
 
 })

@@ -4,6 +4,8 @@ Bmob.initialize(
 
 App({
   onLaunch: function () {
+    // var currentUser = Bmob.User.current();//当前用户
+    // this.globalData.userInfo = currentUser.userInfo
   },
   
   globalData: {
