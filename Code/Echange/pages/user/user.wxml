@@ -16,4 +16,8 @@
       </label>
     </radio-group>
   </view>
+
+  <view> 
+    <button bindtap='updateUserInfo'>保存</button>
+  </view>
 </view>

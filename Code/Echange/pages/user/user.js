@@ -1,3 +1,4 @@
+var Bmob = require('../../utils/bmob.js');
 var app = getApp()
 
 Page({
@@ -5,8 +6,8 @@ Page({
     avatar: '',
     nickName: '',
     items: [
-      { name: '男', value: 'man', checked: 'true' },
-      { name: '女', value: 'woman' },
+      { name: '男', value: '1', checked: 'true' },
+      { name: '女', value: '2' },
     ],
     gender: ''
   },
@@ -16,7 +17,7 @@ Page({
       this.setData({
         avatar: app.globalData.userInfo.avatarUrl || '',
         nickName: app.globalData.userInfo.nickName || '',
-        gender: app.globalData.userInfo.gender || 'man'
+        gender: app.globalData.userInfo.gender || '1'
       })
     }
   },
@@ -57,5 +58,29 @@ Page({
     this.setData({
       gender: e.detail.value
     });
-  }
+  },
+
+  updateUserInfo: function () {
+    var that = this;
+    console.log("update user info")
+
+    var u = Bmob.Object.extend('_User')
+    var query = new Bmob.Query(u);
+    var currentUser = Bmob.User.current()
+    query.get(currentUser.id, {
+      success: function (result) {
+        console.log(result)
+        result.set('nickName', that.nickName)
+        result.set('userPic', that.avatar)
+        // result.set('openid', openid)
+        // result.set('gender', that.gender)
+        result.save().then((res) => {
+          currentUser.set('nickName', that.nickName)
+          currentUser.set('userPic', that.avatar)
+          // currentUser.set('gender', that.gender)
+          Bmob.User._saveCurrentUser(currentUser)
+        })
+      }
+    })
+  },
 })

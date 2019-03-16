@@ -23,7 +23,7 @@ Page({
 
     }
   },
-
+  //一键登录
   bindGetUserInfo: function(e) {
     var that = this;
     if (e.detail.userInfo) {
@@ -45,7 +45,7 @@ Page({
                   var nickName = result.userInfo.nickName;
                   var avatarUrl = result.userInfo.avatarUrl;
                   var gender = result.userInfo.gender;
-                  // console.log(typeof(gender), gender)
+                  console.log(typeof(gender), gender)
                   var u = Bmob.Object.extend("_User");
                   var query = new Bmob.Query(u);
                   // 这个 id 是要修改条目的 id，在生成这个存储并成功时可以获取到

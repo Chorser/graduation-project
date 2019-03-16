@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/home/home",
     "pages/logs/logs",
-    "pages/me/me",
+    "pages/my/my",
     "pages/user/user",
     "pages/edit/edit",
     "pages/feedback/feedback"
@@ -31,7 +31,7 @@
         "selectedIconPath": "/images/edit-active.png"
       },
       {
-        "pagePath": "pages/me/me",
+        "pagePath": "pages/my/my",
         "text": "我的",
         "iconPath": "/images/me.png",
         "selectedIconPath": "/images/me-active.png"

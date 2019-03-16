@@ -26,8 +26,8 @@ Page({
       that.setData({
         loading: true
       })
-      //增加日记
-      var Diary = Bmob.Object.extend("feedback");
+      //发送反馈
+      var Diary = Bmob.Object.extend("Feedback");
       var diary = new Diary();
       diary.set("contact", contact);
       diary.set("content", content);
@@ -48,8 +48,7 @@ Page({
         },
         error: function (result, error) {
           // 添加失败
-          common.showModal('保存反馈失败，请重新发布');
-
+          common.showModal('发送反馈失败，请重新发送');
         }
       });
     }
