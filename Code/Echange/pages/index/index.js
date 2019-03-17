@@ -9,7 +9,6 @@ Page({
   },
 
   onLoad: function() {
-    var that = this;
     var currentUser = Bmob.User.current();//当前用户
       if (currentUser) {
         wx.getUserInfo({
@@ -37,23 +36,29 @@ Page({
               //更新缓存中的openid
               wx.setStorageSync('openid', user.get("id"))
             } else {
-              //保存用户其他信息，如昵称头像等
-              wx.getUserInfo({
+              //从微信端获取用户信息
+              wx.getUserInfo({ 
                 success: function(result) {
                   console.log(result)
                   app.globalData.userInfo = result.userInfo;
                   var nickName = result.userInfo.nickName;
                   var avatarUrl = result.userInfo.avatarUrl;
                   var gender = result.userInfo.gender;
-                  console.log(typeof(gender), gender)
+                  var city = result.userInfo.city;
+                  var province = result.userInfo.province;
+
                   var u = Bmob.Object.extend("_User");
                   var query = new Bmob.Query(u);
                   // 这个 id 是要修改条目的 id，在生成这个存储并成功时可以获取到
+                  // 保存到数据库
                   query.get(user.id, {
                     success: function(result) {
                       // 自动绑定之前的账号
                       result.set('nickName', nickName);
                       result.set("avatarUrl", avatarUrl);
+                      result.set("gender", gender);
+                      result.set("city", city);
+                      result.set("province", province);
                       // result.set("openid", user.id); //openId 就是objectId
                       result.save();
                     }

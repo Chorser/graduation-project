@@ -2,17 +2,18 @@ var Bmob = require('../../utils/bmob.js');
 var app = getApp()
 
 Page({
+  currentUser: Bmob.User.current(),
   data: {
-    avatar: '',
+    avatarUrl: '',
     nickName: '',
+    gender: '',
     items: [
       { name: '男', value: '1', checked: 'true' },
       { name: '女', value: '2' },
-    ],
-    gender: ''
+    ]
   },
 
-  onShow: function (options) {
+  onLoad: function (options) {
     if (app.globalData.userInfo) {
       this.setData({
         avatar: app.globalData.userInfo.avatarUrl || '',
@@ -23,14 +24,14 @@ Page({
   },
 
   //未点完成失去焦点复原（change优先于blur触发）
-  blurName: function (e) {
-    this.setData({ nickName: app.globalData.userInfo.nickName || '' });
-  },
+  // blurName: function (e) {
+  //   this.setData({ nickName: app.globalData.userInfo.nickName || '' });
+  // },
 
   changeName: function (e) {
     var name = e.detail.value.trim();
     if (name) {
-      app.globalData.userInfo.nickName = name;
+      this.data.nickName = name;
       // wx.setStorageSync('nickName', name);
     }
   },
@@ -44,9 +45,9 @@ Page({
           tempFilePath: tempFilePaths[0],
           success: function (res) {
             var savedFilePath = res.savedFilePath;
-            // wx.setStorageSync('avatar', savedFilePath);
+            // wx.setStorageSync('avatarUrl', savedFilePath);
             app.globalData.userInfo.avatarUrl = savedFilePath;
-            that.setData({ avatar: savedFilePath });
+            that.setData({ avatarUrl: savedFilePath });
           }
         });
       }
@@ -60,25 +61,34 @@ Page({
     });
   },
 
+  // 保存用户的修改
   updateUserInfo: function () {
     var that = this;
     console.log("update user info")
 
     var u = Bmob.Object.extend('_User')
     var query = new Bmob.Query(u);
-    var currentUser = Bmob.User.current()
-    query.get(currentUser.id, {
+    query.get(this.currentUser.id, {
       success: function (result) {
-        console.log(result)
-        result.set('nickName', that.nickName)
-        result.set('userPic', that.avatar)
-        // result.set('openid', openid)
-        // result.set('gender', that.gender)
+        result.set('nickName', that.data.nickName)
+        result.set('avatarUrl', that.data.avatarUrl)
+        result.set('gender', that.data.gender)
+
         result.save().then((res) => {
-          currentUser.set('nickName', that.nickName)
-          currentUser.set('userPic', that.avatar)
-          // currentUser.set('gender', that.gender)
-          Bmob.User._saveCurrentUser(currentUser)
+          wx.showToast({
+            title: '保存成功！',
+          })
+
+          app.globalData.userInfo.nickName = that.data.nickName;
+          app.globalData.userInfo.avatarUrl = that.data.avatarUrl;
+          app.globalData.userInfo.gender = that.data.gender;
+
+          // that.currentUser.set('nickName', that.data.nickName)
+          // that.currentUser.set('avatarUrl', that.data.avatarUrl)
+          // that.currentUser.set('gender', that.data.gender)
+          Bmob.User._saveCurrentUser(that.currentUser)
+          console.log(res)
+          console.log(Bmob.User.current())
         })
       }
     })
