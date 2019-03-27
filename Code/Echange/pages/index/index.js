@@ -9,19 +9,13 @@ Page({
   },
 
   onLoad: function() {
-    var currentUser = Bmob.User.current();//当前用户
-      if (currentUser) {
-        wx.getUserInfo({
-          success: function (result) {
-            app.globalData.userInfo = result.userInfo;
-          }
-        });
-        wx.switchTab({
-          url: '../home/home'
-        })
-
+    if (app.globalData.currentUser) { //已登录
+      wx.switchTab({
+        url: '../home/home'
+      })
     }
   },
+
   //一键登录
   bindGetUserInfo: function(e) {
     var that = this;
@@ -29,15 +23,17 @@ Page({
       //用户按了允许授权按钮后需要处理的逻辑方法体
       wx.login({
         success: function(res) {
-          var user = new Bmob.User(); //实例化          
-          user.loginWithWeapp(res.code).then(function(user) {
+          var user = new Bmob.User(); //实例化
+          user.loginWithWeapp(res.code).then(function(user) { //返回的是Bmob里存储的_User信息
             console.log(user)
             if (user.get("nickName")) {
+              // console.log(user.get("nickName"))
               //更新缓存中的openid
-              wx.setStorageSync('openid', user.get("id"))
+              console.log("openid:", user.id)
+              wx.setStorageSync('openid', user.id)
             } else {
               //从微信端获取用户信息
-              wx.getUserInfo({ 
+              wx.getUserInfo({
                 success: function(result) {
                   console.log(result)
                   app.globalData.userInfo = result.userInfo;
@@ -61,15 +57,20 @@ Page({
                       result.set("province", province);
                       // result.set("openid", user.id); //openId 就是objectId
                       result.save();
+
+                      wx.switchTab({
+                        url: '../home/home'
+                      })
                     }
                   });
-
-                  wx.switchTab({
-                    url: '../home/home'
-                  })
                 }
               });
             }
+
+            wx.switchTab({
+              url: '../home/home'
+            })
+            
           }, function(err) {
             console.log(err, 'err');
           });

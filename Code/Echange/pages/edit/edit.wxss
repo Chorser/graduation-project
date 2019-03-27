@@ -1,1 +1,17 @@
 /* pages/edit/edit.wxss */
+.notice {
+  font-size: .7rem
+}
+
+button {
+  border-radius: 100%;
+  width: 85px;
+  height: 85px;
+}
+
+.btn1{
+  background-color: #FFCC99;
+}
+.btn2 {
+   background-color: #FFFFCC;
+}

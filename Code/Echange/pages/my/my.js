@@ -6,11 +6,12 @@ Page({
     nickName: ''
   },
 
-  onLoad: function (options) {    
-    this.setData({
-      avatar: app.globalData.userInfo.avatarUrl ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
-      nickName: app.globalData.userInfo.nickName || '未设置昵称'
-    });
+  onShow: function (options) {
+    if (app.globalData.currentUser)
+      this.setData({
+        avatar: app.globalData.currentUser.get("avatarUrl") ||'https://yunlaiwu0.cn-bj.ufileos.com/teacher_avatar.png',
+        nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
+      });
   },
 
   navTo: function (e) {

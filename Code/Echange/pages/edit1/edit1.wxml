@@ -1,0 +1,28 @@
+<!--pages/edit1/edit1.wxml-->
+<view class="section">
+  <text>物品标题</text>
+  <input type='text' bindinput='setTitleValue' placeholder='起一个吸引人的标题吧' />
+</view>
+
+<view class="section">
+  <text>物品描述</text>
+  <input type='textarea' bindinput='setDescription' auto-height placeholder='请输入物品详细描述' />
+</view>
+
+<!-- <upload> -->
+<view class="section">
+  <image src='../../images/uploadImg.png' style='width:100px;height:100px;' bindtap='uploadImg'></image>
+</view>
+
+<form>
+  <text>物品分类</text>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{type}}" indicator-style="height: 50px;" style="width: 100%; height: 250px;">
+    <view class="picker">
+      当前选择：{{type[index]}}
+    </view>
+  </picker>
+</form>
+
+<view class="section">
+  <button bindtap="submit">提交</button>
+</view>

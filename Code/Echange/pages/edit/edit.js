@@ -6,7 +6,13 @@ Page({
 
   },
 
-  onLoad: function (options) {
-   
+  sell: function () {
+    wx.navigateTo({
+      url: "/pages/edit1/edit1"
+    })
+  },
+
+  buy: function () {
+
   }
 })

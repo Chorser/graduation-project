@@ -1,21 +1,18 @@
 <view class='container'>
   <view class='header'>
-    <text style='padding-right:40rpx;'>定位</text>
+  <view bindtap='openMap'>
+    <image class='map' src='../../images/map.png'></image>
+  </view>
+
     <view class='search-row'>
       <input class='search' value="{{  }}" placeholder='搜索...' />
       <image class='search-icon' src='/images/search.png'></image>
     </view>
   </view>
 
-  <swiper indicator-dots='{{true}}'>
-    <swiper-item>
-      <text>轮播 · 商品1 </text>
-    </swiper-item>
-    <swiper-item>
-      <text>轮播 · 商品2 </text>
-    </swiper-item>
-    <swiper-item>
-      <text>轮播 · 商品3 </text>
+  <swiper indicator-dots='true' autoplay='true' interval='3000'>
+    <swiper-item wx:for="{{rollingImgList}}">
+      <image class='rollImg' src='{{item.imagePath}}'></image>
     </swiper-item>
   </swiper>
 

@@ -2,12 +2,19 @@
   "pages": [
     "pages/index/index",
     "pages/home/home",
+    "pages/showinmap/showinmap",
     "pages/logs/logs",
     "pages/my/my",
     "pages/user/user",
     "pages/edit/edit",
-    "pages/feedback/feedback"
+    "pages/feedback/feedback",
+    "pages/edit1/edit1"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1296db",

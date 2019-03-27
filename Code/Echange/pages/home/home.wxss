@@ -2,7 +2,12 @@
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 30rpx;
+  margin: 20rpx;
+}
+
+.map {
+  width: 75rpx;
+  height: 75rpx;
 }
 
 .search-row {
@@ -10,7 +15,7 @@
   flex: 1;
   align-items: center;
   border: 1rpx solid #DDD;
-  padding: 15rpx;
+  height: 60rpx;
   color: #9B9B9B;
 }
 
@@ -21,4 +26,7 @@
 .search-icon {
   width: 50rpx;
   height: 50rpx;
+}
+.rollImg {
+  display: flex
 }

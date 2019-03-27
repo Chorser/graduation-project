@@ -1,7 +1,7 @@
 <view class="container">
   <view class="section">
     <text>设置头像</text>
-    <image src="{{ avatar }}" bindtap="changeAvatar" />
+    <image src="{{ avatarUrl }}" bindtap="changeAvatar" />
   </view>
   <view class="section">
     <text>设置用户名</text>
