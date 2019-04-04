@@ -20,28 +20,29 @@ Page({
     //活动标记物
     markers: [],
     //地图上不可移动的控件
-    controls: [{//定位当前位置
-      id: 1,
-      position: {
-        left: 10 * wx.getStorageSync("kScreenW"),
-        top: 523 * wx.getStorageSync("kScreenH"),
-        width: 40 * wx.getStorageSync("kScreenW"),
-        height: 40 * wx.getStorageSync("kScreenW")
+    controls: [{ //定位当前位置
+        id: 1,
+        position: {
+          left: 10 * wx.getStorageSync("kScreenW"),
+          top: 523 * wx.getStorageSync("kScreenH"),
+          width: 40 * wx.getStorageSync("kScreenW"),
+          height: 40 * wx.getStorageSync("kScreenW")
+        },
+        iconPath: '/images/location2.png',
+        clickable: true,
       },
-      iconPath: '/images/location2.png',
-      clickable: true,
-    },
-    {//地图中心位置按钮
-      id: 2,
-      position: {
-        left: 177.5 * wx.getStorageSync("kScreenW"),
-        top: 261.5 * wx.getStorageSync("kScreenH"),
-        width: 32 * wx.getStorageSync("kScreenW"),
-        height: 32 * wx.getStorageSync("kScreenW")
-      },
-      iconPath: '/images/now2.png',
-      clickable: false,
-    }],
+      { //地图中心位置按钮
+        id: 2,
+        position: {
+          left: 177.5 * wx.getStorageSync("kScreenW"),
+          top: 261.5 * wx.getStorageSync("kScreenH"),
+          width: 32 * wx.getStorageSync("kScreenW"),
+          height: 32 * wx.getStorageSync("kScreenW")
+        },
+        iconPath: '/images/now2.png',
+        clickable: false,
+      }
+    ],
   },
 
   //点击定位到当前位置
@@ -51,25 +52,25 @@ Page({
     that.getUserCurrentLocation()
   },
   //定位到用户当前位置
-  getUserCurrentLocation: function () {
+  getUserCurrentLocation: function() {
     this.mapCtx.moveToLocation();
     this.setData({
       'mapScale': 15
     })
   },
   //位置变化的时候
-  regionchange: function (e) {
-    //得到地图中心点的位置
-    var that = this
+  regionchange: function(e) {
+    //得到地图中心点的位置
+    var that = this;
     that.mapCtx.getCenterLocation({
-      success: function (res) {
+      success: function(res) {
         //经纬度保留6位小数
         var longitudeFix = res.longitude.toFixed(6)
         var latitudeFix = res.latitude.toFixed(6)
         if (e.type == "begin") {
           console.log('位置相同,不执行刷新操作')
         } else {
-          console.log("位置变化了") 
+          console.log("位置变化了")
         }
       }
     })
@@ -91,11 +92,11 @@ Page({
   //页面加载的函数
   onLoad() {
     console.log('onLoad')
-     that = this;
+    that = this;
     //获取当前位置
     wx.getLocation({
-      type: 'gcj02',// 默认为 wgs84 返回 gps 坐标，gcj02 返回可用wx.openLocation 的坐标
-      success: function (res) {
+      type: 'gcj02', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用wx.openLocation 的坐标
+      success: function(res) {
         // success
         var latitude = res.latitude
         var longitude = res.longitude
@@ -104,13 +105,13 @@ Page({
           longitude: longitude
         };
         that.setData({
-          point: point, 
+          point: point,
         })
       }
     })
   },
 
-  onShow: function () {
+  onShow: function() {
     var molist = new Array();
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
@@ -118,13 +119,13 @@ Page({
     query.include("publisher");
     // 查询所有数据
     query.find({
-      success: function (results) {
+      success: function(results) {
         for (var i = 0; i < results.length; i++) {
           var id = results[i].id;
           var publisherId = results[i].get("publisher").objectId;
           var title = results[i].get("title");
-          if(title.length > 5){
-            title = title.substring(0,5)+"...";
+          if (title.length > 5) {
+            title = title.substring(0, 5) + "...";
           }
           var acttype = results[i].get("acttype");
           var actcolor = that.getbgColor(acttype);
@@ -132,12 +133,12 @@ Page({
           var address = results[i].get("address");
           var longitude = results[i].get("longitude");
           var latitude = results[i].get("latitude");
-          var acttypename = results[i].get("acttypename");       
+          var acttypename = results[i].get("acttypename");
           var jsonA;
           jsonA = {
             "id": id || '',
-            "title": title || '', 
-            "pubid": publisherId || '', 
+            "title": title || '',
+            "pubid": publisherId || '',
             "acttype": acttype || '',
             "isShow": isShow,
             "actcolor": actcolor || '',
@@ -152,7 +153,7 @@ Page({
           })
         }
       },
-      error: function (error) {
+      error: function(error) {
         // common.dataLoading(error, "loading");
         console.log(error)
       }
@@ -160,7 +161,7 @@ Page({
   },
 
   //通过活动类型返回地图气泡背景色
-  getbgColor:function(acttype){
+  getbgColor: function(acttype) {
     if (acttype == 1) return "#FE6C01";
     else if (acttype == 2) return "#00cdab";
     else if (acttype == 3) return "#0E53A6";
@@ -172,7 +173,7 @@ Page({
     else if (acttype == 9) return "#A54A00";
   },
 
-  onReady: function (e) {
+  onReady: function(e) {
     // 使用 wx.createMapContext 获取 map 上下文 
     this.mapCtx = wx.createMapContext('myMap')
   },
@@ -185,7 +186,7 @@ Page({
     }
     return markers;
   },
-  
+
   createMarker(point) {
     let marker = {
       iconPath: "/static/images/map4.png",

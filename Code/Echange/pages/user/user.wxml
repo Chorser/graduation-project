@@ -5,7 +5,7 @@
   </view>
   <view class="section">
     <text>设置用户名</text>
-    <input value="{{ nickName }}" bindblur="blurName" bindconfirm="changeName" auto-focus />
+    <input value="{{ nickName }}" bindinput="changeName"/>
   </view>
 
   <view class='section'>

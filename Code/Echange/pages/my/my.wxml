@@ -17,7 +17,7 @@
     <image src='/images/right.png'> </image>
   </view>
 
-  <view class="item" data-target="publish" bindtap="navTo">
+  <view class="item" data-target="myPost" bindtap="navTo">
     <image src='/images/publish.png'></image>
     <text>我的发布和招募</text>
     <image src='/images/right.png'> </image>

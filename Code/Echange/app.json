@@ -8,7 +8,8 @@
     "pages/user/user",
     "pages/edit/edit",
     "pages/feedback/feedback",
-    "pages/edit1/edit1"
+    "pages/edit1/edit1",
+    "pages/myPost/myPost"
   ],
   "permission": {
     "scope.userLocation": {

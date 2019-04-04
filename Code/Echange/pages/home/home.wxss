@@ -30,3 +30,21 @@
 .rollImg {
   display: flex
 }
+
+.notice {
+  margin: 0;
+  padding: 15px;
+}
+
+.notice .title {
+  font-size: 40rpx;
+}
+.notice .content {
+  font-size: 28rpx;
+  color: gray;
+}
+.notice .time {
+  font-size: 24rpx;
+  color: #C0C0C0;
+  text-align: right;
+}

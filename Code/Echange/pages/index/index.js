@@ -27,7 +27,6 @@ Page({
           user.loginWithWeapp(res.code).then(function(user) { //返回的是Bmob里存储的_User信息
             console.log(user)
             if (user.get("nickName")) {
-              // console.log(user.get("nickName"))
               //更新缓存中的openid
               console.log("openid:", user.id)
               wx.setStorageSync('openid', user.id)
@@ -35,7 +34,7 @@ Page({
               //从微信端获取用户信息
               wx.getUserInfo({
                 success: function(result) {
-                  console.log(result)
+                  console.log(result.userInfo)
                   app.globalData.userInfo = result.userInfo;
                   var nickName = result.userInfo.nickName;
                   var avatarUrl = result.userInfo.avatarUrl;
@@ -70,7 +69,7 @@ Page({
             wx.switchTab({
               url: '../home/home'
             })
-            
+      
           }, function(err) {
             console.log(err, 'err');
           });
