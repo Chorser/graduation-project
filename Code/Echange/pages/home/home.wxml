@@ -6,30 +6,40 @@
 
     <view class='search-row'>
       <input class='search' value="{{  }}" placeholder='搜索...' />
-      <image class='search-icon' src='/images/search.png'></image>
+      <image class='search-icon' src='/images/search.png'/>
     </view>
   </view>
 
   <swiper indicator-dots='true' autoplay='true' interval='3000'>
-    <swiper-item wx:for="{{rollingImgList}}">
-      <image class='rollImg' src='{{item.imagePath}}'></image>
+    <swiper-item wx:for="{{rollingImgList}}" wx:key="item">
+      <image class='rollImg' src='{{item}}'></image>
     </swiper-item>
   </swiper>
 
   <text>商品列表 </text>
-
-  <scroll-view lower-threshold="800" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="false" style="height: {{windowHeight}}px;">
+  <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" style="flex-grow:1; height: {{windowHeight}}px">
     <block wx:if="{{noticeList.length > 0}}">
-      <navigator class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="noticeItem" url="/pages/noticeDetail/noticeDetail?objectId={{item.objectId}}">
-
-        <image class='avatar' src="/images/avatar1.jpg"></image>
+      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="item" 
+      bindtap='showDetail' data-index='{{index}}'>
+      
+        <image class='avatar' src="{{ item.publisherPic }}"></image>
         <view class='block1'>
-          <text class='pName'>{{item.attributes.userId}}</text>
-          <view class='time'> {{item.createdAt}} </view>
+          <text class='pName'>{{item.publisherName}}</text>
+          <view class='time'> {{item.pastTime}}发布 </view>
         </view>
-        <view class='title'> {{item.attributes.title}} </view>
-        <!-- <view class='content'> {{item.attributes.description}} </view> -->
-      </navigator>
+        
+        <!-- <view wx:if="{{item._url!=''}}"> -->
+          <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
+        <!-- </view> -->
+
+        <view class='block'>
+          <view class='title'> {{item.title}} </view>
+          <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
+        </view>
+        <!-- <view class='content'> {{item.description}} </view> -->
+      <!-- </navigator> -->
+      </view>
+      <view class="no-more" wx:if="{{isLastPage}}">---我也是有底线的---</view>
     </block>
 
     <block wx:else>

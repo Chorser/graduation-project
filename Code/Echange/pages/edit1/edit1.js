@@ -7,9 +7,10 @@ Page({
     description: "",
     noteMaxLen: 200, //描述最多字数
     noteNowLen: 0, //描述当前字数
-  },
 
-  title: "",
+    title: "",
+    price: 0
+  },
 
   onLoad: function () {
     var that = this;
@@ -20,7 +21,7 @@ Page({
   },
 
   setTitleValue: function (e) {
-    this.title = e.detail.value;
+    this.data.title = e.detail.value;
   },
 
   setDescription: function (e) {
@@ -33,6 +34,11 @@ Page({
       description: value,
       noteNowLen: len
     })
+  },
+
+  setPrice: function (e) {
+    this.data.price = e.detail.value;
+    console.log(this.data.price)
   },
 
   bindTypeChange: function (e) {
@@ -139,9 +145,10 @@ Page({
       
       notice.set('publisher', me)
       notice.set('userId', user.id)
-      notice.set('title', this.title)
+      notice.set('title', this.data.title)
       notice.set('description', this.data.description)
-      notice.set('typeId', parseInt(this.data.typeIndex + 1))
+      notice.set('typeId', parseInt(this.data.typeIndex + 1));
+      notice.set('price', this.data.price)
       
       if (that.data.isSrc == true) {
         var name = that.data.src;

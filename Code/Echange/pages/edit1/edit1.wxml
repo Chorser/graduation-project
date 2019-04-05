@@ -30,6 +30,11 @@
         {{types[typeIndex]}}
     </view>
   </picker>
+  
+  <view>
+    <text>价格</text>
+    <input type='number' value='' bindinput='setPrice' placeholder='请填写价格' />
+  </view>
 </form>
 
 <view class="section">
