@@ -1,8 +1,8 @@
 <view class='container'>
   <view class='header'>
-  <view bindtap='openMap'>
-    <image class='map' src='../../images/map.png'></image>
-  </view>
+    <view bindtap='openMap'>
+      <image class='map' src='../../images/map.png'></image>
+    </view>
 
     <view class='search-row'>
       <input class='search' value="{{  }}" placeholder='搜索...' />
@@ -20,18 +20,20 @@
 
   <scroll-view lower-threshold="800" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="false" style="height: {{windowHeight}}px;">
     <block wx:if="{{noticeList.length > 0}}">
-      <navigator class='notice weui-cells' wx:for="{{noticeList}}" wx:key="noticeItem" url="/pages/noticeDetail/noticeDetail?objectId={{item.objectId}}">
+      <navigator class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="noticeItem" url="/pages/noticeDetail/noticeDetail?objectId={{item.objectId}}">
 
-  <text>{{item.attributes.userId}}</text>
-        <image class='avatar' src="{{avatarList[0].avatar}}" bindload='showPublisherAvatar' style='width:40px;height:40px;'></image>
+        <image class='avatar' src="/images/avatar1.jpg"></image>
+        <view class='block1'>
+          <text class='pName'>{{item.attributes.userId}}</text>
+          <view class='time'> {{item.createdAt}} </view>
+        </view>
         <view class='title'> {{item.attributes.title}} </view>
-        <view class='content'> {{item.attributes.description}} </view>
-        <view class='time'> {{item.createdAt}} </view>
+        <!-- <view class='content'> {{item.attributes.description}} </view> -->
       </navigator>
     </block>
 
     <block wx:else>
-   <view class="weui-media-box weui-media-box_text">
+      <view class="weui-media-box weui-media-box_text">
         <view class="weui-media-box__title weui-media-box__title_in-text">
           暂无内容，快去发布你的信息吧</view>
         <view class="weui-media-box__desc"></view>

@@ -141,7 +141,7 @@ Page({
       notice.set('userId', user.id)
       notice.set('title', this.title)
       notice.set('description', this.data.description)
-      notice.set('typeId', parseInt(this.data.typeIndex))
+      notice.set('typeId', parseInt(this.data.typeIndex + 1))
       
       if (that.data.isSrc == true) {
         var name = that.data.src;

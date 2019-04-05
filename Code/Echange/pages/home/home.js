@@ -69,68 +69,87 @@ Page({
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
 
-    query.descending('createdAt');
     query.limit(that.data.limit);
+    query.descending('createdAt');
+    query.include("publisher");
     query.find({
       success: function (results) {
         console.log(results);
+        that.dealWithData(results);
+
         that.setData({
           noticeList: results
         })
 
-        that.findAvatar();
       },
       error: function (error) {
         console.log("查询失败： ", error.code + " " + error.message);
       }
     })
-
-
   },
 
-  findAvatar: function () {
+
+  //处理数据
+  dealWithData: function (results) {
     var that = this;
-    var userIdList = [];
-    this.data.noticeList.forEach(function (item) {
-      var userId = item.attributes.userId;
-
-      var flag = true;
-      for (var i in userIdList) {
-        if(userIdList[i].indexOf(userId) > -1) {
-          flag = false;
-          break;
-        }
+    results.forEach(function (item) {
+      console.log(item.get("publisher"))
+      var publisherId = item.get("publisher").objectId;
+      var title = item.get("title");
+      var description = item.get("description");
+      var typeId = item.get("typeId");
+      var typeName = getTypeName(typeId); //根据类型id获取类型名称
+      // var endtime = item.get("endtime");
+      // var address = item.get("address");
+      // var isShow = item.get("isShow");
+      // var peoplenum = item.get("peoplenum");
+      // var likenum = item.get("likenum");
+      // var liker = item.get("liker");
+      // var isLike = 0;
+      // var commentnum = item.get("commentnum");
+      var id = item.id;
+      var createdAt = item.createdAt;
+      var pastTime = util.pastTime(createdAt);
+      var _url
+      var pic = item.get("pic1");
+      if (pic) {
+        _url = item.get("pic1")._url;
+      } else {
+        _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
       }
-      if (flag) {
-        userIdList.push(userId);
+      var publisherName = item.get("publisher").nickName;
+      var publisherPic = item.get("publisher").avatarUrl;
+
+      var jsonA;
+      jsonA = {
+        "title": title || '',
+        "description": description || '',
+        "typeId": typeId || '',
+        "typeName": typeName || '',
+        // "isShow": isShow,
+        // "endtime": endtime || '',
+        // "address": address || '',
+        // "peoplenum": peoplenum || '',
+        "id": id || '',
+        "publisherPic": publisherPic || '',
+        "publisherName": publisherName || '',
+        "publisherId": publisherId || '',
+        "pastTime": pastTime || '',
+        "pic": _url || '',
+        // "likenum": likenum,
+        // "commentnum": commentnum,
+        // "is_liked": isLike || ''
       }
-    });
-
-    // console.log(userIdList)
-
-    userIdList.forEach(function (userId) {
-      var User = Bmob.Object.extend("_User");
-      var query = new Bmob.Query(User);
-      query.descending('createdAt');
-      query.equalTo("objectId", userId.toString());
-      // query.select("avatarUrl");
-      query.find().then(res => {
-        console.log(res[0].attributes.avatarUrl);
-        var url = res[0].attributes.avatarUrl;
-        that.data.avatarList.push({
-          userId: userId.toString(),
-          userName: res[0].attributes.userName,
-          avatar: url
-        })
-
-        console.log(that.data.avatarList)
-
-      })
-
     })
   },
-  showPublisherAvatar: function () {
-
-  }
 
 })
+
+function getTypeName(type) {
+  var typeName = "";
+  if (type == 1) typeName = "	生活用品";
+  else if (type == 2) typeName = "学习用品";
+  else if (type == 3) typeName = "美妆服饰";
+  else if (type == 4) typeName = "电子产品";
+  return typeName;
+}
