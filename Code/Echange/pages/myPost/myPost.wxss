@@ -1,12 +1,12 @@
 /*悬浮按钮*/
 .addBtn {
+  position: fixed;
   width: 100rpx;
   height: 100rpx;
   display: block;
   padding: 0;
   background-size: cover;
-  position: flexd;
-  right: 75rpx;
+  right: 30rpx;
   bottom: 100rpx;
   border-radius: 50%;
   z-index: 999; 

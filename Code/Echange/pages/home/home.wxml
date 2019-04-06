@@ -10,16 +10,17 @@
     </view>
   </view>
 
-  <swiper indicator-dots='true' autoplay='true' interval='3000'>
+<!--轮播图-->
+  <swiper bindchange='handleChange'  previous-margin="50rpx" next-margin="50rpx" autoplay indicator-dots circular interval='3000'>
     <swiper-item wx:for="{{rollingImgList}}" wx:key="item">
-      <image class='rollImg' src='{{item}}'></image>
+      <image class="rollImg {{currentIndex == index ? 'active': ''}}" src='{{item}}'></image>
     </swiper-item>
   </swiper>
 
   <text>商品列表 </text>
-  <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" style="flex-grow:1; height: {{windowHeight}}px">
-    <block wx:if="{{noticeList.length > 0}}">
-      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="item" 
+  <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{windowHeight}}px">
+    <view wx:if="{{noticeList.length > 0}}">
+      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" 
       bindtap='showDetail' data-index='{{index}}'>
       
         <image class='avatar' src="{{ item.publisherPic }}"></image>
@@ -40,7 +41,7 @@
       <!-- </navigator> -->
       </view>
       <view class="no-more" wx:if="{{isLastPage}}">---我也是有底线的---</view>
-    </block>
+    </view>
 
     <block wx:else>
       <view class="weui-media-box weui-media-box_text">

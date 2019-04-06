@@ -5,7 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    noPic: false, //是否显示图片
+    indicatorDots: true, // 是否显示小点
+
     picList: [],
+
   },
 
   /**
@@ -14,11 +18,22 @@ Page({
   onLoad: function (options) {
     var data = JSON.parse(options.data)
     console.log(data)
-    var list = [data.pic];
+    if (!data.pic || data.pic == '') {
+      var noPict = true;
+    }
+    else {
+      var list = [data.pic];
 
-    this.setData({
-      picList: list
-    })
+      if (list.length == 1) 
+        var showDots = false;
+
+      this.setData({
+        picList: list,
+        noPic: noPict,
+        indicatorDots: showDots
+      })
+    }
+    console.log(this.data.picList)
   },
 
   /**
@@ -68,5 +83,16 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  previewImg: function (e) {
+    var imgList = e.currentTarget.dataset.list;//获取data-list
+    var src = e.currentTarget.dataset.src;//获取data-src
+
+    //预览图片，可左右划动
+    wx.previewImage({
+      urls: imgList,
+      current: src
+    })
   }
 })

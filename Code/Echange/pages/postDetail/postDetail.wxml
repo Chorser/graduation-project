@@ -1,8 +1,24 @@
 <view class='container'>
-   <swiper indicator-dots='true' autoplay='true' interval='3000'>
-    <swiper-item wx:for="{{picList}}" wx:key="pic">
-      <image class='rollImg' src='{{pic}}'></image>
-    </swiper-item>
-  </swiper>
+  <view class='swiper' wx:if="{{!noPic}}">
+    <swiper indicator-dots="{{dots}}" autoplay interval='3000' style="height:{{imgheights[current]}}rpx;">
+      <swiper-item wx:for="{{picList}}" wx:key="key">
+        <image bindtap='previewImg' data-list='{{picList}}' data-src='{{item}}' class='rollImg' src='{{item}}' mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <text>物品详情</text>
+
+  <view class='block1'>
+    <text class='pName'>{{item.publisherName}}</text>
+    <view class='time'> {{item.pastTime}}发布 </view>
+  </view>
+  <view class='block'>
+    <view class='title'> {{item.title}} </view>
+    <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
+  </view>
+
+  <view>
+    <image class='avatar' src="{{ item.publisherPic }}"></image>
+  </view>
 </view>
-<text>物品详情</text>

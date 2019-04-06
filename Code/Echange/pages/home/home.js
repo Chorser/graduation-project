@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    currentIndex: 0,
     rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg','/images/roll/3.jpg'],
 
     buttonClicked: false, //是否点击跳转
@@ -41,6 +42,12 @@ Page({
       },
     })
 
+  },
+
+  handleChange: function (e) {
+    this.setData({
+      currentIndex: e.detail.current
+    })
   },
 
   //进入地图
@@ -136,13 +143,13 @@ Page({
       var id = item.id;
       var createdAt = item.createdAt;
       var pastTime = util.pastTime(createdAt);
-      var _url
+      var _url = null
       var pic = item.get("pic1");
       if (pic) {
-        _url = item.get("pic1")._url;
+        _url = pic._url;
       }
        else {
-        _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
+        // _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
       }
       var publisherName = item.get("publisher").nickName;
       var publisherPic = item.get("publisher").avatarUrl;
