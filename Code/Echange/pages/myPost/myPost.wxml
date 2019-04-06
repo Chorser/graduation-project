@@ -1,13 +1,13 @@
 <image class='addBtn' bindtap='toAddNotice' src='../../images/add.png'></image>
 <text>我的发布与招募</text>
 <view class='page'>
-  <scroll-view lower-threshold="800" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight}}px;">
+  <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight}}px;">
     <block wx:if="{{noticeList.length > 0}}">
-      <navigator class='notice weui-cells' wx:for="{{noticeList}}" wx:key="noticeItem" url="/pages/noticeDetail/noticeDetail?objectId={{item.objectId}}">
-        <view class='title'> {{item.attributes.title}} </view>
-        <view class='content'> {{item.attributes.description}} </view>
+      <view class='notice weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+        <view class='title'> {{item.title}} </view>
+        <view class='content'> {{item.description}} </view>
         <view class='time'> {{item.createdAt}} </view>
-      </navigator>
+      </view>
     </block>
 
     <block wx:else>

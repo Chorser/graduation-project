@@ -21,7 +21,7 @@
   <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{windowHeight}}px">
     <view wx:if="{{noticeList.length > 0}}">
       <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" 
-      bindtap='showDetail' data-index='{{index}}'>
+      bindtap='showPostDetail' data-index='{{index}}'>
       
         <image class='avatar' src="{{ item.publisherPic }}"></image>
         <view class='block1'>

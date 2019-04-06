@@ -245,7 +245,7 @@ Page({
   },
 
   //跳转详情页
-  showDetail: function(e) {
+  showPostDetail: function(e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
     var notice = that.data.noticeList[index];

@@ -1,9 +1,36 @@
-/* pages/postDetail/postDetail.wxss */
 swiper {
-  height: 380rpx;
+  height: 350rpx;
 }
 
 .rollImg {
   width: 100%;
-  height: 380rpx;
+  height: 350rpx;
+}
+
+.block {
+  background-color: white;
+  margin-bottom: 10px;
+}
+.notice_detail {
+  text-align: left; 
+  padding: 5px
+}
+.notice_detail .title {
+  font-weight: bolder;
+  font-size: 45rpx;
+}
+.notice_detail .time {
+  color: #c0c0c0;
+}
+
+.publisher_info .avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin: 10px;
+  vertical-align: middle;
+}
+
+.publisher_info .pName {
+  vertical-align: middle;
 }

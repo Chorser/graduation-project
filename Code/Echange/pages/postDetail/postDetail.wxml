@@ -7,18 +7,22 @@
     </swiper>
   </view>
 
-  <text>物品详情</text>
-
-  <view class='block1'>
-    <text class='pName'>{{item.publisherName}}</text>
-    <view class='time'> {{item.pastTime}}发布 </view>
+  <!-- 物品详情 -->
+  <view class='notice_detail block'>
+    <view class='title'> {{notice.title}} </view>
+    <view>
+      <view class='time'> {{notice.pastTime}}发布</view>
+    </view>
+    <view class='content'> {{notice.description}} </view>
   </view>
+
   <view class='block'>
-    <view class='title'> {{item.title}} </view>
-    <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
   </view>
 
-  <view>
-    <image class='avatar' src="{{ item.publisherPic }}"></image>
+  <view class='publisher_info block'>
+    <image class='avatar' src="{{ notice.publisherPic }}"></image>
+    <text class='pName'>{{notice.publisherName}}</text>
   </view>
+
+  <view class='price'>{{notice.price==''?'价格可商议':notice.price+'元'}}</view>
 </view>

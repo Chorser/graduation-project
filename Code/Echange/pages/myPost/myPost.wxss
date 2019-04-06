@@ -7,7 +7,7 @@
   padding: 0;
   background-size: cover;
   right: 30rpx;
-  bottom: 100rpx;
+  bottom: 40rpx;
   border-radius: 50%;
   z-index: 999; 
 }

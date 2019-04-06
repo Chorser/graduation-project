@@ -365,4 +365,11 @@ form{
     background: rgba(0, 0, 0, 0.6);
 }
 
+/* scroll-view隐藏滚动条 */
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent; 
+}
+
 @import 'style/common.wxss';

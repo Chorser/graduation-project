@@ -1,7 +1,8 @@
 .section {
+  background-color: white;
   padding: 20rpx 20rpx;
-  border: 2px;
-  border-color: gray;
+  border-block-end: 10px;
+  border-block-end-color: gray;
 }
 
 .picker {

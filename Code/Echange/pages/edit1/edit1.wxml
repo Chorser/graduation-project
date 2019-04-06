@@ -1,42 +1,41 @@
-<!--pages/edit1/edit1.wxml-->
-<view class="section">
+<view class='container'>
   <text>物品标题</text>
-  <input type='text' bindinput='setTitleValue' placeholder='起一个吸引人的标题吧' />
-</view>
+  <view class="section">
+    <input type='text' bindinput='setTitleValue' placeholder='起一个吸引人的标题吧' />
+  </view>
 
-<view class="section">
   <text>物品描述</text>
-  <textarea name="description" class='weui-textarea' placeholder='请输入物品详细描述' value='{{description}}' style="height: 6em" bindinput="setDescription" maxlength="{{noteMaxLen}}" />
-  <view class="chnumber">{{noteNowLen}}/{{noteMaxLen}}</view>
-</view>
-
-<!-- 物品图片 -->
-<view class="section image_box">
-  <view class="add_btn" wx:if="{{!isSrc}}">
-    <image src='../../images/uploadImg.png' bindtap='uploadImg'></image>
+  <view class="section">
+    <textarea name="description" class='weui-textarea' placeholder='请输入物品详细描述' value='{{description}}' style="height: 6em" bindinput="setDescription" maxlength="{{noteMaxLen}}" />
+    <view class="chnumber">{{noteNowLen}}/{{noteMaxLen}}</view>
   </view>
-  <view wx:if="{{isSrc}}">
-    <view class="picPre">
-      <image src="{{src}}" mode="aspectFit"></image>
-      <view bindtap="clearPic"></view>
+
+  <!-- 物品图片 -->
+  <view class="section image_box">
+    <view class="add_btn" wx:if="{{!isSrc}}">
+      <image src='../../images/uploadImg.png' bindtap='uploadImg'></image>
+    </view>
+    <view wx:if="{{isSrc}}">
+      <view class="picPre">
+        <image src="{{src}}" mode="aspectFit"></image>
+        <view bindtap="clearPic"></view>
+      </view>
     </view>
   </view>
-</view>
 
-<form>
-  <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{types}}" indicator-style="height: 50px;" style="width: 100%;">
-    <view class="picker">
-        <text>物品分类</text>
-        {{types[typeIndex]}}
+    <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{types}}" indicator-style="height: 50px;" style="width: 100%;">
+      <view class="picker">
+          <text>物品分类</text> {{types[typeIndex]}}
+      </view>
+    </picker>
+    
+    <view class='section'>
+      <text style='display:inline-block'>价格</text>
+      <input type='number' value='' bindinput='setPrice' placeholder='请填写价格' />
     </view>
-  </picker>
-  
+
   <view>
-    <text>价格</text>
-    <input type='number' value='' bindinput='setPrice' placeholder='请填写价格' />
+    <button bindtap="submit">提交</button>
   </view>
-</form>
 
-<view class="section">
-  <button bindtap="submit">提交</button>
 </view>

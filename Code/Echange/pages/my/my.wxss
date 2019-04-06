@@ -22,6 +22,7 @@
 .item {
   display: flex;
   color: #9B9B9B;
+  background-color: white;
   padding: 20rpx 0;
   border-bottom: 1rpx solid #DDD;
   font-size: 36rpx;
