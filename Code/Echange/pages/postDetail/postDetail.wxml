@@ -11,18 +11,47 @@
   <view class='notice_detail block'>
     <view class='title'> {{notice.title}} </view>
     <view>
-      <view class='time'> {{notice.pastTime}}发布</view>
+      <view class='time'style='display:inline-block'> {{notice.pastTime}}发布</view>
+      <view class='viewcount' style='display:inline-block'>{{notice.viewCount}}人浏览</view>
     </view>
     <view class='content'> {{notice.description}} </view>
+
+      <!--定位  收藏-->
+    <view class="tool">
+      <view class='tool-item location'  catchtap='onLocationTap' >
+        <image src="/images/map.png"></image>
+        <text style="">{{notice.address}}</text>
+      </view>
+      <!-- <view class="tool-item" catchtap='onUpTop' data-post-id="{{notice.postId}}">
+        <image src="/images/icon/wx_app_like.png"></image>
+        <text>{{post.upNum}}</text>
+      </view> -->
+      <view class="tool-item" catchtap='onCollectionTap' data-post-id="{{notice.objectId}}">
+      <image wx:if="{{isLiked}}" src="/images/tool/like2.png"></image>
+      <image wx:else src="/images/tool/like1.png"></image>
+        <text>收藏</text>
+      </view>
+    </view>
   </view>
 
-  <view class='block'>
-  </view>
 
   <view class='publisher_info block'>
     <image class='avatar' src="{{ notice.publisherPic }}"></image>
     <text class='pName'>{{notice.publisherName}}</text>
   </view>
 
-  <view class='price'>{{notice.price==''?'价格可商议':notice.price+'元'}}</view>
+  <!-- 留言墙 -->
+  <view class='block'>
+    <view style='text-align: center;font-size:40rpx;'>留言板</view>
+  </view>
+
+  <view wx:if='{{!isMyPost}}' class='block block_bottom'>
+    <view class='price'>{{notice.price==''?'价格可商议':'需付： ' + notice.price + '元'}}</view>
+    <button class='btn-blue'>我想要</button>
+  </view>
+
+  <view wx:if='{{isMyPost}}' class='block block_bottom'>
+    <view class='price'>{{notice.price==''?'未定价':'定价： ' + notice.price + '元'}}</view>
+    <button bindtap='toModify' class='btn-blue'>去修改</button>
+  </view>
 </view>

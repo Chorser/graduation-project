@@ -1,19 +1,25 @@
 var common = require('../../utils/common.js')
 var Bmob = require("../../utils/bmob.js");
 var app = getApp()
-var that;
+
+// 引入SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+// 实例化API核心类
+var mapManager = new QQMapWX({
+  key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
+});
+
 Page({
   data: {
-    //活动集合
-    moodList: [],
     //地图的宽高
-    mapHeight: '100%',
-    mapWidth: '100%',
-    mapTop: '0',
+    mapHeight: '95%',
+    mapWidth: '95%',
+    mapTop: '0',  
     //用户当前位置
     point: {
       latitude: 0,
-      longitude: 0
+      longitude: 0,
+      address: "" //选择的位置
     },
     //当前地图的缩放级别
     mapScale: 15,
@@ -76,23 +82,23 @@ Page({
     })
   },
 
-  //点击气泡跳转到活动详情
-  markertap(e) {
-    console.log(e)
-    let mark = {}
-    this.data.markers.map((ele) => {
-      if (ele.id == e.markerId)
-        mark = ele
-    })
-    wx.navigateTo({
-      url: '/pages/detail/detail?actid=' + mark.id + '&pubid=' + mark.pubid
-    })
-  },
-
   //页面加载的函数
   onLoad() {
-    console.log('onLoad')
-    that = this;
+    var that = this;
+
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res.name);
+        //选择地点之后返回到原来页面
+        wx.navigateTo({
+          url: "/pages/home/home?address=" + res.name
+        });
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    });
+
     //获取当前位置
     wx.getLocation({
       type: 'gcj02', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用wx.openLocation 的坐标
@@ -111,54 +117,54 @@ Page({
     })
   },
 
-  onShow: function() {
-    var molist = new Array();
-    var Diary = Bmob.Object.extend("Events");
-    var query = new Bmob.Query(Diary);
-    query.equalTo("isShow", 1); //只统计公开显示的活动
-    query.include("publisher");
-    // 查询所有数据
-    query.find({
-      success: function(results) {
-        for (var i = 0; i < results.length; i++) {
-          var id = results[i].id;
-          var publisherId = results[i].get("publisher").objectId;
-          var title = results[i].get("title");
-          if (title.length > 5) {
-            title = title.substring(0, 5) + "...";
-          }
-          var acttype = results[i].get("acttype");
-          var actcolor = that.getbgColor(acttype);
-          var isShow = results[i].get("isShow");
-          var address = results[i].get("address");
-          var longitude = results[i].get("longitude");
-          var latitude = results[i].get("latitude");
-          var acttypename = results[i].get("acttypename");
-          var jsonA;
-          jsonA = {
-            "id": id || '',
-            "title": title || '',
-            "pubid": publisherId || '',
-            "acttype": acttype || '',
-            "isShow": isShow,
-            "actcolor": actcolor || '',
-            "acttypename": acttypename || '',
-            "latitude": latitude || '',
-            "longitude": longitude || '',
-          }
-          molist.push(jsonA);
-          that.setData({
-            moodList: molist,
-            markers: that.getSchoolMarkers(molist)
-          })
-        }
-      },
-      error: function(error) {
-        // common.dataLoading(error, "loading");
-        console.log(error)
-      }
-    });
-  },
+  // onShow: function() {
+  //   var that = this;
+  //   var molist = new Array();
+  //   var Notice = Bmob.Object.extend("Published_notice");
+  //   var query = new Bmob.Query(Notice);
+  //   query.include("publisher");
+  //   // 查询所有数据
+  //   query.find({
+  //     success: function(results) {
+  //       for (var i = 0; i < results.length; i++) {
+  //         var id = results[i].id;
+  //         var publisherId = results[i].get("publisher").objectId;
+  //         var title = results[i].get("title");
+  //         if (title.length > 5) {
+  //           title = title.substring(0, 5) + "...";
+  //         }
+  //         var acttype = results[i].get("acttype");
+  //         var actcolor = that.getbgColor(acttype);
+  //         var isShow = results[i].get("isShow");
+  //         var address = results[i].get("address");
+  //         var longitude = results[i].get("longitude");
+  //         var latitude = results[i].get("latitude");
+  //         var acttypename = results[i].get("acttypename");
+  //         var jsonA;
+  //         jsonA = {
+  //           "id": id || '',
+  //           "title": title || '',
+  //           "pubid": publisherId || '',
+  //           "acttype": acttype || '',
+  //           "isShow": isShow,
+  //           "actcolor": actcolor || '',
+  //           "acttypename": acttypename || '',
+  //           "latitude": latitude || '',
+  //           "longitude": longitude || '',
+  //         }
+  //         molist.push(jsonA);
+  //         that.setData({
+  //           moodList: molist,
+  //           markers: that.getSchoolMarkers(molist)
+  //         })
+  //       }
+  //     },
+  //     error: function(error) {
+  //       // common.dataLoading(error, "loading");
+  //       console.log(error)
+  //     }
+  //   });
+  // },
 
   //通过活动类型返回地图气泡背景色
   getbgColor: function(acttype) {

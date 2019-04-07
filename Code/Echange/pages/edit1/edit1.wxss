@@ -1,13 +1,10 @@
 .section {
   background-color: white;
-  padding: 20rpx 20rpx;
-  border-block-end: 10px;
-  border-block-end-color: gray;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #DDD;
 }
-
-.picker {
-  padding: 13px;
-  background-color: #fff;
+view .label {
+  padding: 20rpx 0 5rpx 20rpx;
 }
 
 .chnumber {
@@ -18,7 +15,6 @@
   display: inline-block;
   width: 100%;
   padding: 10px 0 10rpx;
-  background-color: #fff;
 }
 
 .image_box view {

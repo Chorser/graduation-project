@@ -11,23 +11,23 @@
     <text>个人信息</text>
     <image src='/images/right.png'> </image>
   </view>
-  <view class="item" data-target="setting" bindtap="navTo">
-    <image src='/images/settings.png'></image>
-    <text>设置</text>
-    <image src='/images/right.png'> </image>
-  </view>
 
   <view class="item" data-target="myPost" bindtap="navTo">
     <image src='/images/publish.png'></image>
-    <text>我的发布和招募</text>
+    <text>我的发布</text>
+    <image src='/images/right.png'> </image>
+  </view>
+  <view class="item" data-target="like" bindtap="navTo">
+    <image src='/images/tool/like1.png'></image>
+    <text>我的收藏</text>
     <image src='/images/right.png'> </image>
   </view>
 
-  <view class="item" data-target="share" bindtap="navTo">
+  <!-- <view class="item" data-target="share" bindtap="navTo">
     <image src='/images/share.png'></image>
     <text>分享给朋友</text>
     <image src='/images/right.png'> </image>
-  </view>
+  </view> -->
 
   <view class="item" data-target="feedback" bindtap="navTo">
     <image src='/images/server.png'></image>

@@ -1,5 +1,8 @@
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
+// 搜索模块
+var WxSearch = require('../../utils/wxSearch/wxSearch.js')
+
 const app = getApp()
 
 Page({
@@ -20,16 +23,25 @@ Page({
     limitPage: 5,//每页显示几条信息
     lastPageNum: 0, //最后一页显示的信息数量
     totalPage: 0, //发布的信息总页数
+
+    addressName: null,
+    address: '',
+  },
+
+  onLoad: function (options) {
+    if (options.address) {
+      this.setData({
+        addressName: options.addressname,
+        address: options.address
+      })
+    }
+    // console.log(this.data.addressName)
   },
 
   onShow: function () {
     var that = this;
-    // var currentUser = Bmob.User.current();//当前用户
-    // console.log(currentUser);
 
     this.getAll(); // 获取页数
-
-    // if (this.data.noticeList.length == 0)
     this.getList();
 
     wx.getSystemInfo({
@@ -50,14 +62,34 @@ Page({
     })
   },
 
-  //进入地图
+  //打开地图
   openMap: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/showinmap/showinmap',
-      });
-    }
+    var that = this;
+    // if (!this.buttonClicked) {
+    //   util.buttonClicked(this);
+    //   wx.navigateTo({
+    //     url: '/pages/showinmap/showinmap',
+    //   });
+    // }
+
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res);
+        console.log(res.name);
+        that.setData({
+          addressName: res.name,
+          address: res.address
+        })
+        //选择地点之后返回到原来页面
+        // wx.navigateTo({
+        //   url: "/pages/home/home?addressname=" + res.name + "address=" + res.address
+        // });
+        
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    });
   },
 
   //获取总的发布数
@@ -120,24 +152,21 @@ Page({
     })
   },
 
-  //处理数据
+  //处理数据,放入list
   dealWithData: function (results) {
     var that = this;
     var currentPageList = new Array();
     results.forEach(function (item) {
-      // console.log(item.get("publisher"))
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
       var typeId = item.get("typeId");
       var typeName = getTypeName(typeId); //根据类型id获取类型名称
       var price = item.get("price");
-      // var endtime = item.get("endtime");
-      // var address = item.get("address");
-      // var isShow = item.get("isShow");
-      // var peoplenum = item.get("peoplenum");
-      // var likenum = item.get("likenum");
-      // var liker = item.get("liker");
+      var address = item.get("address");
+      var longitude = item.get("longitude");
+      var latitude = item.get("latitude");
+
       // var isLike = 0;
       // var commentnum = item.get("commentnum");
       var id = item.id;
@@ -148,12 +177,23 @@ Page({
       if (pic) {
         _url = pic._url;
       }
-       else {
-        // _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-      }
       var publisherName = item.get("publisher").nickName;
       var publisherPic = item.get("publisher").avatarUrl;
-    
+
+      var viewCount = item.get("viewCount") || 0;
+      var likeCount = item.get("likeCount") || 0;
+      var liker = item.get("liker"); //收藏用户ID数组
+      // console.log(liker)
+      var isLiked = false;
+      if (liker) {
+        liker.forEach(function(item) {
+          if (item == app.globalData.currentUser.id) {
+            isLiked = true;
+          }
+        })
+      }
+      // console.log(isLiked)
+
       var jsonA;
       jsonA = {
         "title": title || '',
@@ -166,14 +206,16 @@ Page({
         "publisherId": publisherId || '',
         "pastTime": pastTime || '',
         "pic": _url || '',
-        "price": price || ''
-        // "isShow": isShow,
-        // "endtime": endtime || '',
-        // "address": address || '',
-        // "peoplenum": peoplenum || '',
-        // "likenum": likenum,
+        "price": price || '',
         // "commentnum": commentnum,
-        // "is_liked": isLike || ''
+        "isLiked": isLiked, //是否被本用户收藏
+        "viewCount": viewCount,
+        "likeCount": likeCount,
+        // "liker": liker,
+
+        "address": address,
+        "latitude": latitude,
+        "longitude": longitude,
       }
       currentPageList.push(jsonA);
     });
@@ -240,22 +282,44 @@ Page({
 
     setTimeout(function () {
       wx.stopPullDownRefresh(); //处理完终止下拉刷新
-    }, 300);
+    }, 500);
     
   },
 
   //跳转详情页
   showPostDetail: function(e) {
-    var that = this;
     var index = e.currentTarget.dataset.index;
-    var notice = that.data.noticeList[index];
+    var notice = this.data.noticeList[index];
     var data = JSON.stringify(notice);
-    console.log(data)
+    console.log(data);
 
-    wx.navigateTo({
-      url: '../postDetail/postDetail?data=' + data
+    //是自己发布的特殊处理
+    if (notice.publisherId == app.globalData.currentUser.id) {
+      wx.navigateTo({
+        url: '../postDetail/postDetail?isMyPost=true&data=' + data
+      })
+    }
+    else {
+      this.addViewCount(notice.id);
+      notice.viewCount++;
+      wx.navigateTo({
+        url: '../postDetail/postDetail?data=' + data
+      })
+    }
+  },
+
+  // 更新数据库 浏览数
+  addViewCount: function (objectId, cnt) {
+    var that = this;
+    var Notice = Bmob.Object.extend("Published_notice");
+    var query = new Bmob.Query(Notice);
+    query.get(objectId).then(res => {
+      var cnt = res.get('viewCount') || 0;
+      
+      res.save()
     })
   }
+
 })
 
 function getTypeName(type) {

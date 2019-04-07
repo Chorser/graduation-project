@@ -1,17 +1,22 @@
 <view class='container'>
   <view class='header'>
     <view bindtap='openMap'>
-      <image class='map' src='../../images/map.png'></image>
+      <view wx:if="{{!addressName}}">
+        <image class='map' src='../../images/map.png'></image>
+      </view>
+      <view wx:else style='width: 80px;'>
+        <image class='map' style='transform: scale(.7);' src='../../images/map.png'></image>
+        <view style='font-size: 26rpx; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; '>{{addressName}}</view>
+      </view>
     </view>
-
     <view class='search-row'>
-      <input class='search' value="{{  }}" placeholder='搜索...' />
-      <image class='search-icon' src='/images/search.png'/>
+      <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" name='search' class='search-input' placeholder='搜索...' />
+      <image class='search-icon' src='/images/search.png' />
     </view>
   </view>
 
-<!--轮播图-->
-  <swiper bindchange='handleChange'  previous-margin="50rpx" next-margin="50rpx" autoplay indicator-dots circular interval='3000'>
+  <!--轮播图-->
+  <swiper bindchange='handleChange' previous-margin="50rpx" next-margin="50rpx" autoplay indicator-dots circular interval='3000'>
     <swiper-item wx:for="{{rollingImgList}}" wx:key="item">
       <image class="rollImg {{currentIndex == index ? 'active': ''}}" src='{{item}}'></image>
     </swiper-item>
@@ -20,17 +25,16 @@
   <text>商品列表 </text>
   <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{windowHeight}}px">
     <view wx:if="{{noticeList.length > 0}}">
-      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" 
-      bindtap='showPostDetail' data-index='{{index}}'>
-      
+      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+
         <image class='avatar' src="{{ item.publisherPic }}"></image>
         <view class='block1'>
           <text class='pName'>{{item.publisherName}}</text>
           <view class='time'> {{item.pastTime}}发布 </view>
         </view>
-        
+
         <!-- <view wx:if="{{item._url!=''}}"> -->
-          <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
+        <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
         <!-- </view> -->
 
         <view class='block'>
@@ -38,8 +42,28 @@
           <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
         </view>
         <!-- <view class='content'> {{item.description}} </view> -->
-      <!-- </navigator> -->
+        <!-- </navigator> -->
+
+        <!--定位  收藏、浏览数 -->
+        <view class="tool">
+          <!-- <view class="tool-item" catchtap='onUpTop' data-post-id="{{item.postId}}">
+    <image src="/images/icon/wx_app_like.png"></image>
+    <text>{{post.upNum}}</text>
+  </view> -->
+          <view class="tool-item readed">
+            <image src="/images/tool/readed.png"></image>
+            <text>{{item.viewCount}}</text>
+          </view>
+          <view class="tool-item">
+            <image wx:if="{{item.isLiked}}" src="/images/tool/like2.png"></image>
+            <image wx:else src="/images/tool/like1.png"></image>
+            <text>{{item.likeCount}}</text>
+          </view>
+        </view>
+
       </view>
+
+
       <view class="no-more" wx:if="{{isLastPage}}">---我也是有底线的---</view>
     </view>
 

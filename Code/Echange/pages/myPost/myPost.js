@@ -148,7 +148,7 @@ Page({
     console.log(data)
 
     wx.navigateTo({
-      url: '../postDetail/postDetail?data=' + data
+      url: '../postDetail/postDetail?isMyPost=true&data=' + data
     })
   }
 })

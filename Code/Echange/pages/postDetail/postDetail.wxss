@@ -10,27 +10,83 @@ swiper {
 .block {
   background-color: white;
   margin-bottom: 10px;
+  padding: 0 15px;
 }
 .notice_detail {
-  text-align: left; 
-  padding: 5px
+  /* text-align: left; 
+  padding: 5px */
+  z-index: 200;
 }
 .notice_detail .title {
   font-weight: bolder;
   font-size: 45rpx;
 }
-.notice_detail .time {
+.notice_detail .time,
+.notice_detail .viewcount{
   color: #c0c0c0;
+  display: inline-block;
+  margin-right: 30rpx;
 }
 
 .publisher_info .avatar {
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  margin: 10px;
+  margin: 10px 0;
   vertical-align: middle;
 }
 
 .publisher_info .pName {
   vertical-align: middle;
+  padding-left: 10px;
+}
+
+.block_bottom {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0;
+}
+.block_bottom .price {
+  line-height: 40px;
+  width: 60%;
+  color: red;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: middle;
+}
+.block_bottom button {
+  width: 40%;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
+}
+
+
+.tool {
+  height: 64rpx;
+  text-align: right;
+  line-height: 64rpx;
+  margin: 20rpx 0rpx 20rpx 0;
+  border-top: 1px solid #D5D5D6;
+}
+.tool-item {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
+}
+.tool-item image {
+  height: 50rpx;
+  width: 50rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+
+.location {
+  float:left; 
+  width:70%; 
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }

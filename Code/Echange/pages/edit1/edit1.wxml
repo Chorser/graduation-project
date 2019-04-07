@@ -1,10 +1,10 @@
 <view class='container'>
-  <text>物品标题</text>
+  <view class="label">物品标题</view>
   <view class="section">
-    <input type='text' bindinput='setTitleValue' placeholder='起一个吸引人的标题吧' />
+    <input type='text' value='{{title}}' bindinput='setTitleValue' placeholder='起一个吸引人的标题吧' />
   </view>
 
-  <text>物品描述</text>
+  <view class="label">物品描述</view>
   <view class="section">
     <textarea name="description" class='weui-textarea' placeholder='请输入物品详细描述' value='{{description}}' style="height: 6em" bindinput="setDescription" maxlength="{{noteMaxLen}}" />
     <view class="chnumber">{{noteNowLen}}/{{noteMaxLen}}</view>
@@ -23,19 +23,34 @@
     </view>
   </view>
 
+  <view class='section'>
     <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{types}}" indicator-style="height: 50px;" style="width: 100%;">
       <view class="picker">
-          <text>物品分类</text> {{types[typeIndex]}}
+        <text>物品分类</text>
+        <text style='float:right; text-align: center'>{{types[typeIndex]}}</text>
       </view>
     </picker>
-    
-    <view class='section'>
-      <text style='display:inline-block'>价格</text>
-      <input type='number' value='' bindinput='setPrice' placeholder='请填写价格' />
-    </view>
+  </view>
 
-  <view>
-    <button bindtap="submit">提交</button>
+  <view class='section' style='display: flex;'>
+    <text>价格</text>
+    <input type='number'style='flex:1;padding-left:20px;' bindinput='setPrice' value='{{price}}' placeholder='请填写价格'/>
+  </view>
+
+  <view class='section' style='display: flex;'>
+    <text>定位</text>
+    <input type='text' style='flex:1;padding-left:20px;' bindtap='getPosition' 
+    bindinput='setAddress' value='{{address}}' placeholder='获取位置' />
+  </view>
+
+  
+
+  <view wx:if="{{!isModify}}">
+    <button class='btn-blue' bindtap="submit">提交</button>
+  </view>
+
+  <view wx:if="{{isModify}}">
+    <button class='btn-blue' bindtap="save">保存修改</button>
   </view>
 
 </view>

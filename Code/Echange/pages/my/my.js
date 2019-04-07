@@ -20,5 +20,6 @@ Page({
     wx.navigateTo({
       url: _url
     })
-  }
+  },
+
 })

@@ -11,11 +11,22 @@ page {
 checkbox, radio{
   margin-right: 10rpx;
 }
-button{
+
+button {
+  width: 90%;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0px;
 }
-form{
+
+.btn-blue {
+  background-color: #1296db;
+  color: white
+}
+
+form {
   width: 100%;
 }
 
@@ -30,15 +41,6 @@ form{
   font-size: 12px;
 }
 
-/* page */
-/* .container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  justify-content: space-between;
-  font-size: 32rpx;
-  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
-} */
 .page-head{
   padding: 60rpx 50rpx 80rpx;
   text-align: center;

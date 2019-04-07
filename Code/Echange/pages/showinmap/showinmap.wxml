@@ -1,8 +1,14 @@
 <view class='homepage'>
+  
+  <!-- <view class='search-row'>
+    <input name='search' class='search-input' placeholder='搜索地点' />
+    <image class='search-icon' src='/images/search.png' />
+  </view> -->
+
   <map id="myMap"
    longitude="{{point.longitude}}" latitude="{{point.latitude}}" 
    scale="{{mapScale}}" markers="{{markers}}" 
-   bindcallouttap="markertap" bindcontroltap="controltap" 
+   bindcontroltap="controltap" 
    controls="{{controls}}" show-location 
    style="width: {{mapWidth}}; height: {{mapHeight}};top: {{mapTop}}"></map>
 </view>

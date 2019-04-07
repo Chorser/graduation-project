@@ -6,7 +6,7 @@ Page({
 
   },
 
-  sell: function () {
+  toPost: function () {
     wx.navigateTo({
       url: "/pages/edit1/edit1"
     })

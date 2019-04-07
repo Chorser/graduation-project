@@ -12,21 +12,22 @@
 .search-row {
   display: flex;
   flex: 1;
-  height: 60rpx;
+  height: 75rpx;
   align-items: center;
   border: 1rpx solid #ddd;
   border-radius: 15rpx;
   background-color: white;
 }
-
-.search {
+.search-input {
   flex: 1;
-  font-size: 30rpx;
+  font-size: 3e0rpx;
+  height: 80rpx;
   padding: 0 10px;
 }
 .search-icon {
-  width: 50rpx;
-  height: 50rpx;
+  width: 45rpx;
+  height: 45rpx;
+  padding-right: 10rpx;
 }
 
 .rollImg {
@@ -99,3 +100,25 @@
   color: #3a3939;
   padding: 5px 0;
 }
+
+
+.tool {
+  height: 64rpx;
+  text-align: right;
+  line-height: 64rpx;
+  /* margin: 20rpx 0rpx 20rpx 0; */
+}
+.tool-item {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
+}
+.tool-item image {
+  height: 50rpx;
+  width: 50rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+/* .readed image{
+  transform: scale(1.85);
+} */

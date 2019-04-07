@@ -941,7 +941,6 @@ icon {
   background-color: #1AAD19;
   -webkit-transition: -webkit-transform .3s;
   transition: -webkit-transform .3s;
-  transition: transform .3s;
   transition: transform .3s, -webkit-transform .3s;
 }
 .weui-navbar__title {
