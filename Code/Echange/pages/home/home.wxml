@@ -9,8 +9,8 @@
         <view style='font-size: 26rpx; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; '>{{addressName}}</view>
       </view>
     </view>
-    <view class='search-row'>
-      <input bindconfirm="searchInput" name='search' class='search-input' placeholder='搜索关键字...' />
+    <view class='search-row' bindtap='toSearch'>
+      <input name='search' class='search-input' placeholder='搜索' />
       <image class='search-icon' src='/images/search.png' />
     </view>
   </view>

@@ -1,0 +1,74 @@
+<import src="/wxSearch/wxSearch.wxml" />
+<import src="../template/activity/common-list.wxml" />
+<view class="wxSearch-section">
+  <view class="search-pancel">
+    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" name="input" confirm-type="搜索" class="search-input" placeholder="请输入关键字..."></input>
+    <button bindtap="findEach" class="search-button" form-type="submit" size="mini" plain="true">
+      <icon type="search" color="#959595" size="12" />
+    </button>
+  </view>
+</view>
+<template is="wxSearch" data="{{wxSearchData}}" />
+<view class="scontainer">
+  <view class="bg">
+    <view class="choose_user" style="border-bottom:1rpx solid #e6e6e6;">
+      <view class="choose_user_item" style="color:#{{typeId==0?'fff':'118fff'}};background:#{{typeId==0?'118fff':'fff'}};" bindtap="choseType" id="0">全部</view>
+      <view class="choose_user_item" style="color:#{{typeId==1?'fff':'118fff'}};background:#{{typeId==1?'118fff':'fff'}};" bindtap="choseType" id="1">运动</view>
+      <view class="choose_user_item" style="color:#{{typeId==2?'fff':'118fff'}};background:#{{typeId==2?'118fff':'fff'}};" bindtap="choseType" id="2">游戏</view>
+      <view class="choose_user_item" style="color:#{{typeId==3?'fff':'118fff'}};background:#{{typeId==3?'118fff':'fff'}};" bindtap="choseType" id="3">交友</view>
+      <view class="choose_user_item" style="color:#{{typeId==4?'fff':'118fff'}};background:#{{typeId==4?'118fff':'fff'}};" bindtap="choseType" id="4">旅行</view>
+    </view>
+  </view>
+
+  <view class="index-container">
+    <!--无通知记录-->
+    <view wx:if="{{noticeList.length == 0}}">
+      <view class="imgitem">
+        <image src="/static/images/norecord1.png" class="empty_img"></image>
+      </view>
+      <view class="txtitem">
+        <text class="t28rpx">检索不到活动</text>
+      </view>
+    </view>
+    <view wx:if="{{noticeList.length > 0}}">
+      <view class="activities" wx:for="{{noticeList}}" wx:key="id">
+        <view class="activity" wx:if="{{item.typeId == type || type == 0}}" index="{{index}}">
+          <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+
+            <image class='avatar' src="{{ item.publisherPic }}"></image>
+            <view class='block1'>
+              <text class='pName'>{{item.publisherName}}</text>
+              <view class='time'> {{item.pastTime}}发布 </view>
+            </view>
+
+            <!-- <view wx:if="{{item._url!=''}}"> -->
+            <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
+            <!-- </view> -->
+
+            <view class='block'>
+              <view class='title'> {{item.title}} </view>
+              <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
+            </view>
+
+            <!--定位  收藏、浏览数 -->
+            <view class="tool">
+              <view class="tool-item readed">
+                <image src="/images/tool/readed.png"></image>
+                <text>{{item.viewCount}}</text>
+              </view>
+              <view class="tool-item">
+                <image wx:if="{{item.isLiked}}" src="/images/tool/like2.png"></image>
+                <image wx:else src="/images/tool/like1.png"></image>
+                <text>{{item.likeCount}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="loadingmore">
+        <view class="no-more">---无更多发布---</view>
+      </view>
+    </view>
+  </view>
+</view>
