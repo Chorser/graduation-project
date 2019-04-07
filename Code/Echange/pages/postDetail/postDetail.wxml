@@ -19,7 +19,7 @@
       <!--定位  收藏-->
     <view class="tool">
       <view class='tool-item location'  catchtap='onLocationTap' >
-        <image src="/images/map.png"></image>
+        <image wx:if="{{notice.address}}" src="/images/map.png"></image>
         <text style="">{{notice.address}}</text>
       </view>
       <!-- <view class="tool-item" catchtap='onUpTop' data-post-id="{{notice.postId}}">

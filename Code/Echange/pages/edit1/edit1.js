@@ -203,7 +203,7 @@ Page({
       var notice = new Notice();
       
       notice.set('publisher', me)
-      // notice.set('userId', user.id)
+      notice.set('userId', user.id) //方便判断
       notice.set('title', this.data.title)
       notice.set('description', this.data.description)
       notice.set('typeId', parseInt(this.data.typeIndex + 1))

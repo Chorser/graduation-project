@@ -1,7 +1,7 @@
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
 // 搜索模块
-var WxSearch = require('../../utils/wxSearch/wxSearch.js')
+// var WxSearch = require('../../utils/wxSearch/wxSearch.js')
 
 const app = getApp()
 
@@ -72,6 +72,7 @@ Page({
     //   });
     // }
 
+    //选择地点
     wx.chooseLocation({
       success: function (res) {
         console.log(res);
@@ -90,6 +91,38 @@ Page({
         console.log(err)
       }
     });
+  },
+
+  //模糊查询 title
+  searchInput: function (e) {
+    var searchStr = e.detail.value;
+    console.log(searchStr)
+    var that = this;
+    var Notice = Bmob.Object.extend("Published_notice");
+    var query = new Bmob.Query(Notice);
+    query.descending("createdAt");
+    query.include("publisher"); // 同时获取发布者信息
+    
+    query.find({
+      success: function (results) {
+        var result = that.dealWithData(results);
+
+        var i; 
+        var list = []; 
+        for (i = 0; i < result.length; i++) {
+          if (result[i].title.indexOf(searchStr) >= 0) {
+            // console.log("成功");// console.log(result[i]);
+            list.push(result[i]);
+          }
+        }
+        that.setData({
+          noticeList: list
+        })
+      },
+      error: function (error) {
+        console.log("查询失败： ", error.code + " " + error.message);
+      }
+    })
   },
 
   //获取总的发布数
@@ -144,7 +177,13 @@ Page({
     query.include("publisher"); // 同时获取发布者信息
     query.find({
       success: function (results) {
-        that.dealWithData(results);
+        var currentPageList = that.dealWithData(results);
+
+        that.onSetData(currentPageList, that.data.currentPage);
+
+        setTimeout(function () {
+          wx.hideLoading();
+        }, 900);
       },
       error: function (error) {
         console.log("查询失败： ", error.code + " " + error.message);
@@ -220,12 +259,7 @@ Page({
       currentPageList.push(jsonA);
     });
 
-    that.onSetData(currentPageList, that.data.currentPage);
-
-    setTimeout(function () {
-      wx.hideLoading();
-    }, 900);
-
+    return currentPageList;
     // that.setData({
     //   noticeList: allList
     // })

@@ -10,7 +10,7 @@
       </view>
     </view>
     <view class='search-row'>
-      <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" name='search' class='search-input' placeholder='搜索...' />
+      <input bindconfirm="searchInput" name='search' class='search-input' placeholder='搜索关键字...' />
       <image class='search-icon' src='/images/search.png' />
     </view>
   </view>
