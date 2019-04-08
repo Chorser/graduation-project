@@ -46,19 +46,33 @@ Page({
   changeAvatar: function(e) {
     var that = this;
     wx.chooseImage({
-      success: function(res) {
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 指定是压缩图
+      sourceType: ['album', 'camera'], // 指定来源是相册和相机
+      success: function (res) {
+        var urlArr = new Array();
         var tempFilePaths = res.tempFilePaths;
-        wx.saveFile({
-          tempFilePath: tempFilePaths[0],
-          success: function(res) {
-            var savedFilePath = res.savedFilePath;
-            // wx.setStorageSync('avatarUrl', savedFilePath);
-            //头像
-            that.setData({
-              avatarUrl: savedFilePath
-            });
-          }
-        });
+        console.log(tempFilePaths)
+
+        that.setData({
+          isSrc: true,
+          avatarUrl: tempFilePaths
+        })
+
+    // wx.chooseImage({
+    //   success: function(res) {
+    //     var tempFilePaths = res.tempFilePaths;
+    //     wx.saveFile({
+    //       tempFilePath: tempFilePaths[0],
+    //       success: function(res) {
+    //         var savedFilePath = res.savedFilePath;
+    //         // wx.setStorageSync('avatarUrl', savedFilePath);
+    //         //头像
+    //         that.setData({
+    //           avatarUrl: savedFilePath
+    //         });
+    //       }
+    //     });
       }
     })
   },
@@ -79,9 +93,16 @@ Page({
     query.get(this.currentUser.id, {
       success: function(result) {
         result.set('nickName', that.data.nickName)
-        result.set('avatarUrl', that.data.avatarUrl)
         result.set('gender', that.data.gender)
 
+        if (that.data.isSrc == true) {
+          var url = that.data.avatarUrl;
+          result.set('avatarUrl', that.data.avatarUrl[0])
+          // console.log(url)
+          var file = new Bmob.File(url, that.data.avatarUrl);
+          file.save();
+          result.set('avatar', file);
+        }
         result.save().then((res) => {
           wx.showToast({
             title: '保存成功！',
@@ -89,6 +110,7 @@ Page({
 
           that.currentUser.set('nickName', that.data.nickName)
           that.currentUser.set('avatarUrl', that.data.avatarUrl)
+          that.currentUser.set('avatar', file)
           that.currentUser.set('gender', that.data.gender)
           Bmob.User._saveCurrentUser(that.currentUser)
 

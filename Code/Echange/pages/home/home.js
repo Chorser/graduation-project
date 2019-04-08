@@ -201,6 +201,7 @@ Page({
     var that = this;
     var currentPageList = new Array();
     results.forEach(function (item) {
+      console.log(item)
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
@@ -222,7 +223,8 @@ Page({
         _url = pic._url;
       }
       var publisherName = item.get("publisher").nickName;
-      var publisherPic = item.get("publisher").avatarUrl;
+      var publisherPic = item.get("publisher").avatar.url;
+      console.log(publisherPic)
 
       var viewCount = item.get("viewCount") || 0;
       var likeCount = item.get("likeCount") || 0;
@@ -245,7 +247,7 @@ Page({
         "typeId": typeId || '',
         "typeName": typeName || '',
         "id": id || '',
-        "publisherPic": publisherPic || '../images/avatar1.jpg',
+        "publisherPic": publisherPic || '../../images/avatar1.jpg',
         "publisherName": publisherName || '',
         "publisherId": publisherId || '',
         "pastTime": pastTime || '',

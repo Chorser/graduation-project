@@ -12,7 +12,7 @@
     <view>3. 同一物品只能发布一次，不得重复发布；</view>
     <view>4. 不允许发布广告商品或信息，一经发现予以删除与封禁；</view>
     <view>5. 不允许发布违禁相关物品；</view>
-    <view>6. 本平台不提供交易担保，请理智交易，谨防被骗</view>
+    <view>6. 本平台不提供交易担保，请理智交易，谨防上当</view>
   </view>
   <view>
     <button class='btn1' bindtap='toPost'>发布</button>

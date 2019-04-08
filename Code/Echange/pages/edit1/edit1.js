@@ -198,7 +198,7 @@ Page({
       var me = new Bmob.User();
       me.id = user.id;
       me.avatar = user.get("avatarUrl");
-      console.log(me.avatar)
+      // console.log(me.avatar)
       var Notice = Bmob.Object.extend("Published_notice");
       var notice = new Notice();
       
@@ -213,8 +213,8 @@ Page({
       notice.set('latitude', this.data.latitude)
       notice.set('longitude', this.data.longitude)
 
-      notice.set('view_count', 0)
-      notice.set('like_count', 0);
+      notice.set('viewCount', 0)
+      notice.set('likeCount', 0);
       
       if (that.data.isSrc == true) {
         var name = that.data.src;
