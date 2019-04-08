@@ -10,7 +10,7 @@ var allList;
 Page({
   data: {
     buttonClicked: false, //是否点击跳转
-    type: 0,
+    typeId: 0,
     noticeList: [],
     isEmpty: true,
     loading: false,
@@ -21,31 +21,35 @@ Page({
     //初始化的时候渲染wxSearchdata
     WxSearch.init(that, 43, ['手机', '寝室神器', '教材']);
     WxSearch.initMindKeys(['手机', '寝室神器', '教材']);
+
+    if (!app.globalData.currentUser) {
+      app.globalData.currentUser = Bmob.User.current();
+    }
   },
 
   //选择要查询的活动类型
   chooseType: function(e) {
-    var type = e.currentTarget.id;
-    if (type == 0)
+    var typeId = e.currentTarget.id;
+    if (typeId == 0)
       this.onShow();
-    else if (type == 1)
+    else if (typeId == 1)
       this.setData({
         noticeList: this.data.type1List
       });
-    else if (type == 2)
+    else if (typeId == 2)
       this.setData({
         noticeList: this.data.type2List
       });
-    else if (type == 3)
+    else if (typeId == 3)
       this.setData({
         noticeList: this.data.type3List
       });
-    else if (type == 4)
+    else if (typeId == 4)
       this.setData({
         noticeList: this.data.type4List
       });
     this.setData({
-      type: type
+      typeId: typeId
     })
   },
 
@@ -70,7 +74,7 @@ Page({
         var type4List = new Array(); //电子产品
 
         for (var i in list) {
-          console.log(list[i])
+          // console.log(list[i])
           if (list[i].typeId == 1) type1List.push(list[i]);
           else if (list[i].typeId == 2) type2List.push(list[i]);
           else if (list[i].typeId == 3) type3List.push(list[i]);
@@ -84,10 +88,10 @@ Page({
           type4List: type4List,
         })
 
+        allList = list;
         setTimeout(function() {
           wx.hideLoading();
         }, 900);
-
       },
 
     })
@@ -113,11 +117,11 @@ Page({
       WxSearch.updateHotMindKeys(that, strFind); //更新热门搜索和搜索记忆提示
       var nPos;
       var resultPost = [];
-      for (var i in allList) {
-        var sTxt = allList[i].title || ''; //活动的标题
+      for (var i in that.data.noticeList) {
+        var sTxt = allList[i].title || ''; //发布的标题
         nPos = sTxt.indexOf(strFind);
-        if (nPos >= 0) { //如果输入的关键字在该活动标题中出现过,则匹配该活动
-          resultPost.push(allList[i]); //将该活动加入到搜索到的活动列表中
+        if (nPos >= 0) { //若关键字在该标题中出现过,则匹配该活动
+          resultPost.push(allList[i]); //将该发布加入到搜索到的结果列表中
         }
       }
       that.setData({
@@ -263,12 +267,12 @@ Page({
   }
 })
 
-//根据活动类型获取活动类型名称
-function getTypeName(type) {
+//根据类型获取物品类型名称
+function getTypeName(typeId) {
   var typeName = "";
-  if (type == 1) typeName = "	生活用品";
-  else if (type == 2) typeName = "学习用品";
-  else if (type == 3) typeName = "美妆服饰";
-  else if (type == 4) typeName = "电子产品";
+  if (typeId == 1) typeName = "	生活用品";
+  else if (typeId == 2) typeName = "学习用品";
+  else if (typeId == 3) typeName = "美妆服饰";
+  else if (typeId == 4) typeName = "电子产品";
   return typeName;
 }

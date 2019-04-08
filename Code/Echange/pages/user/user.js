@@ -19,7 +19,7 @@ Page({
     if (app.globalData.currentUser) {
       this.currentUser = app.globalData.currentUser;
       this.setData({
-        avatarUrl: this.currentUser.get("avatarUrl") || '',
+        avatarUrl: this.currentUser.get("avatar").url || '',
         nickName: this.currentUser.get("nickName") || '',
         gender: this.currentUser.get("gender") || 1
       })

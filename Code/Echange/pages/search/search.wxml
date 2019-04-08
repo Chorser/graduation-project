@@ -21,46 +21,44 @@
   </view>
 
   <view class="index-container">
-    <!--无通知记录-->
+    <!--无记录-->
     <view wx:if="{{noticeList.length == 0}}">
-      <!-- <view class="imgitem">
-        <image src="/static/images/norecord1.png" class="empty_img"></image>
-      </view> -->
+      <view class="imgitem">
+        <image src="../../images/box.png" class="empty_img"></image>
+      </view>
       <view class="txtitem">
-        <text class="t28rpx">检索不到活动</text>
+        <text class="t28rpx">检索不到相关发布</text>
       </view>
     </view>
+
     <view wx:if="{{noticeList.length > 0}}">
-      <view class="notices" wx:for="{{noticeList}}" wx:key="id">
-        <view class="notice" wx:if="{{item.typeId == type || type == 0}}" index="{{index}}">
-          <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+      <view class="notices" wx:for="{{noticeList}}" wx:key="index">
+        <view class="notice notice_block" index="{{index}}"  data-index='{{index}}' bindtap='showPostDetail'>
+          <image class='avatar' src="{{ item.publisherPic }}"></image>
+          <view class='block1'>
+            <text class='pName'>{{item.publisherName}}</text>
+            <view class='time'> {{item.pastTime}}发布 </view>
+          </view>
 
-            <image class='avatar' src="{{ item.publisherPic }}"></image>
-            <view class='block1'>
-              <text class='pName'>{{item.publisherName}}</text>
-              <view class='time'> {{item.pastTime}}发布 </view>
+          <!-- <view wx:if="{{item._url!=''}}"> -->
+          <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
+          <!-- </view> -->
+
+          <view class='block'>
+            <view class='title'> {{item.title}} </view>
+            <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
+          </view>
+
+          <!--定位  收藏、浏览数 -->
+          <view class="tool">
+            <view class="tool-item readed">
+              <image src="/images/tool/readed.png"></image>
+              <text>{{item.viewCount}}</text>
             </view>
-
-            <!-- <view wx:if="{{item._url!=''}}"> -->
-            <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
-            <!-- </view> -->
-
-            <view class='block'>
-              <view class='title'> {{item.title}} </view>
-              <view class='price'>{{item.price==''?'价格可商议':item.price+'元'}}</view>
-            </view>
-
-            <!--定位  收藏、浏览数 -->
-            <view class="tool">
-              <view class="tool-item readed">
-                <image src="/images/tool/readed.png"></image>
-                <text>{{item.viewCount}}</text>
-              </view>
-              <view class="tool-item">
-                <image wx:if="{{item.isLiked}}" src="/images/tool/like2.png"></image>
-                <image wx:else src="/images/tool/like1.png"></image>
-                <text>{{item.likeCount}}</text>
-              </view>
+            <view class="tool-item">
+              <image wx:if="{{item.isLiked}}" src="/images/tool/like2.png"></image>
+              <image wx:else src="/images/tool/like1.png"></image>
+              <text>{{item.likeCount}}</text>
             </view>
           </view>
         </view>
