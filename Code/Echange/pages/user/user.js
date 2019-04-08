@@ -88,8 +88,8 @@ Page({
     var that = this;
     console.log("update user info")
 
-    var u = Bmob.Object.extend('_User')
-    var query = new Bmob.Query(u);
+    var User = Bmob.Object.extend('_User')
+    var query = new Bmob.Query(User);
     query.get(this.currentUser.id, {
       success: function(result) {
         result.set('nickName', that.data.nickName)

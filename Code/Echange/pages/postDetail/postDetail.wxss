@@ -90,3 +90,9 @@ swiper {
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
+.word{
+  text-decoration: lightblue;
+  display: inline-block
+  
+}

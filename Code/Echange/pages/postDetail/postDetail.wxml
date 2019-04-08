@@ -34,7 +34,7 @@
     </view>
   </view>
 
-
+  <!-- 发布人信息 -->
   <view class='publisher_info block'>
     <image class='avatar' src="{{ notice.publisherPic }}"></image>
     <text class='pName'>{{notice.publisherName}}</text>
@@ -42,7 +42,13 @@
 
   <!-- 留言墙 -->
   <view class='block'>
-    <view style='text-align: center;font-size:40rpx;'>留言板</view>
+    <view style='text-align: center;font-size:40rpx;  display: inline-block;margin:auto'>
+      留言板  
+    </view>
+      <view style="font-size:15px; text-decoration: lightblue; display: inline-block" bindtap='sendMessage'>我要留言</view>
+      <modal hidden="{{hideModal}}" id="modal" title="留言内容" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+        <input type='textarea' bindinput='setComment' auto-focus/>
+      </modal>
   </view>
 
   <view wx:if='{{!isMyPost}}' class='block block_bottom'>

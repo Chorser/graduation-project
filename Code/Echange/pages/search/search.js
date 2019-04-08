@@ -10,7 +10,8 @@ var allList;
 Page({
   data: {
     buttonClicked: false, //是否点击跳转
-    typeId: 0,
+    typeId: 0, //选择的分类ID
+    op: 0, //排序方式ID
     noticeList: [],
     isEmpty: true,
     loading: false,
@@ -50,6 +51,23 @@ Page({
       });
     this.setData({
       typeId: typeId
+    })
+  },
+
+  //排序方式，默认 离我最近 人气最高
+  changeOrder: function(e) {
+    var op = e.currentTarget.id;
+    if (op == 0) this.onShow();
+    else if (op == 1) ;
+
+    else if (op == 2) {
+      this.setData({
+        noticeList: this.data.noticeList.sort(sortBy('likeCount', false)),
+      })
+    };
+
+    this.setData({
+      op: op
     })
   },
 
@@ -100,6 +118,8 @@ Page({
       loading: false
     });
   },
+
+
 
   //js 实现模糊匹配查询
   findEach: function(e) {
@@ -276,3 +296,31 @@ function getTypeName(typeId) {
   else if (typeId == 4) typeName = "电子产品";
   return typeName;
 }
+
+
+/**数组根据数组对象中的某个属性值进行排序的方法 
+     * 使用例子：newArray.sort(sortBy('number',false)) //表示根据number属性降序排列;若第二个参数不传递，默认表示升序排序
+     * @param attr 排序的属性 如number属性
+     * @param rev true表示升序排列，false降序排序
+  * */
+function sortBy(attr, rev) {
+  // 第一个参数表示按什么属性值排序
+  //第二个参数没有传递 默认升序排列
+  if (rev == undefined) {
+    rev = 1;
+  } else {
+    rev = (rev) ? 1 : -1;
+  }
+
+  return function (a, b) {
+    a = a[attr];
+    b = b[attr];
+    if (a < b) {
+      return rev * -1;
+    }
+    if (a > b) {
+      return rev * 1;
+    }
+    return 0;
+  }
+};

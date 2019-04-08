@@ -20,7 +20,21 @@
     </view>
   </view>
 
-  <view class="index-container">
+  <!-- 排序方式选择 -->
+  <view class='order'>
+    <view class='order-item' style="color:#{{op==0?'118fff':'000'}}; " bindtap='changeOrder' id='0'>默认排序</view>
+    <view class='order-item' style="color:#{{op==1?'118fff':'000'}}; " bindtap='changeOrder' id='1'>
+      <image class='icon' src='../../images/distance.png'></image>
+      离我最近
+    </view>
+    <view class='order-item' style="color:#{{op==2?'118fff':'000'}}; " bindtap='changeOrder' id='2'>
+      <image class='icon' src="../../images/hot.png"></image>
+      人气最高
+    </view>
+  </view>
+
+  <!-- 搜索结果列表 -->
+  <view class="index-container" style='width:90%;'>
     <!--无记录-->
     <view wx:if="{{noticeList.length == 0}}">
       <view class="imgitem">

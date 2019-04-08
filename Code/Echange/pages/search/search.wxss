@@ -1,12 +1,15 @@
 @import "/wxSearch/wxSearch.wxss";
-Page{
+
+Page {
   background-color: white;
 }
+
 .scontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-} 
+}
+
 .bg {
   background: #fff;
   margin-bottom: 12rpx;
@@ -30,6 +33,7 @@ Page{
   font-size: 28rpx;
   letter-spacing: -0.6rpx;
 }
+
 .search-button {
   border-left: 0 !important;
   border-top: 1px solid #fff !important;
@@ -91,6 +95,7 @@ Page{
 }
 
 /*------------------------------*/
+
 .container {
   padding: 0 24rpx;
   background-color: #fff;
@@ -107,6 +112,7 @@ Page{
   border-bottom: 2rpx solid #ededed;
   margin-bottom: 48rpx;
 }
+
 .index-container {
   /* padding: 0 24rpx; */
   background-color: #fff;
@@ -122,6 +128,7 @@ Page{
 }
 
 /*common list  for  index  list page */
+
 .common-list {
   margin-bottom: 24rpx;
 }
@@ -134,7 +141,7 @@ Page{
 }
 
 .common-list .list-item.has-img image.cover {
-   width: 100%;
+  width: 100%;
   height: 300rpx;
   border-radius: 15rpx;
   overflow: hidden;
@@ -143,7 +150,6 @@ Page{
 .common-list .list-item.has-img .content-title1 {
   overflow: hidden;
   margin-bottom: 10px;
-
 }
 
 .common-list .list-item.has-img .content-title1 text {
@@ -163,7 +169,6 @@ Page{
 .common-list .list-item.has-img .content-date {
   margin-left: 100rpx;
   margin-right: 100rpx;
-
 }
 
 .common-list .list-item.has-img .content-date image {
@@ -182,6 +187,7 @@ Page{
 }
 
 /*common list end */
+
 /*topic list*/
 
 .topic-common-list {
@@ -223,19 +229,18 @@ Page{
   color: #fff;
 }
 
-.topic-content-title-line{
+.topic-content-title-line {
   width: 48px;
   padding: 16rpx 0rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   position: absolute;
-  border-bottom: 1px solid #fff; 
+  border-bottom: 1px solid #fff;
   z-index: 2;
   left: 64rpx;
   top: 180rpx;
 }
-
 
 .topic-content-brief {
   /* padding: 0rpx 30rpx 30rpx; */
@@ -259,7 +264,9 @@ Page{
 }
 
 /***************************************************/
+
 /*活动详情界面CSS*/
+
 .list_header_left image {
   width: 60rpx;
   height: 60rpx;
@@ -284,7 +291,9 @@ Page{
   overflow: hidden;
   border-bottom: 1rpx solid #f4f4f4;
 }
+
 /**/
+
 swiper {
   height: 380rpx;
   margin-bottom: 20rpx;
@@ -364,7 +373,6 @@ swiper-item, swiper-item image {
   color: #fff;
 }
 
-
 .horizontal .tag_1 {
   background: #ffac00;
   color: #fff;
@@ -389,7 +397,7 @@ swiper-item, swiper-item image {
 .notice .photo {
   width: 670rpx; /* 670rpx */
   height: 320rpx;
-  box-shadow: 0 10rpx 15rpx rgba(0, 0, 0, .1); 
+  box-shadow: 0 10rpx 15rpx rgba(0, 0, 0, 0.1);
   border-radius: 12rpx;
   overflow: hidden;
   margin: 10rpx 0;
@@ -424,6 +432,7 @@ swiper-item, swiper-item image {
 }
 
 /*页面为空的样式*/
+
 .empty_img {
   height: 115rpx;
   width: 141rpx;
@@ -439,7 +448,6 @@ swiper-item, swiper-item image {
   display: flex;
   justify-content: center;
   margin-top: 73rpx;
-  
 }
 
 .txtitem {
@@ -449,50 +457,57 @@ swiper-item, swiper-item image {
   margin-bottom: 29rpx;
 }
 
-
 .notice_block {
   margin: 0;
   padding: 15px;
   z-index: 200rpx;
-  margin-bottom: 10rpx
+  margin-bottom: 10rpx;
 }
+
 .notice_block .avatar {
   width: 60px;
   height: 60px;
   float: left;
   border-radius: 50%;
-  border-color: grey
+  border-color: grey;
 }
+
 .notice_block .block1 {
   width: 150px;
   height: 60px;
   margin-left: 70px;
 }
+
 .notice_block .pName {
   display: inline-block;
   font-size: 40rpx;
   padding-top: 5px;
 }
+
 .notice_block .time {
   font-size: 35rpx;
   color: #c0c0c0;
   padding-bottom: 10px;
 }
+
 .notice_block .title {
   font-size: 40rpx;
   padding: 10px 15px;
   display: inline-block;
 }
+
 .price {
   font-size: 40rpx;
-  color:red;
+  color: red;
   float: right;
   padding-top: 10px;
 }
+
 /* .notice_block .content {
   font-size: 28rpx;
   color: gray;
 } */
+
 .no-more {
   text-align: center;
   color: #3a3939;
@@ -505,14 +520,35 @@ swiper-item, swiper-item image {
   line-height: 64rpx;
   /* margin: 20rpx 0rpx 20rpx 0; */
 }
+
 .tool-item {
   display: inline-block;
   vertical-align: top;
   margin-right: 30rpx;
 }
+
 .tool-item image {
   height: 50rpx;
   width: 50rpx;
   vertical-align: middle;
   margin-right: 10rpx;
+}
+
+.order {
+  display: flex;
+  width: 80%;
+  border-bottom: 1px solid #dad9d9;
+  padding: 10px 0;
+}
+
+.order-item {
+  flex: 1;
+  text-align: center;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
