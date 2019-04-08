@@ -35,6 +35,10 @@ Page({
         address: options.address
       })
     }
+
+    if (!app.globalData.currentUser) {
+      app.globalData.currentUser = Bmob.User.current();
+    }
     // console.log(this.data.addressName)
   },
 

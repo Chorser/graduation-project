@@ -11,7 +11,7 @@
   <view class='section'>
     <text>设置性别</text>
     <radio-group bindchange="radioChange">
-      <label class='radio' wx:for='{{items}}'>
+      <label class='radio' wx:for='{{items}}' wx:key="index">
         <radio value="{{item.value}}" checked='{{item.checked}}'/> {{item.name}}
       </label>
     </radio-group>

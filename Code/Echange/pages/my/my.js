@@ -9,7 +9,7 @@ Page({
   onShow: function (options) {
     if (app.globalData.currentUser)
       this.setData({
-        avatar: app.globalData.currentUser.get("avatarUrl") ||'/images/avatar1.jpg',
+        avatar: app.globalData.currentUser.get("avatar").url ||'/images/avatar1.jpg',
         nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
       });
   },
