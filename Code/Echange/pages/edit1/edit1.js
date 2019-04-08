@@ -71,7 +71,7 @@ Page({
 
   getPosition: function () {
     var that = this;
-    console.log(this.data.address)
+    // console.log(this.data.address)
     if (!this.data.address || this.data.address == ''){
       //获取当前位置
       wx.getLocation({
@@ -93,7 +93,7 @@ Page({
             success: function (res) {
               console.log(res.result);
               that.setData({
-                address: res.result.address
+                address: res.result.formatted_addresses.recommend
               })
             },
             fail: function (res) {

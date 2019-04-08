@@ -9,14 +9,14 @@
   margin-bottom: 12rpx;
 }
 
-.choose_user {
+.choose_type {
   padding: 11rpx 31rpx 35rpx 31rpx;
   display: flex;
   justify-content: space-between;
   flex-flow: wrap;
 }
 
-.choose_user_item {
+.choose_type_item {
   width: 120rpx;
   height: 60rpx;
   line-height: 60rpx;
@@ -313,12 +313,12 @@ swiper-item, swiper-item image {
   flex-shrink: 0;
 }
 
-.activities .subtitle text {
+.notices .subtitle text {
   font-size: 28rpx;
   color: #666;
 }
 
-.activities .subtitle button {
+.notices .subtitle button {
   border-radius: 50rpx;
   border: 3rpx solid #3688ff;
   background: transparent;
@@ -330,7 +330,7 @@ swiper-item, swiper-item image {
   line-height: 1rem;
 }
 
-.activity {
+.notice {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -383,7 +383,7 @@ swiper-item, swiper-item image {
   text-align: left;
 }
 
-.activity .photo {
+.notice .photo {
   width: 670rpx; /* 670rpx */
   height: 320rpx;
   box-shadow: 0 10rpx 15rpx rgba(0, 0, 0, .1); 
@@ -392,21 +392,21 @@ swiper-item, swiper-item image {
   margin: 10rpx 0;
 }
 
-.activity .intro {
+.notice .intro {
   font-size: 28rpx;
   color: #666;
   padding: 10rpx 0;
   text-align: justify;
 }
 
-.activity .time {
+.notice .time {
   font-size: 28rpx;
   color: #999;
   text-align: justify;
   padding-top: 10rpx;
 }
 
-.activity .location {
+.notice .location {
   font-size: 28rpx;
   color: #999;
   text-align: justify;
@@ -494,4 +494,22 @@ swiper-item, swiper-item image {
   text-align: center;
   color: #3a3939;
   padding: 5px 0;
+}
+
+.tool {
+  height: 64rpx;
+  text-align: right;
+  line-height: 64rpx;
+  /* margin: 20rpx 0rpx 20rpx 0; */
+}
+.tool-item {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
+}
+.tool-item image {
+  height: 50rpx;
+  width: 50rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
 }

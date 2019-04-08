@@ -11,28 +11,28 @@
 <template is="wxSearch" data="{{wxSearchData}}" />
 <view class="scontainer">
   <view class="bg">
-    <view class="choose_user" style="border-bottom:1rpx solid #e6e6e6;">
-      <view class="choose_user_item" style="color:#{{typeId==0?'fff':'118fff'}};background:#{{typeId==0?'118fff':'fff'}};" bindtap="choseType" id="0">全部</view>
-      <view class="choose_user_item" style="color:#{{typeId==1?'fff':'118fff'}};background:#{{typeId==1?'118fff':'fff'}};" bindtap="choseType" id="1">运动</view>
-      <view class="choose_user_item" style="color:#{{typeId==2?'fff':'118fff'}};background:#{{typeId==2?'118fff':'fff'}};" bindtap="choseType" id="2">游戏</view>
-      <view class="choose_user_item" style="color:#{{typeId==3?'fff':'118fff'}};background:#{{typeId==3?'118fff':'fff'}};" bindtap="choseType" id="3">交友</view>
-      <view class="choose_user_item" style="color:#{{typeId==4?'fff':'118fff'}};background:#{{typeId==4?'118fff':'fff'}};" bindtap="choseType" id="4">旅行</view>
+    <view class="choose_type" style="border-bottom:1rpx solid #e6e6e6;">
+      <view class="choose_type_item" style="color:#{{typeId==0?'fff':'118fff'}};background:#{{typeId==0?'118fff':'fff'}};" bindtap="chooseType" id="0">全部</view>
+      <view class="choose_type_item" style="color:#{{typeId==1?'fff':'118fff'}};background:#{{typeId==1?'118fff':'fff'}};" bindtap="chooseType" id="1">生活用品</view>
+      <view class="choose_type_item" style="color:#{{typeId==2?'fff':'118fff'}};background:#{{typeId==2?'118fff':'fff'}};" bindtap="chooseType" id="2">学习用品</view>
+      <view class="choose_type_item" style="color:#{{typeId==3?'fff':'118fff'}};background:#{{typeId==3?'118fff':'fff'}};" bindtap="chooseType" id="3">美妆服饰</view>
+      <view class="choose_type_item" style="color:#{{typeId==4?'fff':'118fff'}};background:#{{typeId==4?'118fff':'fff'}};" bindtap="chooseType" id="4">电子产品</view>
     </view>
   </view>
 
   <view class="index-container">
     <!--无通知记录-->
     <view wx:if="{{noticeList.length == 0}}">
-      <view class="imgitem">
+      <!-- <view class="imgitem">
         <image src="/static/images/norecord1.png" class="empty_img"></image>
-      </view>
+      </view> -->
       <view class="txtitem">
         <text class="t28rpx">检索不到活动</text>
       </view>
     </view>
     <view wx:if="{{noticeList.length > 0}}">
-      <view class="activities" wx:for="{{noticeList}}" wx:key="id">
-        <view class="activity" wx:if="{{item.typeId == type || type == 0}}" index="{{index}}">
+      <view class="notices" wx:for="{{noticeList}}" wx:key="id">
+        <view class="notice" wx:if="{{item.typeId == type || type == 0}}" index="{{index}}">
           <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
 
             <image class='avatar' src="{{ item.publisherPic }}"></image>

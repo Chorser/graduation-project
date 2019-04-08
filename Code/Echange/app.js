@@ -5,6 +5,7 @@ Bmob.initialize(
 App({
   onLaunch: function () {
     this.globalData.currentUser = Bmob.User.current();
+    console.log(this.globalData.currentUser)
 
     //调用系统API获取设备的信息
     wx.getSystemInfo({

@@ -14,79 +14,87 @@ Page({
     noticeList: [],
     isEmpty: true,
     loading: false,
-
   },
+
+  onLoad: function() {
+    that = this;
+    //初始化的时候渲染wxSearchdata
+    WxSearch.init(that, 43, ['手机', '寝室神器', '教材']);
+    WxSearch.initMindKeys(['手机', '寝室神器', '教材']);
+  },
+
   //选择要查询的活动类型
-  choseType: function(e) {
+  chooseType: function(e) {
     var type = e.currentTarget.id;
-    if (type == 0) this.onShow();
-    else if (type == 1) this.setData({
-      noticeList: this.data.type1List
-    });
-    else if (type == 2) this.setData({
-      noticeList: this.data.type2List
-    });
-    else if (type == 3) this.setData({
-      noticeList: this.data.type3List
-    });
-    else if (type == 4) this.setData({
-      noticeList: this.data.type4List
-    });
+    if (type == 0)
+      this.onShow();
+    else if (type == 1)
+      this.setData({
+        noticeList: this.data.type1List
+      });
+    else if (type == 2)
+      this.setData({
+        noticeList: this.data.type2List
+      });
+    else if (type == 3)
+      this.setData({
+        noticeList: this.data.type3List
+      });
+    else if (type == 4)
+      this.setData({
+        noticeList: this.data.type4List
+      });
     this.setData({
       type: type
     })
   },
-  onLoad: function() {
-    that = this;
-    //初始化的时候渲染wxSearchdata
-    WxSearch.init(that, 43, ['手机', '上自习', '开黑组队', '找驴友', '晚上去嗨', '约步走起']);
-    WxSearch.initMindKeys(['一起', '上自习', '开黑组队', '找驴友', '晚上去嗨', '约步走起']);
-  },
 
   onShow: function() {
     that.setData({
-      loading: false
+      loading: true
     });
-    var molist = new Array();
 
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
 
     // 查询所有数据
+    query.descending("createdAt");
+    query.include("publisher"); // 同时获取发布者信息
     query.find({
-      success: function(count) {
-        query.descending("createdAt");
-        query.include("publisher"); // 同时获取发布者信息
-        query.find({
-          success: function(results) {
-            var list = that.dealWithData(results);
-            var type1List = new Array(); //生活用品
-            var type2List = new Array(); //学习用品
-            var type3List = new Array(); //美妆服饰
-            var type4List = new Array(); //电子产品
+      success: function(results) {
+        var list = that.dealWithData(results);
+        console.log(list);
+        var type1List = new Array(); //生活用品
+        var type2List = new Array(); //学习用品
+        var type3List = new Array(); //美妆服饰
+        var type4List = new Array(); //电子产品
 
-            for (var i in list) {
-              if (list[i].typeId == 1) type1List.push(list[i]);
-              else if (list[i].acttype == 2) gamelist.push(list[i]);
-              else if (list[i].acttype == 3) friendlist.push(list[i]);
-              else if (list[i].acttype == 4) travellist.push(list[i]);
-            }
-            that.setData({
-              noticeList: list,
-              type1List: type1List,
-              type2List: type2List,
-              type3List: type3List,
-              type4List: type4List,
-            })
+        for (var i in list) {
+          console.log(list[i])
+          if (list[i].typeId == 1) type1List.push(list[i]);
+          else if (list[i].typeId == 2) type2List.push(list[i]);
+          else if (list[i].typeId == 3) type3List.push(list[i]);
+          else if (list[i].typeId == 4) type4List.push(list[i]);
+        }
+        that.setData({
+          noticeList: list,
+          type1List: type1List,
+          type2List: type2List,
+          type3List: type3List,
+          type4List: type4List,
+        })
 
-            setTimeout(function() {
-              wx.hideLoading();
-            }, 900);
+        setTimeout(function() {
+          wx.hideLoading();
+        }, 900);
 
-          },
-        });
       },
+
     })
+
+    that.setData({
+      loading: false
+    });
   },
 
   //js 实现模糊匹配查询
@@ -144,7 +152,7 @@ Page({
         _url = pic._url;
       }
       var publisherName = item.get("publisher").nickName;
-      var publisherPic = item.get("publisher").avatarUrl;
+      var publisherPic = item.get("publisher").avatar.url;
 
       var viewCount = item.get("viewCount") || 0;
       var likeCount = item.get("likeCount") || 0;
@@ -204,7 +212,7 @@ Page({
   // },
 
   //跳转详情页
-  showPostDetail: function (e) {
+  showPostDetail: function(e) {
     var index = e.currentTarget.dataset.index;
     var notice = this.data.noticeList[index];
     var data = JSON.stringify(notice);
@@ -215,8 +223,7 @@ Page({
       wx.navigateTo({
         url: '../postDetail/postDetail?isMyPost=true&data=' + data
       })
-    }
-    else {
+    } else {
       this.addViewCount(notice.id);
       notice.viewCount++;
       wx.navigateTo({
