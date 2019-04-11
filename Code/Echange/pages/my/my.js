@@ -6,6 +6,11 @@ Page({
     nickName: ''
   },
 
+  onLoad: function () {
+    if(!app.globalData.currentUser)
+      app.globalData.currentUser = Bmob.User.current();
+  },
+
   onShow: function (options) {
     if (app.globalData.currentUser)
       this.setData({

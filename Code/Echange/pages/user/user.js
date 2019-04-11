@@ -16,8 +16,11 @@ Page({
   },
 
   onLoad: function(options) {
-    if (app.globalData.currentUser) {
-      this.currentUser = app.globalData.currentUser;
+    // if (app.globalData.currentUser) {
+    //   this.currentUser = app.globalData.currentUser;
+
+    this.currentUser = Bmob.User.current();
+
       this.setData({
         avatarUrl: this.currentUser.get("avatar").url || '',
         nickName: this.currentUser.get("nickName") || '',
@@ -31,7 +34,7 @@ Page({
             {  name: '女', value: 2, checked: 'true' }
           ]
         })
-      }
+      // }
     }
 
   },
@@ -112,7 +115,7 @@ Page({
           that.currentUser.set('avatarUrl', that.data.avatarUrl)
           that.currentUser.set('avatar', file)
           that.currentUser.set('gender', that.data.gender)
-          Bmob.User._saveCurrentUser(that.currentUser)
+          Bmob.User._saveCurrentUser(that.currentUser);
 
           app.globalData.currentUser = Bmob.User.current();
           console.log(app.globalData.currentUser)

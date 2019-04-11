@@ -133,10 +133,10 @@ Page({
     this.createComment(this.data.comment);
   },
 
-  createComment: function (comment) {
+  createComment: function (str) {
     var that = this;
     // 校验
-    if (!comment || comment.length == 0) {
+    if (!str || str.length == 0) {
       wx.showToast({
         title: '请输入留言内容',
       });
@@ -154,7 +154,7 @@ Page({
           //向数据库插入一条记录
           var Comments = Bmob.Object.extend('Comments');
           var comment = new Comments();
-          comment.set('content', this.data.comment);
+          comment.set('content', str);
           comment.set('notice', notice); // ??
           comment.set('publisher', me);
 
@@ -169,7 +169,7 @@ Page({
           // }
           comment.save(null, {
             success: function (res) {
-              // va?r 
+              // var 
             }
           })
         }
