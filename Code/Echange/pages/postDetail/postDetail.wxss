@@ -91,8 +91,22 @@ swiper {
   text-overflow:ellipsis;
 }
 
-.word{
+.word {
   text-decoration: lightblue;
   display: inline-block
-  
+}
+
+.commentBoardTitle {
+  width: 100%; 
+  text-align: center; 
+  font-size:40rpx;  
+  display: inline-block;
+  margin:auto;
+}
+.commentBtn {
+  font-size:15px; 
+  float:right; 
+  text-decoration: lightblue;
+  border: 1rpx solid #DDD;
+  vertical-align: middle;
 }

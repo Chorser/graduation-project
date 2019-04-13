@@ -6,7 +6,7 @@
 
   <view class="label">物品描述</view>
   <view class="section">
-    <textarea name="description" class='weui-textarea' placeholder='请输入物品详细描述' value='{{description}}' style="height: 6em" bindinput="setDescription" maxlength="{{noteMaxLen}}" />
+    <textarea name="description" class='weui-textarea' placeholder='请输入物品详细描述，如品牌、规格、几成新、购买渠道、转手原因、取货方式等' value='{{description}}' style="height: 6em" bindinput="setDescription" maxlength="{{noteMaxLen}}" />
     <view class="chnumber">{{noteNowLen}}/{{noteMaxLen}}</view>
   </view>
 

@@ -227,7 +227,8 @@ Page({
         _url = pic._url;
       }
       var publisherName = item.get("publisher").nickName;
-      var publisherPic = item.get("publisher").avatar.url;
+      if (item.get("publisher").avatar)
+        var publisherPic = item.get("publisher").avatar.url;
       // console.log(publisherPic)
 
       var viewCount = item.get("viewCount") || 0;

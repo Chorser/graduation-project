@@ -52,7 +52,7 @@ Page {
 
 .search-button icon {
   position: absolute;
-  margin: 28rpx 16rpx;
+  margin: 28rpx 0;
 }
 
 .search-input {
@@ -343,7 +343,7 @@ swiper-item, swiper-item image {
 }
 
 .notice {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: stretch;
   padding: 0 0 35rpx;

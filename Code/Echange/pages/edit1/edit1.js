@@ -285,7 +285,7 @@ Page({
           var name = that.data.src;
           var file = new Bmob.File(name, that.data.src);
           file.save();
-          query.set('pic1', file);
+          result.set('pic1', file);
         }
 
         result.save().then((res) => {

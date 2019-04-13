@@ -11,14 +11,14 @@
   <view class='notice_detail block'>
     <view class='title'> {{notice.title}} </view>
     <view>
-      <view class='time'style='display:inline-block'> {{notice.pastTime}}发布</view>
+      <view class='time' style='display:inline-block'> {{notice.pastTime}}发布</view>
       <view class='viewcount' style='display:inline-block'>{{notice.viewCount}}人浏览</view>
     </view>
     <view class='content'> {{notice.description}} </view>
 
-      <!--定位  收藏-->
+    <!--定位  收藏-->
     <view class="tool">
-      <view class='tool-item location'  catchtap='onLocationTap' >
+      <view class='tool-item location' catchtap='onLocationTap'>
         <image wx:if="{{notice.address}}" src="/images/map.png"></image>
         <text style="">{{notice.address}}</text>
       </view>
@@ -27,8 +27,8 @@
         <text>{{post.upNum}}</text>
       </view> -->
       <view class="tool-item" catchtap='onCollectionTap' data-post-id="{{notice.objectId}}">
-      <image wx:if="{{isLiked}}" src="/images/tool/like2.png"></image>
-      <image wx:else src="/images/tool/like1.png"></image>
+        <image wx:if="{{isLiked}}" src="/images/tool/like2.png"></image>
+        <image wx:else src="/images/tool/like1.png"></image>
         <text>收藏</text>
       </view>
     </view>
@@ -41,14 +41,17 @@
   </view>
 
   <!-- 留言墙 -->
-  <view class='block'>
-    <view style='text-align: center;font-size:40rpx;  display: inline-block;margin:auto'>
-      留言板  
+  <view class='block commentBoard'>
+    <view class='commentBoardTitle'>
+      留言板
+      <view class='commentBtn' style="" bindtap='sendMessage'>我要留言</view>
     </view>
-      <view style="font-size:15px; text-decoration: lightblue; display: inline-block" bindtap='sendMessage'>我要留言</view>
-      <modal hidden="{{hideModal}}" id="modal" title="留言内容" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
-        <input type='textarea' bindinput='setComment' auto-focus/>
-      </modal>
+
+    <view style='padding: 10rpx ; border-top: 1rpx solid #DDD;'>还没有人留言，快来抢个沙发吧！</view>
+
+    <modal hidden="{{hideModal}}" id="modal" title="留言内容" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+      <input type='textarea' bindinput='setComment' auto-focus/>
+    </modal>
   </view>
 
   <view wx:if='{{!isMyPost}}' class='block block_bottom'>
