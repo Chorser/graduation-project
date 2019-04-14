@@ -9,6 +9,13 @@
   height: 75rpx;
 }
 
+.address_Name {
+  font-size: 26rpx; 
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis; 
+}
+
 .search-row {
   display: flex;
   flex: 1;
@@ -54,9 +61,9 @@
 
 .notice_block {
   margin: 0;
-  padding: 15px;
-  z-index: 200rpx;
-  margin-bottom: 10rpx
+  padding: 15rpx 15rpx 5rpx 15rpx;
+  z-index: 500rpx;
+  margin-bottom: 20rpx
 }
 .notice_block .avatar {
   width: 60px;
@@ -106,6 +113,7 @@
   height: 64rpx;
   text-align: right;
   line-height: 64rpx;
+  border-top: 1rpx solid #DDD;
   /* margin: 20rpx 0rpx 20rpx 0; */
 }
 .tool-item {
@@ -119,6 +127,3 @@
   vertical-align: middle;
   margin-right: 10rpx;
 }
-/* .readed image{
-  transform: scale(1.85);
-} */

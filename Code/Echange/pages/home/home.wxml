@@ -6,7 +6,7 @@
       </view>
       <view wx:else style='width: 80px;'>
         <image class='map' style='transform: scale(.7);' src='../../images/map.png'></image>
-        <view style='font-size: 26rpx; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; '>{{addressName}}</view>
+        <view class='address_Name'>{{addressName}}</view>
       </view>
     </view>
     <view class='search-row' bindtap='toSearch'>

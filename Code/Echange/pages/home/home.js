@@ -29,24 +29,14 @@ Page({
   },
 
   onLoad: function (options) {
+    var that = this;
+    
     if (options.address) {
       this.setData({
         addressName: options.addressname,
         address: options.address
       })
     }
-
-    if (!app.globalData.currentUser) {
-      app.globalData.currentUser = Bmob.User.current();
-    }
-    // console.log(this.data.addressName)
-  },
-
-  onShow: function () {
-    var that = this;
-
-    this.getAll(); // 获取页数
-    this.getList();
 
     wx.getSystemInfo({
       success: (res) => {
@@ -58,6 +48,19 @@ Page({
       },
     })
 
+    if (!app.globalData.currentUser) {
+      app.globalData.currentUser = Bmob.User.current();
+    }
+    // console.log(this.data.addressName)
+
+    // 自动定位学校
+
+
+  },
+
+  onShow: function () {
+    this.getAll(); // 获取页数
+    this.getList();
   },
 
   handleChange: function (e) {

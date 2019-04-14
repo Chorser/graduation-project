@@ -14,8 +14,8 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log(app.globalData.currentUser)
     this.user = app.globalData.currentUser;
+    console.log(this.user);
   },
 
   onShow: function () {
