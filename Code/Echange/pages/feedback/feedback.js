@@ -19,10 +19,10 @@ Page({
   // },
   addFeedback: function (event) {
     var that = this;
-    var contact = event.detail.value.contact;
+    var title = event.detail.value.title;
     var content = event.detail.value.content;
 
-    if (!contact) {
+    if (!title) {
       common.showTip("标题不能为空", "loading");
       return false;
     }
@@ -42,12 +42,18 @@ Page({
           info = '**手机型号：' + res.brand + '**手机系统：' + res.system +'\n**微信版本号：'+ res.version;
         },
       })
+
+      var user = Bmob.User.current();
+      var me = new Bmob.User();
+      me.id = user.id;
+
       //发送反馈
       var Diary = Bmob.Object.extend("Feedback");
       var diary = new Diary();
-      diary.set("contact", contact);
+      diary.set("title", title);
       diary.set("content", content);
       diary.set("feedInfo", info);
+      diary.set("feedUser", me);
 
       //添加数据，第一个入口参数是null
       diary.save(null, {
