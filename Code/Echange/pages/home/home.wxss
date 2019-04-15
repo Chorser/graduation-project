@@ -1,3 +1,23 @@
+/*悬浮按钮*/
+.searchBtn {
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  display: block;
+  padding: 0;
+  background-size: cover;
+  background-color: blue;
+  right: 30rpx;
+  bottom: 40rpx;
+  border-radius: 50%;
+  z-index: 999; 
+}
+.icon-search {
+  width: 40rpx;
+  height: 40rpx;
+  padding: 30rpx;
+}
+
 .header {
   display: flex;
   align-items: center;

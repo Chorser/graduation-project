@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "Echange · 逛逛",
-  "usingComponents": {},
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
+  "usingComponents": {
+    "nav-bar": "/components/navbar/navbar"
+  }
 }

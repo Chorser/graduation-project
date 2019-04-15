@@ -1,6 +1,7 @@
 <!--pages/edit/edit.wxml-->
-
-<view>
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+<view class='container'  style='margin-top: {{height}}px'>
   <!-- <view>发布与编辑</view> -->
   <!-- TODO 发布编辑 -->
   <view class='notice'>

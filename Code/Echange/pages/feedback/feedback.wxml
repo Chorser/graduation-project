@@ -1,4 +1,7 @@
-<view class="page">
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class="page"   style='margin-top: {{height}}px'>
   <view class="page__hd i-header">
     <view class="g-bd">
       <view> </view>

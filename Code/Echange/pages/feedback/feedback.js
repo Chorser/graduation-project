@@ -4,6 +4,14 @@ var app = getApp();
 
 Page({
   data: {
+    navbarData: {
+      showCapsule: true, //是否显示左上角图标：1表示显示，0表示不显示
+      title: "Echange·问题反馈",
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
+
     userInfo: {},
     length: 0
   }, 
@@ -26,11 +34,20 @@ Page({
       that.setData({
         loading: true
       })
+
+      var info = '';
+      wx.getSystemInfo({
+        success: function(res) {
+          console.log(res)
+          info = '**手机型号：' + res.brand + '**手机系统：' + res.system +'\n**微信版本号：'+ res.version;
+        },
+      })
       //发送反馈
       var Diary = Bmob.Object.extend("Feedback");
       var diary = new Diary();
       diary.set("contact", contact);
       diary.set("content", content);
+      diary.set("feedInfo", info);
 
       //添加数据，第一个入口参数是null
       diary.save(null, {
