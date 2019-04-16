@@ -1,5 +1,9 @@
 <import src="/wxSearch/wxSearch.wxml" />
 <import src="../template/activity/common-list.wxml" />
+
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
 <view class="wxSearch-section">
   <view class="search-pancel">
     <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" name="input" confirm-type="搜索" class="search-input" placeholder="请输入关键字..."></input>

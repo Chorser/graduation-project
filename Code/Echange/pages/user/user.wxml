@@ -1,4 +1,7 @@
-<view class="container">
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class="container" style='margin-top: {{height}}px'>
   <view class="section">
     <text>设置头像</text>
     <image src="{{ avatarUrl }}" bindtap="changeAvatar" />

@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "Echange · 发布/招募"
+      "usingComponents": {
+        "nav-bar": "/components/navbar/navbar"
+      }
 }

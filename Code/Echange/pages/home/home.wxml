@@ -1,4 +1,12 @@
-<view class='container'>
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class='container' style='margin-top: {{height}}px'>
+
+  <div class='searchBtn' bindtap='toSearch'>
+    <image class='icon-search' src='../../images/search.png'/>
+  </div>
+
   <view class='header'>
     <view bindtap='openMap'>
       <view wx:if="{{!addressName}}">
@@ -9,10 +17,10 @@
         <view class='address_Name'>{{addressName}}</view>
       </view>
     </view>
-    <view class='search-row' bindtap='toSearch'>
+    <!-- <view class='search-row' bindtap='toSearch'>
       <input name='search' class='search-input' placeholder='搜索' />
       <image class='search-icon' src='/images/search.png' />
-    </view>
+    </view> -->
   </view>
 
   <!--轮播图-->
@@ -22,7 +30,7 @@
     </swiper-item>
   </swiper>
 
-  <text>商品列表 </text>
+  <!-- <text>商品列表 </text> -->
   <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{windowHeight}}px">
     <view wx:if="{{noticeList.length > 0}}">
       <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>

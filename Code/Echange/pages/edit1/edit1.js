@@ -1,3 +1,4 @@
+var app = getApp();
 var Bmob = require('../../utils/bmob.js');
 // 引入SDK核心类
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
@@ -8,6 +9,13 @@ var mapManager = new QQMapWX({
 
 Page({
   data: {
+    navbarData: {
+      showCapsule: true, //是否显示左上角图标：1表示显示，0表示不显示
+      title: 'Echange·发布',
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
     typeIndex: 0,
     types: ['美妆服饰', '电子产品', '学习用品', '生活用品'],
     noteMaxLen: 200, //描述最多字数

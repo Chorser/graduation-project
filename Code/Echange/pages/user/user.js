@@ -4,6 +4,13 @@ var app = getApp()
 Page({
   currentUser: null,
   data: {
+    navbarData: {
+      showCapsule: true, //是否显示左上角图标：1表示显示，0表示不显示
+      title: "Echange·个人信息",
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
     avatarUrl: '',
     nickName: '',
     gender: 1,

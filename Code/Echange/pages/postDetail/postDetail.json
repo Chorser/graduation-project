@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "nav-bar": "/components/navbar/navbar"
+  },
     "navigationBarTitleText": "物品详情"
 }

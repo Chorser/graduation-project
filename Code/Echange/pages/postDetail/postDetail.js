@@ -3,6 +3,14 @@ const app = getApp()
 
 Page({
   data: {
+
+    navbarData: {
+      showCapsule: true, //是否显示左上角图标：1表示显示，0表示不显示
+      title: 'Echange·物品详情',
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
     noPic: false, //是否显示图片
     indicatorDots: true, // 是否显示小点
 

@@ -1,4 +1,7 @@
-<view class="page">
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class="page"   style='margin-top: {{height}}px'>
   <view class="page__hd i-header">
     <view class="g-bd">
       <view> </view>
@@ -14,11 +17,11 @@
   </view>
   <view class="btn-area">
     <form bindsubmit="addFeedback">
-      <view class="weui-cells__title">联系方式</view>
+      <view class="weui-cells__title">建议标题</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__bd">
-            <input class="weui-input" name="contact" placeholder="请输入联系方式" />
+            <input class="weui-input" name="title" placeholder="请输入建议标题" />
           </view>
         </view>
       </view>

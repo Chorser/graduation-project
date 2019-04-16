@@ -11,7 +11,8 @@
     "pages/edit1/edit1",
     "pages/myPost/myPost",
     "pages/postDetail/postDetail",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/message/message"
   ],
   "permission": {
     "scope.userLocation": {
@@ -22,7 +23,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1296db",
     "navigationBarTitleText": "Echange",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "color": "#8a8a8a",
@@ -39,6 +41,12 @@
         "text": "发布",
         "iconPath": "/images/edit.png",
         "selectedIconPath": "/images/edit-active.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "/images/me.png",
+        "selectedIconPath": "/images/me-active.png"
       },
       {
         "pagePath": "pages/my/my",
