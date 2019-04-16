@@ -17,11 +17,12 @@
         <view class='address_Name'>{{addressName}}</view>
       </view>
     </view>
-    <!-- <view class='search-row' bindtap='toSearch'>
+    <view class='search-row' bindtap='toSearch'>
       <input name='search' class='search-input' placeholder='搜索' />
       <image class='search-icon' src='/images/search.png' />
     </view> 
-  </view>-->
+  </view>
+  -->
 
   <!--轮播图-->
   <swiper bindchange='handleChange' previous-margin="50rpx" next-margin="50rpx" autoplay indicator-dots circular interval='3000'>
@@ -31,19 +32,19 @@
   </swiper>
 
   <!-- <text>商品列表 </text> -->
-  <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{windowHeight}}px">
+  <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{ windowHeight }}px">
     <view wx:if="{{noticeList.length > 0}}">
-      <view class='notice_block weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+      <view class='notice_block weui-cells' wx:for="{{ noticeList }}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
 
         <image class='avatar' src="{{ item.publisherPic }}"></image>
         <view class='block1'>
-          <text class='pName'>{{item.publisherName}}</text>
-          <view class='time'> {{item.pastTime}}发布 </view>
+          <text class='pName'>{{ item.publisherName }}</text>
+          <view class='time'> {{ item.pastTime }} 发布 </view>
         </view>
 
-        <!-- <view wx:if="{{item._url!=''}}"> -->
-        <!-- <image src='{{item._url}}'  style='width:80px; height:80px' /> -->
-        <!-- </view> -->
+        <view class='block' wx:if="{{ item.pic }}">
+          <image src='{{item.pic}}'  style='max-width:280rpx; max-height:160rpx' />
+        </view>
 
         <view class='block'>
           <view class='title'> {{item.title}} </view>
@@ -58,6 +59,11 @@
     <image src="/images/icon/wx_app_like.png"></image>
     <text>{{post.upNum}}</text>
   </view> -->
+          <view class='tool-item location' >
+            <image src="/images/map.png"></image>
+            <text style='max-width: 70%'>{{item.address}}</text>
+          </view>
+
           <view class="tool-item readed">
             <image src="/images/tool/readed.png"></image>
             <text>{{item.viewCount}}</text>

@@ -11,6 +11,7 @@ Page({
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
 
+
     noPic: false, //是否显示图片
     indicatorDots: true, // 是否显示小点
 
@@ -132,7 +133,6 @@ Page({
       hideModal: true
     })
   },
-
   confirm: function () {
     this.setData({
       hideModal: true
@@ -140,7 +140,6 @@ Page({
 
     this.createComment(this.data.comment);
   },
-
   createComment: function (str) {
     var that = this;
     // 校验

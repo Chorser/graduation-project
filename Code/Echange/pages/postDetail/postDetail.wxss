@@ -70,6 +70,7 @@ swiper {
   line-height: 64rpx;
   margin: 20rpx 0rpx 20rpx 0;
   border-top: 1px solid #D5D5D6;
+  font-size: 24rpx;
 }
 .tool-item {
   display: inline-block;
@@ -77,23 +78,17 @@ swiper {
   margin-right: 30rpx;
 }
 .tool-item image {
-  height: 50rpx;
-  width: 50rpx;
+  height: 40rpx;
+  width: 40rpx;
   vertical-align: middle;
   margin-right: 10rpx;
 }
-
 .location {
-  float:left; 
-  width:70%; 
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.word {
-  text-decoration: lightblue;
-  display: inline-block
+  float: left; 
+  /* width:70%;  */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .commentBoardTitle {

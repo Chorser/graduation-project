@@ -35,20 +35,20 @@
 }
 
 .navbar-v-line {
-  width: 1px;
+  width: 2px;
   height: 32rpx;
   background-color: #e5e5e5;
 }
 
 .back-pre, .back-home {
   width: 32rpx;
-  height: 36rpx;
+  height: 32rpx;
   margin-top: 4rpx;
   padding: 10rpx;
 }
 .nav-capsule .back-home {
   width: 36rpx;
-  height: 40rpx;
+  height: 36rpx;
   margin-top: 3rpx;
 }
 

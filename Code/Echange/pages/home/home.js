@@ -16,7 +16,7 @@ Page({
     height: app.globalData.height * 2 + 20,
 
     currentIndex: 0,
-    rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg','/images/roll/3.jpg'],
+    rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg','/images/roll/3.jpg', '/images/roll/4.jpg'],
 
     buttonClicked: false, //是否点击跳转
 
