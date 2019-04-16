@@ -3,6 +3,14 @@ const app = getApp()
 
 Page({
   data: {
+    navbarData: {
+      showCapsule: false, //是否显示左上角图标：1表示显示，0表示不显示
+      title: 'Echange·授权登录',
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
+
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false

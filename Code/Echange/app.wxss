@@ -27,7 +27,9 @@ button {
 
 .btn-blue {
   background-color: #1296db;
-  color: white
+  color: white;
+  width: 50%;
+  border-radius: 80rpx;
 }
 
 form {

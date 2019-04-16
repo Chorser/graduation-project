@@ -22,7 +22,7 @@
   margin: auto;
   font-size: 36rpx;
   color: #fff;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .nav-capsule {
@@ -42,7 +42,7 @@
 
 .back-pre, .back-home {
   width: 32rpx;
-   height: 36rpx;
+  height: 36rpx;
   margin-top: 4rpx;
   padding: 10rpx;
 }
@@ -51,4 +51,22 @@
   height: 40rpx;
   margin-top: 3rpx;
 }
-  
+
+._navmap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.nav-capsule ._navmap .map {
+  width: 45rpx;
+  height: 45rpx;
+  margin-top: 3rpx;
+}
+.address-name {
+  width: 140rpx;
+  font-size: 24rpx;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

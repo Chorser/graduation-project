@@ -9,6 +9,14 @@ var that;
 var allList;
 Page({
   data: {
+    navbarData: {
+      showCapsule: true, //是否显示左上角图标：1表示显示，0表示不显示
+      title: 'Echange·商品搜索',
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
+
+
     buttonClicked: false, //是否点击跳转
     typeId: 0, //选择的分类ID
     op: 0, //排序方式ID

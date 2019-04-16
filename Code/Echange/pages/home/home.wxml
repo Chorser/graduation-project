@@ -7,12 +7,12 @@
     <image class='icon-search' src='../../images/search.png'/>
   </div>
 
-  <view class='header'>
+<!-- <view class='header'>
     <view bindtap='openMap'>
       <view wx:if="{{!addressName}}">
         <image class='map' src='../../images/map.png'></image>
       </view>
-      <view wx:else style='width: 80px;'>
+      <view wx:else style='display:flex;flex-direction:row;align-items: center;'>
         <image class='map' style='transform: scale(.7);' src='../../images/map.png'></image>
         <view class='address_Name'>{{addressName}}</view>
       </view>
@@ -20,8 +20,8 @@
     <!-- <view class='search-row' bindtap='toSearch'>
       <input name='search' class='search-input' placeholder='搜索' />
       <image class='search-icon' src='/images/search.png' />
-    </view> -->
-  </view>
+    </view> 
+  </view>-->
 
   <!--轮播图-->
   <swiper bindchange='handleChange' previous-margin="50rpx" next-margin="50rpx" autoplay indicator-dots circular interval='3000'>

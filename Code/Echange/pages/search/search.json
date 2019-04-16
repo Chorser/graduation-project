@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "检索",  
-  "usingComponents": {}
+  "usingComponents": {
+    "nav-bar": "/components/navbar/navbar"
+  }
 }

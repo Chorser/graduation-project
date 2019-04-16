@@ -6,7 +6,7 @@
   display: block;
   padding: 0;
   background-size: cover;
-  background-color: blue;
+  background-color: #1296db;
   right: 30rpx;
   bottom: 40rpx;
   border-radius: 50%;

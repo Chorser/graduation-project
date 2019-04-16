@@ -8,7 +8,7 @@ Component({
     navbarData: {
       type: Object,
       value: {},
-      observer: function(newVal, oldVal) {}
+      observer: function (newVal, oldVal) { }
     }
   },
 
@@ -19,7 +19,8 @@ Component({
     height: '',
     //默认值  默认显示左上角
     navbarData: {
-      showCapsule: true
+      showCapsule: true,
+      isHomePage: false,
     }
   },
 
@@ -46,6 +47,30 @@ Component({
     _backhome() {
       wx.switchTab({
         url: '/pages/home/home',
+      })
+    },
+    _navmap() {
+      var that = this;
+
+      //选择地点
+      wx.chooseLocation({
+        success: function (res) {
+          console.log(res);
+          console.log(res.name);
+          that.setData({
+            addressName: res.name,
+            address: res.address
+          })
+          //选择地点之后返回到原来页面
+          // wx.navigateTo({
+          //   url: "/pages/home/home?addressname=" + res.name + "address=" + res.address
+          // });
+
+        },
+        fail: function (err) {
+          console.log(err)
+        }
+
       })
     }
   }
