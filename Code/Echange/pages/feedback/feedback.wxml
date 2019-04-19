@@ -7,8 +7,8 @@
       <view> </view>
       <view class="g-bda">
         <view bindtap="" class="g-bda-userinfo">
-          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+          <image class="userinfo-avatar" src="{{avatarUrl}}"></image>
+          <text class="userinfo-nickname">{{nickName}}</text>
         </view>
       </view>
     </view>
@@ -17,19 +17,19 @@
   </view>
   <view class="btn-area">
     <form bindsubmit="addFeedback">
-      <view class="weui-cells__title">建议标题</view>
+      <view class="weui-cells__title">反馈标题</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__bd">
-            <input class="weui-input" name="title" placeholder="请输入建议标题" />
+            <input class="weui-input" name="title" placeholder="您遇到什么问题了呢？" />
           </view>
         </view>
       </view>
-      <view class="weui-cells__title">建议内容</view>
+      <view class="weui-cells__title">反馈内容</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" name="content" placeholder="请输入建议内容" style="height: 3.3em" bindinput='userInput'/>
+            <textarea class="weui-textarea" name="content" placeholder="在使用中有任何问题都可以发送给我们哦" style="height: 3.3em" bindinput='userInput'/>
             <view class="weui-textarea-counter">{{length}}/200</view>
           </view>
         </view>

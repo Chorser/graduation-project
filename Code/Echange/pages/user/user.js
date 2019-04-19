@@ -1,4 +1,12 @@
 var Bmob = require('../../utils/bmob.js');
+
+// 引入腾讯地图SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+// 实例化API核心类
+var mapManager = new QQMapWX({
+  key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
+});
+
 var app = getApp()
 
 Page({
@@ -14,34 +22,41 @@ Page({
     avatarUrl: '',
     nickName: '',
     gender: 1,
-    items: [
+    items: [{
+        name: '男',
+        value: 1,
+        checked: 'true'
+      },
       {
-        name: '男', value: 1, checked: 'true' },
-      {
-        name: '女',  value: 2 },
-    ]
+        name: '女',
+        value: 2
+      },
+    ],
+
+    school: ''
   },
 
   onLoad: function(options) {
-    // if (app.globalData.currentUser) {
-    //   this.currentUser = app.globalData.currentUser;
-
     this.currentUser = Bmob.User.current();
+    this.setData({
+      avatarUrl: this.currentUser.get("avatarUrl") || '',
+      nickName: this.currentUser.get("nickName") || '',
+      gender: this.currentUser.get("gender") || 1
+    })
 
+    if (this.data.gender != 1) {
       this.setData({
-        avatarUrl: this.currentUser.get("avatar").url || '',
-        nickName: this.currentUser.get("nickName") || '',
-        gender: this.currentUser.get("gender") || 1
+        items: [{
+            name: '男',
+            value: 1
+          },
+          {
+            name: '女',
+            value: 2,
+            checked: 'true'
+          }
+        ]
       })
-
-      if (this.data.gender != 1) {
-        this.setData({
-          items: [
-            {  name: '男', value: 1 },
-            {  name: '女', value: 2, checked: 'true' }
-          ]
-        })
-      // }
     }
 
   },
@@ -59,7 +74,7 @@ Page({
       count: 1, // 默认9
       sizeType: ['compressed'], // 指定是压缩图
       sourceType: ['album', 'camera'], // 指定来源是相册和相机
-      success: function (res) {
+      success: function(res) {
         var urlArr = new Array();
         var tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths)
@@ -68,21 +83,6 @@ Page({
           isSrc: true,
           avatarUrl: tempFilePaths
         })
-
-    // wx.chooseImage({
-    //   success: function(res) {
-    //     var tempFilePaths = res.tempFilePaths;
-    //     wx.saveFile({
-    //       tempFilePath: tempFilePaths[0],
-    //       success: function(res) {
-    //         var savedFilePath = res.savedFilePath;
-    //         // wx.setStorageSync('avatarUrl', savedFilePath);
-    //         //头像
-    //         that.setData({
-    //           avatarUrl: savedFilePath
-    //         });
-    //       }
-    //     });
       }
     })
   },
@@ -91,6 +91,61 @@ Page({
     this.setData({
       gender: parseInt(e.detail.value)
     });
+  },
+
+  changeSchool() {
+    var that = this;
+    // // console.log(this.data.address)
+    // if (!this.data.address || this.data.address == '') {
+      //获取当前位置
+    mapManager.search({
+      keyword: '学校',
+      success: function (res) {
+        console.log(res);
+        var addresses = res.data;
+        that.setData({
+          school: addresses[0].title
+        })
+      },
+      fail: function (res) {
+        console.log(res.status, res.message);
+      },
+      complete: function (res) {
+        console.log(res.status, res.message);
+      }
+
+      // wx.getLocation({
+      //   type: 'wgs84',
+      //   success(res) {
+      //     console.log(res)
+      //     var latitude = res.latitude
+      //     var longitude = res.longitude
+      //     that.setData({
+      //       latitude: res.latitude,
+      //       longitude: res.longitude
+      //     })
+      //     // 调用接口转换成具体位置
+      //     mapManager.reverseGeocoder({
+      //       location: {
+      //         latitude: res.latitude,
+      //         longitude: res.longitude
+      //       },
+      //       success: function(res) {
+      //         console.log(res.result);
+      //         that.setData({
+      //           school: res.result.formatted_addresses.recommend
+      //         })
+      //       },
+      //       fail: function(res) {
+      //         console.log(res);
+      //       },
+      //     })
+      //   },
+      //   fail: function(err) {
+      //     console.log(err);
+      //   },
+      })
+    // }
   },
 
   // 保存用户的修改
@@ -108,7 +163,6 @@ Page({
         if (that.data.isSrc == true) {
           var url = that.data.avatarUrl;
           result.set('avatarUrl', that.data.avatarUrl[0])
-          // console.log(url)
           var file = new Bmob.File(url, that.data.avatarUrl);
           file.save();
           result.set('avatar', file);

@@ -13,7 +13,7 @@
 
 .name {
   text-align: center;
-  color: #000;
+  color: rgb(240, 238, 238);
   font-size: 40rpx;
   font-weight: bold;
   margin: 10rpx 0 60rpx;

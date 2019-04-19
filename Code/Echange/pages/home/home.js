@@ -38,6 +38,7 @@ Page({
 
   onLoad: function (options) {
     var that = this;
+    // console.log(app.globalData.typeList)
     
     if (options.address) {
       this.setData({
@@ -176,14 +177,14 @@ Page({
 
   //数据存储
   onSetData: function (data) {
-    console.log(data.length);
+    // console.log(data.length);
     let page = this.data.currentPage + 1;
     //设置数据
     data = data || [];
     this.setData({
       noticeList: page === 1 || page === undefined ? data : this.data.noticeList.concat(data),
     });
-    console.log(this.data.noticeList, page);
+    // console.log(this.data.noticeList, page);
   },
 
   getList: function () {
@@ -216,7 +217,7 @@ Page({
     var that = this;
     var currentPageList = new Array();
     results.forEach(function (item) {
-      console.log(item)
+      // console.log(item)
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
@@ -347,43 +348,44 @@ Page({
   showPostDetail: function(e) {
     var index = e.currentTarget.dataset.index;
     var notice = this.data.noticeList[index];
-    var data = JSON.stringify(notice);
-    console.log(data);
 
     //是自己发布的特殊处理
     if (notice.publisherId == app.globalData.currentUser.id) {
       wx.navigateTo({
-        url: '../postDetail/postDetail?isMyPost=true&data=' + data
+        url: '../postDetail/postDetail?isMyPost=true&data=' + JSON.stringify(notice)
       })
     }
     else {
-      this.addViewCount(notice.id);
+      // data.viewCount++;
       notice.viewCount++;
       wx.navigateTo({
-        url: '../postDetail/postDetail?data=' + data
+        url: '../postDetail/postDetail?data=' + JSON.stringify(notice)
       })
+      this.addViewCount(notice.id);
     }
   },
 
   // 更新数据库 浏览数
-  addViewCount: function (objectId, cnt) {
+  addViewCount: function (objectId) {
     var that = this;
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
     query.get(objectId).then(res => {
       var cnt = res.get('viewCount') || 0;
-      
-      res.save()
+      res.set('viewCount', ++cnt)
+      res.save();
     })
   }
 
 })
 
 function getTypeName(type) {
-  var typeName = "";
-  if (type == 1) typeName = "	生活用品";
-  else if (type == 2) typeName = "学习用品";
-  else if (type == 3) typeName = "美妆服饰";
-  else if (type == 4) typeName = "电子产品";
-  return typeName;
+  // var typeName = "";
+  // if (type == 1) typeName = "	生活用品";
+  // else if (type == 2) typeName = "学习用品";
+  // else if (type == 3) typeName = "美妆服饰";
+  // else if (type == 4) typeName = "电子产品";
+  // return typeName;
+  var list = app.globalData.typeList;
+  return list[type];
 }

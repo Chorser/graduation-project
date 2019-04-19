@@ -18,7 +18,7 @@ Page({
     height: app.globalData.height * 2 + 20,
 
     typeIndex: 0,
-    types: ['美妆服饰', '电子产品', '学习用品', '生活用品'],
+    types: [],
     noteMaxLen: 200, //描述最多字数
     noteNowLen: 0, //描述当前字数
 
@@ -49,6 +49,8 @@ Page({
     that.setData({
       src: "",
       isSrc: false,
+
+      types: app.globalData.typeList
     })
   },
 
@@ -311,7 +313,7 @@ Page({
   },
 
   validate: function () {
-    if (this.title == '') {
+    if (this.data.title == '') {
       wx.showToast({
         title: '请输入标题',
         icon: 'none'

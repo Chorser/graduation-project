@@ -11,12 +11,21 @@ Page({
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
 
-
-    userInfo: {},
+    avatarUrl: '',
+    nickName: '',
     length: 0
-  }, 
-  // onLoad: function () {
-  // },
+  },
+
+  onLoad: function () {
+    this.user = app.globalData.currentUser;    
+    console.log(this.user);
+    
+    this.setData({
+      avatarUrl: this.user.get('avatar')._url,
+      nickName: this.user.get('nickName'),
+    })
+  },
+
   addFeedback: function (event) {
     var that = this;
     var title = event.detail.value.title;
@@ -80,8 +89,6 @@ Page({
 
   //统计输入长度
   userInput: function (e) {
-    // console.log("输入的内容---" + e.detail.value)
-    // console.log("输入的长度---" + e.detail.value.length)
     this.setData({
       length: e.detail.value.length
     })

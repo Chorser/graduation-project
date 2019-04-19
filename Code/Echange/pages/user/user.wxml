@@ -19,6 +19,11 @@
       </label>
     </radio-group>
   </view>
+  
+  <view class="section">
+    <text>所在学校</text>
+    <input value="{{ school }}" bindtap="changeSchool"/>
+  </view>
 
   <view> 
     <button class='btn-blue' bindtap='updateUserInfo'>保存</button>
