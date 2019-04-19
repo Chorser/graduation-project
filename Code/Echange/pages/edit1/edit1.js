@@ -52,6 +52,7 @@ Page({
 
       types: app.globalData.typeList
     })
+    console.log(this.data.types)
   },
 
   setTitleValue: function (e) {
@@ -196,6 +197,7 @@ Page({
     })
   },
 
+  // 创建
   submit: function () {
     var that = this;
 
@@ -217,7 +219,7 @@ Page({
       notice.set('userId', user.id) //方便判断
       notice.set('title', this.data.title)
       notice.set('description', this.data.description)
-      notice.set('typeId', parseInt(this.data.typeIndex + 1))
+      notice.set('typeId', parseInt(this.data.typeIndex))
       notice.set('price', this.data.price)
       
       notice.set('address', this.data.address)
@@ -229,7 +231,7 @@ Page({
       
       if (that.data.isSrc == true) {
         var name = that.data.src;
-        console.log(name)
+        // console.log(name)
         var file = new Bmob.File(name, that.data.src);
         file.save();
         notice.set('pic1', file);
@@ -267,7 +269,7 @@ Page({
       title: data.title,
       description: data.description,
       noteNowLen: data.description.length,
-      typeIndex: data.typeId - 1,
+      typeIndex: data.typeId,
       price: data.price,
       address: data.address,
       longitude: data.longitude,
@@ -279,7 +281,7 @@ Page({
     })
   },
 
-  // 保存修改
+  // 修改
   save: function () {
     var that = this;
     var Notice = Bmob.Object.extend("Published_notice");
@@ -290,12 +292,13 @@ Page({
         result.set('title', that.data.title)
         result.set('description', that.data.description)
         result.set('price', that.data.price)
-        result.set('typeId', parseInt(that.data.typeIndex) + 1);
+        result.set('typeId', parseInt(that.data.typeIndex));
         // 图片上传
         if (that.data.isSrc == true) {
           var name = that.data.src;
           var file = new Bmob.File(name, that.data.src);
           file.save();
+          
           result.set('pic1', file);
         }
 

@@ -95,13 +95,52 @@ Page({
         //增
         likerList.push(app.globalData.currentUser.id);
         var likecount = res.get('likeCount') + 1;
+
+        // 向likes表里添加数据
+        var Like = Bmob.Object.extend("Likes");
+        var like = new Like();
+
+        var user = Bmob.User.current();
+        var me = new Bmob.User();
+        me.id = user.id;
+        like.set('user', me);
+        like.set('notice', this.data.notice);
+        like.save(null, {
+          success: function (result) {
+            console.log("日记创建成功, objectId:" + result.id);
+            this.likeObjectId = result.id;
+          },
+          fail: function (error) {
+            console.log("查询失败: " + error.code + " " + error.message);
+          }
+        })
+
       } else {
         // 删
         var index = contains(likerList, app.globalData.currentUser.id);
         likerList.splice(index, 1);
         var likecount = res.get('likeCount') - 1;
+
+        // likes表里删除数据
+        var Like = Bmob.Object.extend("Likes");
+
+        if (!this.likeObjectId) {
+          var query = new Bmob.Query(Like);
+          var me = new Bmob.User();
+          me.id = user.id;
+          query.equalTo("user", me);
+          query.equalTo("notice", this.data.notice);
+          // 查询所有数据
+          query.find({
+            success: function (results) {
+              console.log(results);
+            },
+            fail: function (error) {
+              console.log("查询失败: " + error.code + " " + error.message);
+            }
+          });
+        }
       }
-      console.log(likerList)
       res.set('liker', likerList)
       res.set('likeCount', likecount)
       res.save().then((res) => {
@@ -114,7 +153,7 @@ Page({
     that.setData({
       isLiked: !isLiked
     })
-
+  
   },
 
   // 留言

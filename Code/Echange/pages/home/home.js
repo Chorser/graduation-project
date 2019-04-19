@@ -49,7 +49,7 @@ Page({
 
     wx.getSystemInfo({
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth
