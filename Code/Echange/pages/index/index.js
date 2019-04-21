@@ -17,7 +17,18 @@ Page({
   },
 
   onLoad: function() {
-    if (app.globalData.currentUser) { //已登录
+    if (Bmob.User.current()) { //已登录
+      var objectId = Bmob.User.current().id;
+      //获取用户信息
+      var User = Bmob.Object.extend("_User");
+      var query = new Bmob.Query(User);
+      // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
+      query.get(objectId, {
+        success: function(result) {
+          app.globalData.currentUser = result;
+        }
+      })
+
       wx.switchTab({
         url: '../home/home'
       })
@@ -77,7 +88,7 @@ Page({
             wx.switchTab({
               url: '../home/home'
             })
-      
+
           }, function(err) {
             console.log(err, 'err');
           });

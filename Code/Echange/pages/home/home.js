@@ -114,37 +114,6 @@ Page({
       url: '/pages/search/search',
     });
   },
-  //模糊查询 title
-  // searchInput: function (e) {
-  //   var searchStr = e.detail.value;
-  //   console.log(searchStr)
-  //   var that = this;
-  //   var Notice = Bmob.Object.extend("Published_notice");
-  //   var query = new Bmob.Query(Notice);
-  //   query.descending("createdAt");
-  //   query.include("publisher"); // 同时获取发布者信息
-    
-  //   query.find({
-  //     success: function (results) {
-  //       var result = that.dealWithData(results);
-
-  //       var i; 
-  //       var list = []; 
-  //       for (i = 0; i < result.length; i++) {
-  //         if (result[i].title.indexOf(searchStr) >= 0) {
-  //           // console.log("成功");// console.log(result[i]);
-  //           list.push(result[i]);
-  //         }
-  //       }
-  //       that.setData({
-  //         noticeList: list
-  //       })
-  //     },
-  //     error: function (error) {
-  //       console.log("查询失败： ", error.code + " " + error.message);
-  //     }
-  //   })
-  // },
 
   //获取总的发布数
   getAll: function () {
@@ -177,7 +146,6 @@ Page({
 
   //数据存储
   onSetData: function (data) {
-    // console.log(data.length);
     let page = this.data.currentPage + 1;
     //设置数据
     data = data || [];
@@ -241,7 +209,6 @@ Page({
       var publisherName = item.get("publisher").nickName;
       if (item.get("publisher").avatar)
         var publisherPic = item.get("publisher").avatar.url;
-      // console.log(publisherPic)
 
       var viewCount = item.get("viewCount") || 0;
       var likeCount = item.get("likeCount") || 0;
@@ -255,7 +222,6 @@ Page({
           }
         })
       }
-      // console.log(isLiked)
 
       var jsonA;
       jsonA = {
@@ -356,7 +322,6 @@ Page({
       })
     }
     else {
-      // data.viewCount++;
       notice.viewCount++;
       wx.navigateTo({
         url: '../postDetail/postDetail?data=' + JSON.stringify(notice)

@@ -18,7 +18,7 @@ Page({
 
   onLoad: function () {
     this.user = app.globalData.currentUser;    
-    console.log(this.user);
+    // console.log('bug:', this.user);
     
     this.setData({
       avatarUrl: this.user.get('avatar')._url,

@@ -10,15 +10,10 @@ Page {
   align-items: center;
 }
 
-.bg {
-  background: #fff;
-  margin-bottom: 12rpx;
-}
-
 .choose_type {
   padding: 11rpx 31rpx 35rpx 31rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-flow: wrap;
 }
 
@@ -265,7 +260,7 @@ Page {
 
 /***************************************************/
 
-/*活动详情界面CSS*/
+/*详情界面CSS*/
 
 .list_header_left image {
   width: 60rpx;
@@ -395,7 +390,7 @@ swiper-item, swiper-item image {
 }
 
 .notice .photo {
-  width: 670rpx; /* 670rpx */
+  width: 670rpx;
   height: 320rpx;
   box-shadow: 0 10rpx 15rpx rgba(0, 0, 0, 0.1);
   border-radius: 12rpx;
@@ -536,7 +531,7 @@ swiper-item, swiper-item image {
 
 .order {
   display: flex;
-  width: 80%;
+  width: 90%;
   border-bottom: 1px solid #dad9d9;
   padding: 10px 0;
 }

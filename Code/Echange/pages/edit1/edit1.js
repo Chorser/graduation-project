@@ -231,7 +231,6 @@ Page({
       
       if (that.data.isSrc == true) {
         var name = that.data.src;
-        // console.log(name)
         var file = new Bmob.File(name, that.data.src);
         file.save();
         notice.set('pic1', file);

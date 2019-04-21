@@ -37,9 +37,9 @@ Page({
   },
 
   onLoad: function(options) {
-    this.currentUser = Bmob.User.current();
+    this.currentUser = app.globalData.currentUser;
     this.setData({
-      avatarUrl: this.currentUser.get("avatarUrl") || '',
+      avatarUrl: this.currentUser.get("avatar")._url || '',
       nickName: this.currentUser.get("nickName") || '',
       gender: this.currentUser.get("gender") || 1
     })
@@ -168,6 +168,7 @@ Page({
           result.set('avatar', file);
         }
         result.save().then((res) => {
+          console.log(res);
           wx.showToast({
             title: '保存成功！',
           })
@@ -179,7 +180,6 @@ Page({
           Bmob.User._saveCurrentUser(that.currentUser);
 
           app.globalData.currentUser = Bmob.User.current();
-          console.log(app.globalData.currentUser)
         })
       }
     })

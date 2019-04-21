@@ -22,8 +22,10 @@ App({
     //   this.globalData.share = false
     // };
 
-    this.globalData.currentUser = Bmob.User.current();
-    console.log(this.globalData.currentUser)
+    // this.globalData.currentUser = Bmob.User.current();
+    // console.log(this.globalData.currentUser)
+
+    
 
     //调用系统API获取设备的信息
     wx.getSystemInfo({
@@ -49,7 +51,7 @@ App({
         var list = [];
         for (let i = 0; i < results.length; i++) {
           // console.log(results[i].get("typeId"), results[i].get("typeName"));
-          list[results[i].get("typeId")] = results[i].get("typeName");
+          list[results[i].get("typeId")] = results[i].get("typeName") || '';
         }
         console.log(list)
         that.globalData.typeList = list;

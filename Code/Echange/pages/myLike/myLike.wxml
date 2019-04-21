@@ -1,0 +1,39 @@
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class='page' style='margin-top: {{height}}px'>
+  <view class="list-title">
+    <view>
+      <image src="/images/myLike_bg.jpg" class="cover"></image>
+    </view>
+    <view class="list-title-content">
+      <text>我的收藏</text>
+    </view>
+    <view class="list-title-line"></view>
+    <view class="list-title-brief">
+      <text>共收藏{{totalCount}}条发布商品</text>
+    </view>
+  </view>
+
+
+  <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
+    <block wx:if="{{likeList.length > 0}}">
+      <view class='like weui-cells' wx:for="{{likeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+        <image class='pic' src="{{ item.pic1.url }}"></image>
+        <view class='block1'>
+          <view class='title'> {{item.title}} </view>
+          <text class='pNameTime'>{{ item.publisherName }} 发布于{{ item.pastTime }} </text>
+        </view>
+        <!-- <view class='content'> {{item.description}} </view> -->
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title weui-media-box__title_in-text">
+          暂无内容，快去集市看看吧</view>
+        <view class="weui-media-box__desc"></view>
+      </view>
+    </block>
+  </scroll-view>
+</view>

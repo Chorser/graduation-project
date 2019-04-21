@@ -4,7 +4,8 @@
 <!-- 引入自定义组件navigationBar -->
 <nav-bar navbar-data='{{navbarData}}'></nav-bar>
 
-<view class="wxSearch-section">
+
+<view class="wxSearch-section" style='margin-top: {{height}}px'>
   <view class="search-pancel">
     <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" name="input" confirm-type="搜索" class="search-input" placeholder="请输入关键字..."></input>
     <button bindtap="findEach" class="search-button" form-type="submit" size="mini" plain="true">
@@ -14,13 +15,9 @@
 </view>
 <template is="wxSearch" data="{{wxSearchData}}" />
 <view class="scontainer">
-  <view class="bg">
-    <view class="choose_type" style="border-bottom:1rpx solid #e6e6e6;">
-      <view class="choose_type_item" style="color:#{{typeId==0?'fff':'118fff'}};background:#{{typeId==0?'118fff':'fff'}};" bindtap="chooseType" id="0">全部</view>
-      <view class="choose_type_item" style="color:#{{typeId==1?'fff':'118fff'}};background:#{{typeId==1?'118fff':'fff'}};" bindtap="chooseType" id="1">生活用品</view>
-      <view class="choose_type_item" style="color:#{{typeId==2?'fff':'118fff'}};background:#{{typeId==2?'118fff':'fff'}};" bindtap="chooseType" id="2">学习用品</view>
-      <view class="choose_type_item" style="color:#{{typeId==3?'fff':'118fff'}};background:#{{typeId==3?'118fff':'fff'}};" bindtap="chooseType" id="3">美妆服饰</view>
-      <view class="choose_type_item" style="color:#{{typeId==4?'fff':'118fff'}};background:#{{typeId==4?'118fff':'fff'}};" bindtap="chooseType" id="4">电子产品</view>
+  <view class="choose_type">
+    <view style="border-bottom:1rpx solid #e6e6e6;" wx:for="{{types}}" wx:key="index">
+      <view class="choose_type_item" style="color:#{{typeId==index?'fff':'118fff'}};background:#{{typeId==index?'118fff':'fff'}};" bindtap="chooseType" id="index">{{index==0?'全部':types[index]}}</view>
     </view>
   </view>
 
@@ -51,7 +48,7 @@
 
     <view wx:if="{{noticeList.length > 0}}">
       <view class="notices" wx:for="{{noticeList}}" wx:key="index">
-        <view class="notice notice_block" index="{{index}}"  data-index='{{index}}' bindtap='showPostDetail'>
+        <view class="notice notice_block" index="{{index}}" data-index='{{index}}' bindtap='showPostDetail'>
           <image class='avatar' src="{{ item.publisherPic }}"></image>
           <view class='block1'>
             <text class='pName'>{{item.publisherName}}</text>

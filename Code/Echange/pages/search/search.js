@@ -23,6 +23,8 @@ Page({
     noticeList: [],
     isEmpty: true,
     loading: false,
+
+    types: []
   },
 
   onLoad: function() {
@@ -31,9 +33,10 @@ Page({
     WxSearch.init(that, 43, ['手机', '寝室神器', '教材']);
     WxSearch.initMindKeys(['手机', '寝室神器', '教材']);
 
-    if (!app.globalData.currentUser) {
-      app.globalData.currentUser = Bmob.User.current();
-    }
+    this.setData({
+      types: app.globalData.typeList
+    })
+    console.log(this.data.types)
   },
 
   //选择要查询的活动类型
@@ -87,13 +90,13 @@ Page({
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
 
-    // 查询所有数据
+    // 根据类别查询所有数据
     query.descending("createdAt");
     query.include("publisher"); // 同时获取发布者信息
     query.find({
       success: function(results) {
         var list = that.dealWithData(results);
-        console.log(list);
+        // console.log(list);
         var type1List = new Array(); //生活用品
         var type2List = new Array(); //学习用品
         var type3List = new Array(); //美妆服饰
@@ -229,20 +232,6 @@ Page({
     return list;
   },
 
-  // 点击活动进入活动详情页面
-  // click_activity: function(e) {
-  //   console.log(getCurrentPages())
-  //   if (!this.buttonClicked) {
-  //     util.buttonClicked(this);
-  //     let actid = e.currentTarget.dataset.actid;
-  //     let pubid = e.currentTarget.dataset.pubid;
-  //     let user_key = wx.getStorageSync('user_key');
-  //     wx.navigateTo({
-  //       url: '/pages/detail/detail?actid=' + actid + "&pubid=" + pubid
-  //     });
-  //   }
-  // },
-
   //跳转详情页
   showPostDetail: function(e) {
     var index = e.currentTarget.dataset.index;
@@ -253,17 +242,28 @@ Page({
     //是自己发布的特殊处理
     if (notice.publisherId == app.globalData.currentUser.id) {
       wx.navigateTo({
-        url: '../postDetail/postDetail?isMyPost=true&data=' + data
-      })
-    } else {
-      this.addViewCount(notice.id);
-      notice.viewCount++;
-      wx.navigateTo({
-        url: '../postDetail/postDetail?data=' + data
+        url: '../postDetail/postDetail?isMyPost=true&data=' + JSON.stringify(notice)
       })
     }
+    else {
+      notice.viewCount++;
+      wx.navigateTo({
+        url: '../postDetail/postDetail?data=' + JSON.stringify(notice)
+      })
+      this.addViewCount(notice.id);
+    }
   },
-
+  // 更新数据库 浏览数
+  addViewCount: function (objectId) {
+    var that = this;
+    var Notice = Bmob.Object.extend("Published_notice");
+    var query = new Bmob.Query(Notice);
+    query.get(objectId).then(res => {
+      var cnt = res.get('viewCount') || 0;
+      res.set('viewCount', ++cnt)
+      res.save();
+    })
+  },
 
   wxSearchInput: function(e) {
     var that = this

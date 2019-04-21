@@ -2,9 +2,10 @@
   display: flex;
   padding: 30rpx;
   border-bottom: 1rpx solid #DDD;
-  color: #9B9B9B;
+  color: #5a5a5a;
   font-size: 30rpx;
   align-items: center;
+  background-color: #fff
 }
 
 .section text {

@@ -59,8 +59,8 @@ function getBeforeDate(n) {
     mon = temp2;
     year = temp3;
   }
-  if (year == year_after) {//不跨年
-    if (mon == mon_after) {//不跨年不跨月
+  if (year == year_after) { // 不跨年
+    if (mon == mon_after) { // 不跨年不跨月
       chs += day_after - day;
       return chs + '天前发布'
     } else {//不跨年跨月

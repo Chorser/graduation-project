@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "Echange · 我的"
+  "usingComponents": {
+    "nav-bar": "/components/navbar/navbar"
+  }
 }
