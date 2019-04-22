@@ -184,10 +184,10 @@ Page({
         })
 
       } else { //如果是取消收藏，查询是否存在收藏记录
-        plyerQuery.equalTo("user", isme);
-        plyerQuery.equalTo("wid", wid);
-        plyerQuery.equalTo("msgType", 2);
-        plyerQuery.find({
+        messageQuery.equalTo("user", isme);
+        messageQuery.equalTo("wid", wid);
+        messageQuery.equalTo("msgType", 2);
+        messageQuery.find({
           success: function(result) {
             console.log(result)
             if (result.length == 0) { //如果消息表中不存在该条消息，则生成新消息
@@ -197,12 +197,12 @@ Page({
               var username = app.globalData.currentUser.nickName;
 
               var message = new Message();
-              message.set("noticetype", "2");
+              message.set("msgType", "2");
               message.set("avatar", value); //我的头像
               message.set("username", username); // 我的名称
               message.set("uid", isme);
               message.set("wid", wid); //活动ID
-              message.set("fid", publisherId); //
+              message.set("fid", publisherId); //发布人Id
               message.set("is_read", false); //是否已读,0代表没有,1代表读了
               message.save();
             }
