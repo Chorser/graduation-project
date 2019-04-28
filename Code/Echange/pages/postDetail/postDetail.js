@@ -22,6 +22,7 @@ Page({
     isLiked: false,
 
     hideModal: true, //隐藏留言输入框
+    buyModal: true, //隐藏购买框
     comment: ''
   },
 
@@ -315,6 +316,21 @@ Page({
     wx.navigateTo({
       url: '../edit1/edit1?data=' + modifyData
     })
+  },
+
+  //订购确认
+  toBuy: function() {
+    wx.showModal({
+      title: '订购确认',
+      content: '需要支付' + this.data.notice.price +'元，确定要购买该商品吗？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })  
   }
 })
 

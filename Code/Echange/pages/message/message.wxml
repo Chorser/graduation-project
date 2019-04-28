@@ -1,2 +1,7 @@
-<!--pages/message/message.wxml-->
-<text>pages/message/message.wxml</text>
+
+<!-- 引入自定义组件navigationBar -->
+<nav-bar navbar-data='{{navbarData}}'></nav-bar>
+
+<view class='page' style='margin-top: {{height}}px'>
+  <text>pages/message/message.wxml</text>
+</view>

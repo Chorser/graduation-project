@@ -9,7 +9,7 @@
 		"postcss": true,
 		"minified": false,
 		"newFeature": true,
-		"autoAudits": false
+		"autoAudits": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.0",

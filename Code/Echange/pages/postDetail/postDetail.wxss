@@ -23,6 +23,7 @@ swiper {
 }
 .notice_detail .time,
 .notice_detail .viewcount{
+  font-size: 32rpx;
   color: #c0c0c0;
   display: inline-block;
   margin-right: 30rpx;

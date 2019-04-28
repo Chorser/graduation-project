@@ -1,4 +1,10 @@
 var app = getApp();
+// 引入SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+// 实例化API核心类
+const mapManager = new QQMapWX({
+  key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
+});
 
 Component({
   /**
@@ -35,6 +41,32 @@ Component({
     })
   },
 
+  pageLifetimes: {
+    // 组件所在页面的生命周期函数
+    show() {
+      var that = this;
+      if(that.data.navbarData.isHomePage) {
+        // 自动定位
+        mapManager.search({
+          keyword: '大学',
+          success: function (res) {
+            console.log(res.data);
+            that.setData({
+              addressName: res.data[0].title,
+              address: res.data[0].address,
+              location: res.data[0].location
+            })
+          },
+          fail: function (res) {
+            console.log(res);
+          }
+        })
+      }
+    },
+    // hide() { },
+    // resize() { },
+  },
+
   /**
    * 组件的方法列表
    */
@@ -61,11 +93,6 @@ Component({
             addressName: res.name,
             address: res.address
           })
-          //选择地点之后返回到原来页面
-          // wx.navigateTo({
-          //   url: "/pages/home/home?addressname=" + res.name + "address=" + res.address
-          // });
-
         },
         fail: function (err) {
           console.log(err)

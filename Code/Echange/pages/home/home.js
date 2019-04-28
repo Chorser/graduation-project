@@ -1,9 +1,16 @@
+const app = getApp()
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
 // 搜索模块
 // var WxSearch = require('../../utils/wxSearch/wxSearch.js')
 
-const app = getApp()
+// 引入SDK核心类
+// var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+// // 实例化API核心类
+// var mapManager = new QQMapWX({
+//   key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
+// });
+
 
 Page({
   data: {
@@ -16,7 +23,7 @@ Page({
     height: app.globalData.height * 2 + 20,
 
     currentIndex: 0,
-    rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg','/images/roll/3.jpg', '/images/roll/4.jpg'],
+    rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg', '/images/roll/3.jpg', '/images/roll/4.jpg'],
 
     buttonClicked: false, //是否点击跳转
 
@@ -39,7 +46,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     // console.log(app.globalData.typeList)
-    
+
     if (options.address) {
       this.setData({
         addressName: options.addressname,
@@ -49,7 +56,6 @@ Page({
 
     wx.getSystemInfo({
       success: (res) => {
-        // console.log(res)
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth
@@ -63,13 +69,13 @@ Page({
     // console.log(this.data.addressName)
 
     // 自动定位学校
-
+    // this.autoLocation();
 
   },
 
   onShow: function () {
-    this.getAll(); // 获取页数
-    this.getList();
+    // this.getAll(); // 获取页数
+    // this.getList();
   },
 
   handleChange: function (e) {
@@ -101,7 +107,7 @@ Page({
         // wx.navigateTo({
         //   url: "/pages/home/home?addressname=" + res.name + "address=" + res.address
         // });
-        
+
       },
       fail: function (err) {
         console.log(err)
@@ -109,6 +115,20 @@ Page({
     });
   },
 
+  // // 自动定位
+  // autoLocation: function () {
+  //   mapManager.search({
+  //     keyword: '大学',
+  //     success: function (res) {
+  //       console.log(res);
+  //       return res[0];
+  //     },
+  //     fail: function (res) {
+  //       console.log(res);
+  //     }
+  //   })
+  // },
+  
   toSearch: function () {
     wx.navigateTo({
       url: '/pages/search/search',
@@ -125,7 +145,7 @@ Page({
       success: function (count) {
         var totalPage = 0;
         var lastPageNum = 0;
-        if (count % that.data.limitPage == 0) { 
+        if (count % that.data.limitPage == 0) {
           totalPage = parseInt(count / that.data.limitPage);
         } else {
           var lowPage = parseInt(count / that.data.limitPage);
@@ -216,7 +236,7 @@ Page({
       // console.log(liker)
       var isLiked = false;
       if (liker) {
-        liker.forEach(function(item) {
+        liker.forEach(function (item) {
           if (item == app.globalData.currentUser.id) {
             isLiked = true;
           }
@@ -294,7 +314,7 @@ Page({
 
   refresh: function () {
     this.setData({
-      noticeList: [], 
+      noticeList: [],
       currentPage: 0,
       isLastPage: false,
       limitPage: 5,
@@ -307,11 +327,11 @@ Page({
     setTimeout(function () {
       wx.stopPullDownRefresh(); //处理完终止下拉刷新
     }, 500);
-    
+
   },
 
   //跳转详情页
-  showPostDetail: function(e) {
+  showPostDetail: function (e) {
     var index = e.currentTarget.dataset.index;
     var notice = this.data.noticeList[index];
 

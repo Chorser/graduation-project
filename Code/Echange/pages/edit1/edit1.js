@@ -1,5 +1,6 @@
 var app = getApp();
 var Bmob = require('../../utils/bmob.js');
+
 // 引入SDK核心类
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 // 实例化API核心类
@@ -220,7 +221,7 @@ Page({
       notice.set('title', this.data.title)
       notice.set('description', this.data.description)
       notice.set('typeId', parseInt(this.data.typeIndex))
-      notice.set('price', this.data.price)
+      notice.set('price', parseFloat(this.data.price))
       
       notice.set('address', this.data.address)
       notice.set('latitude', this.data.latitude)

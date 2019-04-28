@@ -25,7 +25,6 @@ App({
     // this.globalData.currentUser = Bmob.User.current();
     // console.log(this.globalData.currentUser)
 
-    
 
     //调用系统API获取设备的信息
     wx.getSystemInfo({
@@ -40,17 +39,20 @@ App({
       }
     })
 
+
     // 获取物品类别
+    if (that.globalData.typeList.length != 0) {
+      console.log(that.globalData.typeList)
+      return;
+    }
     var Type = Bmob.Object.extend("Product_type");
     var query = new Bmob.Query(Type);
     query.select("typeId");
     query.select("typeName");
     query.find({
       success: function (results) {
-        // console.log(results);
         var list = [];
         for (let i = 0; i < results.length; i++) {
-          // console.log(results[i].get("typeId"), results[i].get("typeName"));
           list[results[i].get("typeId")] = results[i].get("typeName") || '';
         }
         console.log(list)
@@ -58,7 +60,7 @@ App({
 
       },
       fail: function (error) {
-
+        console.log("err:", error);
       }
     })
   }

@@ -9,6 +9,7 @@ view .label {
 
 .chnumber {
   text-align: right;
+  color: rgb(143, 143, 143);
 }
 
 .image_box {

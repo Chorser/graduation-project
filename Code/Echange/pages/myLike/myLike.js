@@ -101,4 +101,16 @@ Page({
     }
   },
 
+  // 更新数据库 浏览数
+  addViewCount: function (objectId) {
+    var that = this;
+    var Notice = Bmob.Object.extend("Published_notice");
+    var query = new Bmob.Query(Notice);
+    query.get(objectId).then(res => {
+      var cnt = res.get('viewCount') || 0;
+      res.set('viewCount', ++cnt)
+      res.save();
+    })
+  }
+
 })

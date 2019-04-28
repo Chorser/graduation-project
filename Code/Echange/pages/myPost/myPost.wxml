@@ -3,7 +3,19 @@
 
 <view class='page' style='margin-top: {{height}}px'>
   <image class='addBtn' bindtap='toAddNotice' src='../../images/add.png'></image>
-  <text>我的发布</text>
+
+  <view class="list-title">
+    <view>
+      <image src="/images/myLike_bg.jpg" class="cover"></image>
+    </view>
+    <view class="list-title-content">
+      <text>我的发布</text>
+    </view>
+    <view class="list-title-line"></view>
+    <view class="list-title-brief">
+      <text>共发布过{{totalCount}}个商品</text>
+    </view>
+  </view>
 
   <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
     <block wx:if="{{noticeList.length > 0}}">
@@ -11,6 +23,7 @@
         <view class='title'> {{item.title}} </view>
         <view class='content'> {{item.description}} </view>
         <view class='time'> {{item.createdAt}} </view>
+        <image class='soldout' wx:if="{{item.status == 1}}" src="/images/soldout.png"></image>
       </view>
     </block>
 

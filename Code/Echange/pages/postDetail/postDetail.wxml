@@ -59,7 +59,11 @@
 
   <view wx:if='{{!isMyPost}}' class='block block_bottom'>
     <view class='price'>{{notice.price==''?'价格可商议':'需付： ' + notice.price + '元'}}</view>
-    <button class='btn-blue'>我想买</button>
+    <button bindtap='toBuy' class='btn-blue'>我想买</button>
+
+    <!-- <modal hidden="{{buyModal}}" id="modalBuy" title="订购确认" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+      <view>需要支付{{price}}元，确定要购买该商品吗？</view>
+    </modal> -->
   </view>
 
   <view wx:if='{{isMyPost}}' class='block block_bottom'>

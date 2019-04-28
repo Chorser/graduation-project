@@ -13,17 +13,17 @@ Page({
     nickName: ''
   },
 
-  onShow: function (options) {
-    this.currentUser = app.globalData.currentUser;
+  onShow: function(options) {
+    if (!this.currentUser)
+      this.currentUser = app.globalData.currentUser;
     console.log(this.currentUser)
-    if (this.currentUser)
-      this.setData({
-        avatar: this.currentUser.get("avatar")._url ||'/images/avatar1.jpg',
-        nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
-      });
+    this.setData({
+      avatar: this.currentUser.get("avatar")._url || '/images/avatar1.jpg',
+      nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
+    });
   },
 
-  navTo: function (e) {
+  navTo: function(e) {
     var target = e.currentTarget.dataset.target;
     var _url = '/pages/' + target + '/' + target;
     wx.navigateTo({

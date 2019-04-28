@@ -36,7 +36,7 @@ Page({
           windowWidth: res.windowWidth
         })
       }
-    })
+    }) 
   },
 
   pullUpLoad: function (e) {
@@ -98,6 +98,10 @@ Page({
       var typeId = item.get("typeId");
       // var typeName = getTypeName(typeId); //根据类型id获取类型名称
       var price = item.get("price");
+
+      var status = item.get("status");
+      console.log(status || 0)
+
       var id = item.id;
       var createdAt = item.createdAt;
       var pastTime = util.pastTime(createdAt);
@@ -123,7 +127,8 @@ Page({
         "pastTime": pastTime || '',
         "createdAt": createdAt || '',
         "pic": _url || '',
-        "price": price || ''
+        "price": price || '',
+        "status": status || 0,
       }
       list.push(jsonA);
     });

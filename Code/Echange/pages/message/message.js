@@ -1,11 +1,19 @@
-// pages/message/message.js
+const app = getApp();
+var Bmob = require('../../utils/bmob.js');
+var util = require('../../utils/util.js');
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    navbarData: {
+      showCapsule: false, //是否显示左上角图标：1表示显示，0表示不显示
+      title: 'Echange·我的',
+    },
+    // 此页面 页面内容距最顶部的距离
+    height: app.globalData.height * 2 + 20,
   },
 
   /**

@@ -68,7 +68,14 @@ Page({
   //排序方式，默认 离我最近 人气最高
   changeOrder: function(e) {
     var op = e.currentTarget.id;
-    if (op == 0) this.data.noticeList.sort(sortBy('pastTime', false));
+    this.setData({
+      op: op
+    })
+    if (op == 0) {
+      this.setData({
+        noticeList: this.data.noticeList.sort(sortBy('pastTime', false)),
+      })
+    }
     else if (op == 1) ;
 
     else if (op == 2) {
@@ -76,10 +83,6 @@ Page({
         noticeList: this.data.noticeList.sort(sortBy('likeCount', false)),
       })
     };
-
-    this.setData({
-      op: op
-    })
   },
 
   onShow: function() {
