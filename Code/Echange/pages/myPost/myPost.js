@@ -27,6 +27,10 @@ Page({
 
   onShow: function () {
     var that = this;
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    });
     this.getMyAll();
 
     wx.getSystemInfo({
@@ -98,18 +102,23 @@ Page({
       var typeId = item.get("typeId");
       // var typeName = getTypeName(typeId); //根据类型id获取类型名称
       var price = item.get("price");
-
       var status = item.get("status");
-      console.log(status || 0)
 
       var id = item.id;
-      var createdAt = item.createdAt;
-      var pastTime = util.pastTime(createdAt);
+      var pastTime = util.pastTime(item.createdAt);
+      // 创建时间处理
+      if (item.createdAt.substr(0, 4) === "2019"){
+        var createdAt = item.createdAt.substr(5, 11);
+      } else {
+        var createdAt = item.createdAt.substr(0, 16);
+      }
       var _url = null
       var pic = item.get("pic1");
       if (pic) {
         _url = pic._url;
       }
+
+      var viewCount = item.get("viewCount") || 0;
 
       var myName = that.user.get("nickName"); //item.get("publisher").nickName;
       var myPic = that.user.get("avatarUrl"); //item.get("publisher").avatarUrl;
@@ -126,6 +135,8 @@ Page({
         "publisherId": myId || '',
         "pastTime": pastTime || '',
         "createdAt": createdAt || '',
+        "viewCount": viewCount,
+
         "pic": _url || '',
         "price": price || '',
         "status": status || 0,
@@ -135,7 +146,7 @@ Page({
 
     setTimeout(function () {
       wx.hideLoading();
-    }, 900);
+    }, 500);
 
     that.setData({
       noticeList: list

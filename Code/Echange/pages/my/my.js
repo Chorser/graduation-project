@@ -14,9 +14,10 @@ Page({
   },
 
   onShow: function(options) {
-    if (!this.currentUser)
+    if (!this.currentUser) {
       this.currentUser = app.globalData.currentUser;
-    console.log(this.currentUser)
+    }
+    // console.log(this.currentUser)
     this.setData({
       avatar: this.currentUser.get("avatar")._url || '/images/avatar1.jpg',
       nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'

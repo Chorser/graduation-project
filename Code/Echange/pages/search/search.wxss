@@ -11,7 +11,7 @@ Page {
 }
 
 .choose_type {
-  padding: 11rpx 31rpx 35rpx 31rpx;
+  padding: 11rpx 100rpx;
   display: flex;
   justify-content: space-around;
   flex-flow: wrap;
@@ -42,7 +42,7 @@ Page {
   color: #296fd0 !important;
   width: 20%;
   margin: 0 !important;
-  box-shadow: 1px 1px 6px #ecf0f0;
+  box-shadow: 1px 1px 6px #c6caca;
 }
 
 .search-button icon {
@@ -301,7 +301,7 @@ swiper-item, swiper-item image {
   overflow: hidden;
 }
 
-.activities .subtitle {
+.notices .subtitle {
   padding: 20rpx 35rpx;
   border-top: 20rpx solid #f4f4f4;
   background: #fff;
@@ -313,7 +313,7 @@ swiper-item, swiper-item image {
   z-index: 999;
 }
 
-.activities .subtitle image {
+.notices .subtitle image {
   width: 42rpx;
   height: 42rpx;
   margin-right: 30rpx;
@@ -341,7 +341,7 @@ swiper-item, swiper-item image {
   /* display: flex; */
   flex-direction: column;
   align-items: stretch;
-  padding: 0 0 35rpx;
+  /* padding: 0 0 35rpx; */
   margin: 0 40rpx;
   border-bottom: 10rpx solid #f4f4f4;
 }
@@ -409,7 +409,7 @@ swiper-item, swiper-item image {
   font-size: 28rpx;
   color: #999;
   text-align: justify;
-  padding-top: 10rpx;
+
 }
 
 .notice .location {
@@ -455,7 +455,7 @@ swiper-item, swiper-item image {
 .notice_block {
   margin: 0;
   padding: 15px 0;
-  z-index: 200rpx;
+  /* z-index: 200rpx; */
   margin-bottom: 10rpx;
 }
 
@@ -480,7 +480,6 @@ swiper-item, swiper-item image {
 }
 
 .notice_block .time {
-  font-size: 35rpx;
   color: #c0c0c0;
   padding-bottom: 10px;
 }

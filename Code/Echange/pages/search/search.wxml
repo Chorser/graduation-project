@@ -1,5 +1,5 @@
+<!-- 引入wxSearch组件 -->
 <import src="/wxSearch/wxSearch.wxml" />
-<import src="../template/activity/common-list.wxml" />
 
 <!-- 引入自定义组件navigationBar -->
 <nav-bar navbar-data='{{navbarData}}'></nav-bar>

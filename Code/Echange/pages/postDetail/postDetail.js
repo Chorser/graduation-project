@@ -20,6 +20,7 @@ Page({
 
     isMyPost: false,
     isLiked: false,
+    isSoldOut: false,
 
     hideModal: true, //隐藏留言输入框
     buyModal: true, //隐藏购买框
@@ -48,14 +49,16 @@ Page({
       if (list.length > 1)
         showDots = true;
     }
-
+    var isSoldOut = false;
+    (data.status == 1) ? isSoldOut = true: isSoldOut = false;
     this.setData({
       notice: data,
       picList: list || [],
       noPic: noPict,
       indicatorDots: showDots,
 
-      isLiked: data.isLiked
+      isLiked: data.isLiked,
+      isSoldOut: isSoldOut
     })
 
     console.log(this.data.notice)
@@ -93,83 +96,51 @@ Page({
     isme.id = userId;
 
     var wid = that.data.notice.id; //商品Id
+    var Notice = Bmob.Object.extend("Published_notice");
+    var noticePointer = new Notice();
+    noticePointer.id = wid;
     var publisherId = that.data.notice.publisherId;
 
     //数据库操作
-    var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
     query.get(wid).then(res => {
+      // 修改Likes表数据
+      var Like = Bmob.Object.extend("Likes");
+
+      var Message = Bmob.Object.extend("Message");
+      var messageQuery = new Bmob.Query(Message);
+      messageQuery.equalTo("user", isme);
+      messageQuery.equalTo("wid", wid);
+
       var likerList = res.get('liker') || [];
-      if (!isLiked) {
+      if (!isLiked) { //非收藏状态
         //增
         likerList.push(app.globalData.currentUser.id);
         var likecount = res.get('likeCount') + 1;
 
         // 向likes表里添加数据
-        var Like = Bmob.Object.extend("Likes");
         var like = new Like();
         like.set('user', isme);
-        like.set('notice', wid);
+        like.set('notice', noticePointer);
         like.save(null, {
           success: function(result) {
-            console.log("创建成功, objectId:" + result.id);
+            console.log("likes表数据新增成功, objectId:" + result.id);
           },
           fail: function(error) {
-            console.log("查询失败: " + error.code + " " + error.message);
+            console.log("likes表数据新增失败: " + error.code + " " + error.message);
           }
         })
-      } else {
-        // 删
-        var id = app.globalData.currentUser.id;
-        var index = contains(likerList, id);
-        likerList.splice(index, 1);
-        var likecount = res.get('likeCount') - 1;
 
-        res.set('liker', likerList)
-        res.set('likeCount', likecount)
-        res.save().then((res) => {
-          wx.showToast({
-            title: (that.data.isLiked) ? '收藏成功' : '取消收藏',
-          })
-        });
-        // likes表里删除数据
-        var Like = Bmob.Object.extend("Likes");
-
-        if (!this.likeObjectId) {
-          var query = new Bmob.Query(Like);
-          var me = new Bmob.User();
-          me.id = id;
-          query.equalTo("user", me);
-          query.equalTo("notice", this.data.notice.id);
-          // 查询所有数据
-          query.find({
-            success: function(results) {
-              console.log(results);
-            },
-            fail: function(error) {
-              console.log("查询失败: " + error.code + " " + error.message);
-            }
-          });
-        }
-      }
-
-      //在生成消息之前，先遍历消息表，如果要生成的消息在表中已经存在，则不生成消息
-      var Message = Bmob.Object.extend("Message");
-      var messageQuery = new Bmob.Query(Message);
-
-      if (!isLiked) { //如果是收藏，查询是否存在收藏记录
-        messageQuery.equalTo("user", isme);
-        messageQuery.equalTo("wid", wid);
-        // messageQuery.equalTo("behavior", 1);
+        // 发送 收藏消息 给发布人
+        //在生成消息之前，先遍历消息表，如果要生成的消息在表中已经存在，则不生成消息
+        messageQuery.equalTo("msgType", 1);
         messageQuery.find({
           success: function(result) {
-            console.log(result);
             if (result.length == 0) { //如果消息表中不存在该条消息，则生成新消息
-              // var value = wx.getStorageSync("my_avatar") //我的头像
-              // var my_username = wx.getStorageSync("my_username") //我的用户名
-
+              console.log("不存在该条消息，可以生成新消息");
               var value = app.globalData.currentUser.avatar;
               var username = app.globalData.currentUser.nickName;
+              console.log(app.globalData.currentUser);
 
               var message = new Message();
               message.set("msgType", 1); // 1为收藏
@@ -179,14 +150,44 @@ Page({
               message.set("wid", wid); //商品ID
               message.set("fid", publisherId);
               message.set("is_read", false); //是否已读 boolean
-              message.save();
+              message.save().then((res) => {
+                console.log("消息生成 ", res);
+              });
+            } else {
+              console.log(result);
             }
           }
         })
 
-      } else { //如果是取消收藏，查询是否存在收藏记录
-        messageQuery.equalTo("user", isme);
-        messageQuery.equalTo("wid", wid);
+
+      } else { // 已是收藏状态
+        // 删
+        var index = contains(likerList, userId);
+        likerList.splice(index, 1);
+        var likecount = res.get('likeCount') - 1;
+        res.set('liker', likerList)
+        res.set('likeCount', likecount)
+        res.save().then((res) => {
+          console.log("likes表数据删除 ", res);
+        });
+
+        // likes表里删除数据？？怎么删
+        // 获取objectId再destroy
+        if (!this.likeObjectId) {
+          var likeQuery = new Bmob.Query(Like);
+          likeQuery.equalTo("user", isme);
+          likeQuery.equalTo("notice", wid);
+          // 查询所有数据
+          likeQuery.find({
+            success: function(results) {
+              console.log(results);
+            },
+            fail: function(error) {
+              console.log("查询失败: ", error.code, " ", error.message);
+            }
+          });
+        }
+
         messageQuery.equalTo("msgType", 2);
         messageQuery.find({
           success: function(result) {
@@ -194,8 +195,8 @@ Page({
             if (result.length == 0) { //如果消息表中不存在该条消息，则生成新消息
               // var value = wx.getStorageSync("my_avatar")
               // var my_username = wx.getStorageSync("my_username")
-              var value = app.globalData.currentUser.avatar;
-              var username = app.globalData.currentUser.nickName;
+              var value = app.globalData.currentUser.get("avatar");
+              var username = app.globalData.currentUser.get("nickName");
 
               var message = new Message();
               message.set("msgType", "2");
@@ -215,7 +216,9 @@ Page({
     that.setData({
       isLiked: !isLiked
     })
-
+    wx.showToast({
+      title: (that.data.isLiked) ? '收藏成功' : '取消收藏',
+    })
   },
 
   //取消收藏 向liker 表中删除数据
@@ -263,6 +266,7 @@ Page({
       hideModal: true
     })
   },
+  // 数据库 Comment 增加记录
   createComment: function(str) {
     var that = this;
     // 校验
@@ -285,7 +289,7 @@ Page({
           var Comments = Bmob.Object.extend('Comments');
           var comment = new Comments();
           comment.set('content', str);
-          comment.set('notice', notice); // ??
+          comment.set('notice', notice);
           comment.set('publisher', me);
 
           // if (that.data.isToResponse) { //如果是回复的评论
@@ -300,7 +304,7 @@ Page({
 
           comment.save(null, {
             success: function(res) {
-              // var 
+              // TODO 显示留言
             }
           })
         }
@@ -320,17 +324,61 @@ Page({
 
   //订购确认
   toBuy: function() {
+    var that = this;
     wx.showModal({
       title: '订购确认',
-      content: '需要支付' + this.data.notice.price +'元，确定要购买该商品吗？',
-      success: function (res) {
+      content: '需要支付' + this.data.notice.price + '元，确定要购买该商品吗？',
+      success: function(res) {
         if (res.confirm) {
           console.log('用户点击确定')
+
+          // 物品状态改为已出售
+          var Notice = Bmob.Object.extend("Published_notice");
+          var notice = new Notice();
+          notice.id = that.data.notice.id;
+
+          var noticeQuery = new Bmob.Query(Notice);
+          noticeQuery.get(that.data.notice.id).then(res => {
+            res.set("status", 1);
+            res.save();
+
+            let temp =  that.data.notice;
+            temp.status = 1;
+            that.setData({
+              notice: temp,
+              isSoldOut: true
+            })
+            //buyer
+            var isme = new Bmob.User();
+            isme.id = app.globalData.currentUser.id;
+            
+            var seller = new Bmob.User();
+            seller.id = that.data.notice.publisherId;
+
+            // 增加订单
+            createOrder({
+              publisherId: seller.id,
+              price: that.data.notice.price,
+              notice: notice,
+              isme: isme,
+              seller: seller
+            })
+
+            // 发消息
+            createMessage({
+              type: 5, // 5为购买
+              // avatar: avatar,
+              // username: username,
+              isme: isme,
+              wid: notice.id,
+              publisherId: seller.id
+            });
+          });
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
-    })  
+    })
   }
 })
 
@@ -342,4 +390,39 @@ function contains(arrays, obj) {
     }
   }
   return false;
+}
+
+function createOrder(data) {
+  var Order = Bmob.Object.extend("Order")
+  var order = new Order();  
+  data.isme.username = app.globalData.currentUser.get("nickName");
+  data.isme.avatar = app.globalData.currentUser.get("avatar");
+
+  order.set('totalPrice', data.price);
+  order.set('buyer', data.isme);
+  order.set('seller', data.seller);
+  order.set('notice', data.notice);
+  order.save().then((res) => {
+    console.log("订单创建成功 ", res);
+    
+    wx.showToast({
+      title: '购买成功',
+    })
+  });
+}
+
+function createMessage(data) {
+  var Message = Bmob.Object.extend("Message");
+  var message = new Message();
+  message.set("msgType", data.type); // 5为购买
+  message.set("avatarUrl", app.globalData.currentUser.get("avatar").url); //我的头像
+  message.set("userName", app.globalData.currentUser.get("nickName")); // 我的名称
+  
+  message.set("user", data.isme);
+  message.set("wid", data.wid); //商品ID
+  message.set("fid", data.publisherId);
+  message.set("is_read", false); //是否已读 boolean
+  message.save().then((res) => {
+    console.log("创建消息 ", res);
+  });
 }

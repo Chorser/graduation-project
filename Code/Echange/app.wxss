@@ -9,11 +9,7 @@ page {
   font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 
   position: relative;
-  z-index: 9999998;
-}
-
-checkbox, radio{
-  margin-right: 10rpx;
+  /* z-index: 9999998; */
 }
 
 button {

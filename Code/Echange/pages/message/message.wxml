@@ -3,5 +3,40 @@
 <nav-bar navbar-data='{{navbarData}}'></nav-bar>
 
 <view class='page' style='margin-top: {{height}}px'>
-  <text>pages/message/message.wxml</text>
+  <view class="list-title">
+    <view>
+      <image src="/images/myLike_bg.jpg" class="cover"></image>
+    </view>
+    <view class="list-title-content">
+      <text>我的消息</text>
+    </view>
+    <view class="list-title-line"></view>
+    <view class="list-title-brief">
+      <text>共有{{messageList.length}}条未读消息</text>
+    </view>
+  </view>
+
+  <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
+    <block wx:if="{{messageList.length > 0}}">
+      <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+        <image class='un-read' wx:if="{{item.isRead == false}}" style='width: 30rpx;height:30rpx' src='/images/redpoint.png'/>
+        <view class='content'> {{item.userAvatar}} </view>
+        <view class='title'> {{item.userName}} </view> 
+        <!-- ×××收藏了 ××× -->
+        <!-- ×××购买了 ××× -->
+        <view> {{item.typeName}}了</view>
+        <view class='time'> {{item.pastTime}} </view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="weui-media-box weui-media-box_text">
+        <view class="font-minor weui-media-box__title weui-media-box__title_in-text">
+          暂无消息</view>
+        <view class="weui-media-box__desc"></view>
+
+      </view>
+    </block>
+  </scroll-view>
+  
 </view>

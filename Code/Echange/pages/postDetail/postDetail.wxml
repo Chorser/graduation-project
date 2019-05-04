@@ -12,6 +12,8 @@
 
   <!-- 物品详情 -->
   <view class='notice_detail block'>
+    <image class='soldout' wx:if="{{notice.status == 1}}" src="/images/soldout.png"></image>
+
     <view class='title'> {{notice.title}} </view>
     <view>
       <view class='time' style='display:inline-block'> {{notice.pastTime}}发布</view>
@@ -29,7 +31,7 @@
         <image src="/images/icon/wx_app_like.png"></image>
         <text>{{post.upNum}}</text>
       </view> -->
-      <view class="tool-item" catchtap='onCollectionTap' data-post-id="{{notice.objectId}}">
+      <view wx:if="{{!isMyPost}}" class="tool-item" catchtap='onCollectionTap' data-post-id="{{notice.objectId}}">
         <image wx:if="{{isLiked}}" src="/images/tool/like2.png"></image>
         <image wx:else src="/images/tool/like1.png"></image>
         <text>收藏</text>
@@ -40,7 +42,7 @@
   <!-- 发布人信息 -->
   <view class='publisher_info block'>
     <image class='avatar' src="{{ notice.publisherPic }}"></image>
-    <text class='pName'>{{notice.publisherName}}</text>
+    <text class='pName'>{{ notice.publisherName }}</text>
   </view>
 
   <!-- 留言墙 -->
@@ -50,24 +52,21 @@
       <view class='commentBtn' style="" bindtap='openMessage'>我要留言</view>
     </view>
 
-    <view style='padding: 10rpx ; border-top: 1rpx solid #DDD;'>还没有人留言，快来抢个沙发吧！</view>
+    <view class='font-minor no-comment' style=''>还没有人留言，快来抢个沙发吧！</view>
 
     <modal hidden="{{hideModal}}" id="modal" title="留言内容" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
-      <textarea class='weui-textarea' bindinput='setComment' style="height: 4em" placeholder='输入你的留言'/>
+      <textarea class='weui-textarea' bindinput='setComment' style="height: 4em" placeholder='输入你的留言' />
     </modal>
   </view>
 
   <view wx:if='{{!isMyPost}}' class='block block_bottom'>
     <view class='price'>{{notice.price==''?'价格可商议':'需付： ' + notice.price + '元'}}</view>
-    <button bindtap='toBuy' class='btn-blue'>我想买</button>
-
-    <!-- <modal hidden="{{buyModal}}" id="modalBuy" title="订购确认" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
-      <view>需要支付{{price}}元，确定要购买该商品吗？</view>
-    </modal> -->
+    <button wx:if='{{!isSoldOut}}' bindtap='toBuy' class='btn-blue'>我想买</button>
   </view>
 
   <view wx:if='{{isMyPost}}' class='block block_bottom'>
     <view class='price'>{{notice.price==''?'未定价':'定价： ' + notice.price + '元'}}</view>
-    <button bindtap='toModify' class='btn-blue'>去修改</button>
+    <button wx:if='{{!isSoldOut}}' bindtap='toModify' class='btn-blue'>去修改</button>
   </view>
+
 </view>

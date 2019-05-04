@@ -21,19 +21,22 @@ Page({
 
   onShow: function(options) {
     var that = this;
+    wx.showLoading({
+      title: '正在加载',
+      mask: true
+    });
     var Like = Bmob.Object.extend("Likes");
     var query = new Bmob.Query(Like);
     var userId = app.globalData.currentUser.id;
     query.equalTo("user", userId);
     query.descending("createAt");
     query.include("notice");
-
     query.find({
       success: function(res) {
         var list = [];
         for (let i = 0; i < res.length; i++) {
           var item = res[i].get("notice");
-          console.log(item)
+          // console.log(item)
           if (item.pic1)
             item.pic = item.pic1.url || '';
 
@@ -52,34 +55,33 @@ Page({
           }
           item.isLiked = isLiked;
 
-          // var publisherId = item.userId;
           var publisherId = item.publisher.objectId;
           var User = Bmob.Object.extend('_User')
           var query = new Bmob.Query(User);
           query.get(publisherId, {
             success: function(result) {
               item.publisherName = result.get("nickName");
-              if (result.get("avatar"))
+              if (result.get("avatar")) {
                 item.publisherPic = result.get("avatar")._url;
-
-              list.push(item);
-
+              }
             },
           })
-          setTimeout(function() {
-            that.setData({
-              likeList: list,
-              totalCount: list.length
-            })
-
-          }, 1000);
+          list.push(item);
+          console.log(item);
         }
-
+        setTimeout(function () {
+          that.setData({
+            likeList: list,
+            totalCount: list.length
+          })
+          wx.hideLoading();
+        }, 1000);
       },
       fail: function(res) {
         console.log(res)
       }
     })
+
   },
 
   //跳转详情页

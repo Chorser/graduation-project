@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/home/home",
-    "pages/showinmap/showinmap",
     "pages/logs/logs",
     "pages/my/my",
     "pages/user/user",
@@ -56,5 +55,6 @@
         "selectedIconPath": "/images/me-active.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

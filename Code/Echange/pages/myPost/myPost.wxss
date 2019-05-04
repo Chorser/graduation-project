@@ -30,7 +30,7 @@
 }
 
 .list-title-line {
-  width: 75px;
+  width: 95px;
   padding: 16rpx 0rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,7 +85,9 @@ image.cover {
 }
 
 .notice .soldout {
-  width: 200rpx;
-  height: 200rpx;
-  position: relative;
+  position: absolute;
+  top: 24rpx;
+  right: 220rpx;
+  width: 180rpx;
+  height: 150rpx;
 }

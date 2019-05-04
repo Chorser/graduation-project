@@ -35,6 +35,7 @@
   <scroll-view lower-threshold="5" bindscrolltolower="loadMore" upper-threshold="0" scroll-y="true" circular="true" style="flex-grow:1; height: {{ windowHeight }}px">
     <view wx:if="{{noticeList.length > 0}}">
       <view class='notice_block weui-cells' wx:for="{{ noticeList }}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+        <image class='soldout' wx:if="{{item.status == 1}}" src="/images/soldout.png"></image>
 
         <image class='avatar' src="{{ item.publisherPic }}"></image>
         <view class='block1'>
@@ -43,7 +44,7 @@
         </view>
 
         <view class='block' wx:if="{{ item.pic }}">
-          <image src='{{item.pic}}'  style='max-width:280rpx; max-height:160rpx' />
+          <image src='{{item.pic}}' mode='aspectFill' style='max-width:280rpx; max-height:250rpx' />
         </view>
 
         <view class='block'>
@@ -83,7 +84,7 @@
 
     <block wx:else>
       <view class="weui-media-box weui-media-box_text">
-        <view class="weui-media-box__title weui-media-box__title_in-text">
+        <view class="font-minor weui-media-box__title weui-media-box__title_in-text">
           暂无内容，快去发布你的信息吧</view>
         <view class="weui-media-box__desc"></view>
 

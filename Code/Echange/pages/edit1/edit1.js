@@ -227,7 +227,7 @@ Page({
       notice.set('latitude', this.data.latitude)
       notice.set('longitude', this.data.longitude)
 
-      notice.set('viewCount', 0)
+      notice.set('viewCount', 0);
       notice.set('likeCount', 0);
       
       if (that.data.isSrc == true) {

@@ -822,7 +822,7 @@ icon {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  word-wrap: normal;
+  /* word-wrap: normal; */
   word-wrap: break-word;
   word-break: break-all;
 }
@@ -1036,4 +1036,9 @@ icon {
   line-height: 28px;
   color: #09BB07;
   white-space: nowrap;
+}
+
+.font-minor {
+  color: #727272;
+  font-size: 32rpx; 
 }

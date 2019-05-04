@@ -1,16 +1,6 @@
 const app = getApp()
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
-// 搜索模块
-// var WxSearch = require('../../utils/wxSearch/wxSearch.js')
-
-// 引入SDK核心类
-// var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
-// // 实例化API核心类
-// var mapManager = new QQMapWX({
-//   key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
-// });
-
 
 Page({
   data: {
@@ -24,8 +14,6 @@ Page({
 
     currentIndex: 0,
     rollingImgList: ['/images/roll/1.jpg', '/images/roll/2.jpg', '/images/roll/3.jpg', '/images/roll/4.jpg'],
-
-    buttonClicked: false, //是否点击跳转
 
     windowHeight: 0,
     windowWidth: 0,
@@ -45,7 +33,6 @@ Page({
 
   onLoad: function (options) {
     var that = this;
-    // console.log(app.globalData.typeList)
 
     if (options.address) {
       this.setData({
@@ -75,7 +62,7 @@ Page({
 
   onShow: function () {
     // this.getAll(); // 获取页数
-    // this.getList();
+    this.getList();
   },
 
   handleChange: function (e) {
@@ -87,13 +74,7 @@ Page({
   //打开地图
   openMap: function () {
     var that = this;
-    // if (!this.buttonClicked) {
-    //   util.buttonClicked(this);
-    //   wx.navigateTo({
-    //     url: '/pages/showinmap/showinmap',
-    //   });
-    // }
-
+    
     //选择地点
     wx.chooseLocation({
       success: function (res) {
@@ -205,7 +186,6 @@ Page({
     var that = this;
     var currentPageList = new Array();
     results.forEach(function (item) {
-      // console.log(item)
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
@@ -215,8 +195,7 @@ Page({
       var address = item.get("address");
       var longitude = item.get("longitude");
       var latitude = item.get("latitude");
-
-      // var isLike = 0;
+      var status = item.get("status"); //物品状态
       // var commentnum = item.get("commentnum");
       var id = item.id;
       var createdAt = item.createdAt;
@@ -261,7 +240,7 @@ Page({
         "viewCount": viewCount,
         "likeCount": likeCount,
         // "liker": liker,
-
+        "status": status,
         "address": address,
         "latitude": latitude,
         "longitude": longitude,
