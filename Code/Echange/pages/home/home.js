@@ -62,7 +62,7 @@ Page({
 
   onShow: function () {
     // this.getAll(); // 获取页数
-    this.getList();
+    // this.getList();
   },
 
   handleChange: function (e) {

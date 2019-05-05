@@ -7,7 +7,7 @@ Page({
   data: {
     navbarData: {
       showCapsule: false, //是否显示左上角图标：1表示显示，0表示不显示
-      title: 'Echange·我的',
+      title: 'Echange·我的消息',
     },
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
@@ -29,7 +29,7 @@ Page({
     var Message = Bmob.Object.extend("Message");
     var messageQuery = new Bmob.Query(Message);
     messageQuery.equalTo("fid", app.globalData.currentUser.id);
-    messageQuery.descending('createdAt');
+    messageQuery.descending('updatedAt');
     // messageQuery.limit(that.data.limit);
 
     messageQuery.find({
@@ -53,7 +53,7 @@ Page({
       var noticeId = item.get("wid");
       var user = item.get("user"); //做出操作的用户
       var userName = item.get("userName");
-      var userAvatar = item.get("avatar");
+      var userAvatar = item.get("avatarUrl");
       var typeId = item.get("msgType");
       var typeName = getTypeName(typeId); //根据类型id获取消息类型名称
       var isRead = item.get("is_read"); 
@@ -90,11 +90,21 @@ Page({
     var that = this;
     var index = options.currentTarget.dataset.index;
     var now = "messageList[" + index + "].hidden";
+    var ifread = "messageList[" + index + "].isRead";
     if (that.data.messageList[index].hidden == true) {
       console.log("展开");
+      if (!that.data.messageList[index].isRead) {
+        wx.showToast({
+          title: '标记已读',
+          duration: 500
+        })
+      }
       that.setData({
-        [now]: false
+        [now]: false,
+        [ifread]: true,
       })
+      
+      //TODO 数据库操作
     } else {
       console.log("折叠");
       that.setData({

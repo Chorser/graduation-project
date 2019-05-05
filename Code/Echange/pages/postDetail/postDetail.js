@@ -371,6 +371,7 @@ Page({
               // username: username,
               isme: isme,
               wid: notice.id,
+              wName: that.data.notice.title,
               publisherId: seller.id
             });
           });

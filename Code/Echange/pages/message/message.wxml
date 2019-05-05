@@ -1,4 +1,3 @@
-
 <!-- 引入自定义组件navigationBar -->
 <nav-bar navbar-data='{{navbarData}}'></nav-bar>
 
@@ -19,14 +18,17 @@
   <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
     <block wx:if="{{messageList.length > 0}}">
       <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showFold' data-index='{{index}}'>
-        <image class='un-read' wx:if="{{item.isRead == false}}" style='width: 30rpx;height:30rpx' src='/images/redpoint.png'/>
-        <view class='content'> 用户 {{item.userName}} {{item.typeName}}了您的商品：</view> 
+        <view class='msg'>
+          <image class='un-read' wx:if="{{item.isRead == false}}" style='' src='/images/redpoint.png' /> 用户 {{item.userName}} {{item.typeName}}了 您的商品
+        </view>
+        <view class='time'> {{item.pastTime}} </view>
         <!-- ×××收藏了 ××× -->
         <!-- ×××购买了 ××× -->
-        <view class='time'> {{item.pastTime}} </view>
+
         <view hidden='{{item.hidden}}'>
-          <view>折叠</view>
-          <view class='avatar'> {{item.userAvatar}} </view>
+          <!-- <view>折叠</view> -->
+          <image class='avatar' wx:if='{{item.userAvatar}}' src='{{item.userAvatar}}' />
+          <image class='product' wx:if='{{item.pic}}' src='{{item.pic}}'/>
         </view>
       </view>
     </block>
@@ -40,5 +42,5 @@
       </view>
     </block>
   </scroll-view>
-  
+
 </view>
