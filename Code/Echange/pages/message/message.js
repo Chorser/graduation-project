@@ -72,6 +72,7 @@ Page({
         "userAvatar": userAvatar || '',
         "isRead": isRead,
         "pastTime": pastTime || '',
+        "hidden": true
       }
       list.push(jsonA);
     });
@@ -84,6 +85,23 @@ Page({
       messageList: list
     })
   },
+
+  showFold: function (options) {
+    var that = this;
+    var index = options.currentTarget.dataset.index;
+    var now = "messageList[" + index + "].hidden";
+    if (that.data.messageList[index].hidden == true) {
+      console.log("展开");
+      that.setData({
+        [now]: false
+      })
+    } else {
+      console.log("折叠");
+      that.setData({
+        [now]: true,
+      })
+    }
+  }
 
 })
 

@@ -18,14 +18,16 @@
 
   <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
     <block wx:if="{{messageList.length > 0}}">
-      <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+      <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showFold' data-index='{{index}}'>
         <image class='un-read' wx:if="{{item.isRead == false}}" style='width: 30rpx;height:30rpx' src='/images/redpoint.png'/>
-        <view class='content'> {{item.userAvatar}} </view>
-        <view class='title'> {{item.userName}} </view> 
+        <view class='content'> 用户 {{item.userName}} {{item.typeName}}了您的商品：</view> 
         <!-- ×××收藏了 ××× -->
         <!-- ×××购买了 ××× -->
-        <view> {{item.typeName}}了</view>
         <view class='time'> {{item.pastTime}} </view>
+        <view hidden='{{item.hidden}}'>
+          <view>折叠</view>
+          <view class='avatar'> {{item.userAvatar}} </view>
+        </view>
       </view>
     </block>
 
