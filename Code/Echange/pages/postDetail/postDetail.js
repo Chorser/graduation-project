@@ -96,6 +96,7 @@ Page({
     isme.id = userId;
 
     var wid = that.data.notice.id; //商品Id
+    var wTitle = that.data.notice.title; //商品名称
     var Notice = Bmob.Object.extend("Published_notice");
     var noticePointer = new Notice();
     noticePointer.id = wid;
@@ -148,6 +149,7 @@ Page({
               message.set("userName", username); // 我的名称
               message.set("user", isme);
               message.set("wid", wid); //商品ID
+              messge.set("wTitle", wTitle);
               message.set("fid", publisherId);
               message.set("is_read", false); //是否已读 boolean
               message.save().then((res) => {

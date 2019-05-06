@@ -19,7 +19,7 @@
     <block wx:if="{{messageList.length > 0}}">
       <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showFold' data-index='{{index}}'>
         <view class='msg'>
-          <image class='un-read' wx:if="{{item.isRead == false}}" style='' src='/images/redpoint.png' /> 用户 {{item.userName}} {{item.typeName}}了 您的商品
+          <image class='un-read' wx:if="{{item.isRead == false}}" style='' src='/images/redpoint.png' /> 用户 {{item.userName}} {{item.typeName}}了 您的商品 {{item.noticeTitle}}
         </view>
         <view class='time'> {{item.pastTime}} </view>
         <!-- ×××收藏了 ××× -->

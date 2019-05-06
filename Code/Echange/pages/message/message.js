@@ -51,6 +51,7 @@ Page({
       console.log(item)
       var publisherId = item.get("fid");
       var noticeId = item.get("wid");
+      var noticeTitle = item.get("wTitle");
       var user = item.get("user"); //做出操作的用户
       var userName = item.get("userName");
       var userAvatar = item.get("avatarUrl");
@@ -67,6 +68,7 @@ Page({
       jsonA = {
         "publisherId": publisherId || '',
         "noticeId": noticeId || '',
+        "noticeTitle": noticeTitle || '',
         "typeName": typeName || '',
         "userName": userName || '',
         "userAvatar": userAvatar || '',
@@ -96,7 +98,7 @@ Page({
       if (!that.data.messageList[index].isRead) {
         wx.showToast({
           title: '标记已读',
-          duration: 500
+          duration: 1500
         })
       }
       that.setData({
@@ -119,7 +121,7 @@ Page({
 function getTypeName(type) {
   var typeName = "";
   if (type == 1) typeName = "	收藏 ";
-  else if (type == 2) typeName = "取消收藏";//?
+  else if (type == 2) typeName = "取消收藏";//?取消收藏 就删除收藏消息
   else if (type == 3) typeName = "评论";
   else if (type == 4) typeName = "回复";
   else if (type == 5) typeName = "购买";

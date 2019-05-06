@@ -61,8 +61,8 @@ Page({
   },
 
   onShow: function () {
-    // this.getAll(); // 获取页数
-    // this.getList();
+    this.getAll(); // 获取页数
+    this.getList();
   },
 
   handleChange: function (e) {
