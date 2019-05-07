@@ -7,6 +7,7 @@ var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var mapManager = new QQMapWX({
   key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
 });
+// 位置以 主页选择的 位置作为自己的位置?
 
 Page({
   data: {

@@ -95,10 +95,19 @@ Page({
     var ifread = "messageList[" + index + "].isRead";
     if (that.data.messageList[index].hidden == true) {
       console.log("展开");
+      
       if (!that.data.messageList[index].isRead) {
+        var objectId = that.data.messageList[index].id;
+        var Message = Bmob.Object.extend("Message");
+        var query = new Bmob.Query(Message);
+        query.get(objectId).then(res => {
+          res.set('is_read', true);
+          res.save();
+        })
+
         wx.showToast({
           title: '标记已读',
-          duration: 1500
+          duration: 1200
         })
       }
       that.setData({

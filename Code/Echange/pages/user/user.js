@@ -41,7 +41,8 @@ Page({
     this.setData({
       avatarUrl: this.currentUser.get("avatar")._url || '',
       nickName: this.currentUser.get("nickName") || '',
-      gender: this.currentUser.get("gender") || 1
+      gender: this.currentUser.get("gender") || 1,
+      school: this.currentUser.get("school") || ''
     })
 
     if (this.data.gender != 1) {
@@ -95,24 +96,21 @@ Page({
 
   changeSchool() {
     var that = this;
-    // // console.log(this.data.address)
-    // if (!this.data.address || this.data.address == '') {
+    console.log(this.data.school)
+    if (!this.data.school || this.data.school == '') {
       //获取当前位置
-    mapManager.search({
-      keyword: '学校',
-      success: function (res) {
-        console.log(res);
-        var addresses = res.data;
-        that.setData({
-          school: addresses[0].title
-        })
-      },
-      fail: function (res) {
-        console.log(res.status, res.message);
-      },
-      complete: function (res) {
-        console.log(res.status, res.message);
-      }
+      mapManager.search({
+        keyword: '大学',
+        success: function (res) {
+          console.log(res);
+          var addresses = res.data;
+          that.setData({
+            school: addresses[0].title
+          })
+        },
+        fail: function (res) {
+          console.log(res.status, res.message);
+        }
 
       // wx.getLocation({
       //   type: 'wgs84',
@@ -145,7 +143,7 @@ Page({
       //     console.log(err);
       //   },
       })
-    // }
+    }
   },
 
   // 保存用户的修改
@@ -159,7 +157,8 @@ Page({
       success: function(result) {
         result.set('nickName', that.data.nickName)
         result.set('gender', that.data.gender)
-
+        result.set('school', that.data.school)
+        
         if (that.data.isSrc == true) {
           var url = that.data.avatarUrl;
           result.set('avatarUrl', that.data.avatarUrl[0])
@@ -177,6 +176,7 @@ Page({
           that.currentUser.set('avatarUrl', that.data.avatarUrl)
           that.currentUser.set('avatar', file)
           that.currentUser.set('gender', that.data.gender)
+          that.currentUser.set('school', that.data.school)
           Bmob.User._saveCurrentUser(that.currentUser);
 
           app.globalData.currentUser = Bmob.User.current();

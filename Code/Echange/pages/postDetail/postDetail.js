@@ -28,6 +28,7 @@ Page({
   },
 
   onLoad: function(options) {
+
     if (options.isMyPost) {
       //用户查看自己的发布商品详情 特殊处理
       this.setData({
@@ -57,7 +58,7 @@ Page({
       noPic: noPict,
       indicatorDots: showDots,
 
-      isLiked: data.isLiked,
+      isLiked: data.isLiked || false,
       isSoldOut: isSoldOut
     })
 
@@ -89,7 +90,7 @@ Page({
   // 更改收藏状态
   onCollectionTap: function() {
     var that = this;
-    var isLiked = that.data.isLiked; //是否是收藏状态
+    var isLiked = that.data.isLiked || false ; //是否是收藏状态
 
     var userId = app.globalData.currentUser.id;
     var isme = new Bmob.User();
@@ -153,7 +154,7 @@ Page({
               message.set("fid", publisherId);
               message.set("is_read", false); //是否已读 boolean
               message.save().then((res) => {
-                console.log("消息生成 ", res);
+                console.log("消息已生成 ", res);
               });
             } else {
               console.log(result);
@@ -309,6 +310,17 @@ Page({
               // TODO 显示留言
             }
           })
+
+          var seller = new Bmob.User();
+          seller.id = that.data.notice.publisherId;
+          // 发消息
+          createMessage({
+            type: 3, // 3为评论
+            isme: me,
+            wid: notice.id,
+            wName: that.data.notice.title,
+            publisherId: seller.id
+          })
         }
 
       });
@@ -327,61 +339,72 @@ Page({
   //订购确认
   toBuy: function() {
     var that = this;
-    wx.showModal({
-      title: '订购确认',
-      content: '需要支付' + this.data.notice.price + '元，确定要购买该商品吗？',
-      success: function(res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
 
-          // 物品状态改为已出售
-          var Notice = Bmob.Object.extend("Published_notice");
-          var notice = new Notice();
-          notice.id = that.data.notice.id;
+    var price = this.data.notice.price;
+    if (price == null || price == '') {
+      wx.showToast({
+        title: '请先联系卖家改价',
+      })
+    } else {
 
-          var noticeQuery = new Bmob.Query(Notice);
-          noticeQuery.get(that.data.notice.id).then(res => {
-            res.set("status", 1);
-            res.save();
+      wx.showModal({
+        title: '订购确认',
+        content: '需要支付' + this.data.notice.price + '元，确定要购买该商品吗？',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
 
-            let temp =  that.data.notice;
-            temp.status = 1;
-            that.setData({
-              notice: temp,
-              isSoldOut: true
-            })
-            //buyer
-            var isme = new Bmob.User();
-            isme.id = app.globalData.currentUser.id;
-            
-            var seller = new Bmob.User();
-            seller.id = that.data.notice.publisherId;
+            // 物品状态改为已出售
+            var Notice = Bmob.Object.extend("Published_notice");
+            var notice = new Notice();
+            notice.id = that.data.notice.id;
 
-            // 增加订单
-            createOrder({
-              publisherId: seller.id,
-              price: that.data.notice.price,
-              notice: notice,
-              isme: isme,
-              seller: seller
-            })
+            var noticeQuery = new Bmob.Query(Notice);
+            noticeQuery.get(that.data.notice.id).then(res => {
+              res.set("status", 1);
+              res.save();
 
-            // 发消息
-            createMessage({
-              type: 5, // 5为购买
-              // avatar: avatar,
-              // username: username,
-              isme: isme,
-              wid: notice.id,
-              wName: that.data.notice.title,
-              publisherId: seller.id
+              let temp =  that.data.notice;
+              temp.status = 1;
+              that.setData({
+                notice: temp,
+                isSoldOut: true
+              })
+              //buyer
+              var isme = new Bmob.User();
+              isme.id = app.globalData.currentUser.id;
+              
+              var seller = new Bmob.User();
+              seller.id = that.data.notice.publisherId;
+
+              // 增加订单
+              createOrder({
+                publisherId: seller.id,
+                price: that.data.notice.price,
+                notice: notice,
+                isme: isme,
+                seller: seller
+              })
+
+              // 发消息
+              createMessage({
+                type: 5, // 5为购买
+                // avatar: avatar,
+                // username: username,
+                isme: isme,
+                wid: notice.id,
+                wName: that.data.notice.title,
+                publisherId: seller.id
+              });
             });
-          });
-        } else if (res.cancel) {
-          console.log('用户点击取消')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
         }
-      }
-    })
+      })
+
+    }
+
   }
 })
 
@@ -417,7 +440,7 @@ function createOrder(data) {
 function createMessage(data) {
   var Message = Bmob.Object.extend("Message");
   var message = new Message();
-  message.set("msgType", data.type); // 5为购买
+  message.set("msgType", data.type);
   message.set("avatarUrl", app.globalData.currentUser.get("avatar").url); //我的头像
   message.set("userName", app.globalData.currentUser.get("nickName")); // 我的名称
   

@@ -13,7 +13,7 @@
 }
 
 .section input {
-  width: 400rpx;
+  width: 440rpx;
   text-align: right;
 }
 

@@ -5,6 +5,14 @@ var common = require('../../utils/common.js')
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
 var app = getApp()
+
+// 引入SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+// 实例化API核心类
+var mapManager = new QQMapWX({
+  key: 'OZQBZ-O7UKU-LW4VZ-43PF2-NVGZ7-H4FNU'
+});
+
 var that;
 var allList;
 Page({
@@ -15,7 +23,6 @@ Page({
     },
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
-
 
     buttonClicked: false, //是否点击跳转
     typeId: 0, //选择的分类ID
@@ -39,7 +46,7 @@ Page({
     console.log(this.data.types)
   },
 
-  //选择要查询的活动类型
+  //选择要查询的商品类型
   chooseType: function(e) {
     var typeId = e.currentTarget.id;
     if (typeId == 0)
@@ -76,7 +83,12 @@ Page({
         noticeList: this.data.noticeList.sort(sortBy('pastTime', false)),
       })
     }
-    else if (op == 1) ;
+    else if (op == 1) {
+      // TODO 计算距离
+
+      mapManager
+    
+    }
 
     else if (op == 2) {
       this.setData({
@@ -179,6 +191,11 @@ Page({
       var longitude = item.get("longitude");
       var latitude = item.get("latitude");
 
+      // var toAddress = { longitude: longitude, latitude: latitude};
+      var toAddress = longitude + ',' + latitude;
+      console.log(toAddress);
+      that.calculateDistance(toAddress);
+
       // var isLike = 0;
       // var commentnum = item.get("commentnum");
       var id = item.id;
@@ -268,6 +285,35 @@ Page({
     })
   },
 
+  calculateDistance: function (dest) {
+    var that = this;
+    //调用距离计算接口
+    mapManager.calculateDistance({
+      //mode: 'walking', //可选值：'driving'、'walking' 'straight'（直线） ，不填默认：'walking'
+      //获取表单提交的经纬度并设置from和to参数（示例为string格式）
+      // from: data.start || '', //若起点有数据则采用起点坐标，若为空默认当前地址
+      to: dest, //终点坐标
+      success: function (res) {//成功后的回调
+        console.log(res);
+        var res = res.result;
+        var dis = [];
+        for (var i = 0; i < res.elements.length; i++) {
+          dis.push(res.elements[i].distance); //将返回数据存入dis数组，
+        }
+        // that.setData({ //设置并更新distance数据
+        //   distance: dis
+        // });
+      },
+      fail: function (error) {
+        console.error(error);
+      // },
+      // complete: function (res) {
+      //   console.log(res);
+      }
+    });
+  },
+
+  // wxSearch 方法
   wxSearchInput: function(e) {
     var that = this
     WxSearch.wxSearchInput(e, that);
