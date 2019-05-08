@@ -101,6 +101,7 @@ Page({
         var Message = Bmob.Object.extend("Message");
         var query = new Bmob.Query(Message);
         query.get(objectId).then(res => {
+          console.log(res);
           res.set('is_read', true);
           res.save();
         })

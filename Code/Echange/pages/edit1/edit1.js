@@ -74,7 +74,7 @@ Page({
   },
 
   setPrice: function (e) {
-    this.data.price = e.detail.value;
+    this.data.price = parseFloat(e.detail.value);
     console.log(this.data.price)
   },
 
@@ -307,11 +307,14 @@ Page({
         result.save().then((res) => {
           wx.showToast({
             title: '修改成功！',
+            duration: 1500
           })
 
-          wx.navigateBack({
-            delta: 2 //回跳两页
-          })
+          setTimeout(function () {
+            wx.navigateBack({
+              delta: 2 //回跳两页
+            })
+          }, 1500)
         })
       }
     })

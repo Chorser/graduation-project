@@ -105,20 +105,21 @@ swiper {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  margin: 10px 0;
+  margin: 10rpx 0;
   vertical-align: middle;
   display: inline-block;
 }
 .comment_block .block1 .pName {
-  margin-left: 10px;
   display: inline-block;
+  flex: 1;
+  margin:10px;
 }
 .comment_block .block1 .time {
   display: inline-block;
-  margin-left: 40%;
   font-size: 28rpx;
-  width: 120px;
   text-align: right;
+  flex:2;
+  margin:10px 0;
 }
 .block-line {
   width: 100%;

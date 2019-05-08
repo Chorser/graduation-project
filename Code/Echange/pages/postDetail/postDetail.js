@@ -149,18 +149,28 @@ Page({
               var username = app.globalData.currentUser.nickName;
               console.log(app.globalData.currentUser);
 
-              var message = new Message();
-              message.set("msgType", 1); // 1为收藏
-              message.set("avatar", value); //我的头像
-              message.set("userName", username); // 我的名称
-              message.set("user", isme);
-              message.set("wid", wid); //商品ID
-              message.set("wTitle", wTitle);
-              message.set("fid", publisherId);
-              message.set("is_read", false); //是否已读 boolean
-              message.save().then((res) => {
-                console.log("消息生成成功 ", res);
+              // var message = new Message();
+              // message.set("msgType", 1); // 1为收藏
+              // message.set("avatar", value); //我的头像
+              // message.set("userName", username); // 我的名称
+              // message.set("user", isme);
+              // message.set("wid", wid); //商品ID
+              // message.set("wTitle", wTitle);
+              // message.set("fid", publisherId);
+              // message.set("is_read", false); //是否已读 boolean
+              // message.save().then((res) => {
+              //   console.log("消息生成成功 ", res);
+              // });
+
+              // 发消息
+              createMessage({
+                type: 1, // 5为购买
+                isme: isme,
+                wid: wid,
+                wTitle: wTitle,
+                publisherId: publisherId
               });
+
             } else {
               console.log("消息表中已存在该条消息，不生成新消息");
               console.log(result);
@@ -396,7 +406,7 @@ Page({
             type: 3, // 3为评论
             isme: me,
             wid: notice.id,
-            wName: that.data.notice.title,
+            wTitle: that.data.notice.title,
             publisherId: seller.id
           })
         }
@@ -467,11 +477,9 @@ Page({
               // 发消息
               createMessage({
                 type: 5, // 5为购买
-                // avatar: avatar,
-                // username: username,
                 isme: isme,
                 wid: notice.id,
-                wName: that.data.notice.title,
+                wTitle: that.data.notice.title,
                 publisherId: seller.id
               });
             });
@@ -524,9 +532,10 @@ function createMessage(data) {
   
   message.set("user", data.isme);
   message.set("wid", data.wid); //商品ID
+  message.set("wTitle", data.wTitle); // 商品发布标题
   message.set("fid", data.publisherId);
   message.set("is_read", false); //是否已读 boolean
   message.save().then((res) => {
-    console.log("创建消息 ", res);
+    console.log("创建消息成功", res);
   });
 }

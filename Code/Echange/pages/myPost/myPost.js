@@ -56,7 +56,12 @@ Page({
     var that = this;
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
-    query.equalTo("userId", app.globalData.currentUser.id);
+    
+    var userId = app.globalData.currentUser.id;
+    var isme = new Bmob.User();
+    isme.id = userId;
+    query.equalTo("publisher", userId);
+
     query.count({
       success: function (count) {
         that.setData({
@@ -74,8 +79,11 @@ Page({
     var that = this;
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
-    query.equalTo("userId", app.globalData.currentUser.id);
-    // query.include("publisher"); // 同时获取发布者信息 我的信息就行
+    
+    var userId = app.globalData.currentUser.id;
+    var isme = new Bmob.User();
+    isme.id = userId;
+    query.equalTo("publisher", userId);
     query.descending('createdAt');
     query.limit(that.data.limit);
 
