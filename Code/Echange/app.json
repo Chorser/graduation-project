@@ -12,7 +12,8 @@
     "pages/postDetail/postDetail",
     "pages/search/search",
     "pages/message/message",
-    "pages/myLike/myLike"
+    "pages/myLike/myLike",
+    "pages/myOrder/myOrder"
   ],
   "permission": {
     "scope.userLocation": {

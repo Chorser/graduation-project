@@ -15,6 +15,7 @@ Page({
     messageList: [],
     totalCount: 0,
     limit: 10,
+    unread: 0,
   },
 
   /**
@@ -47,6 +48,7 @@ Page({
   dealWithData: function (results) {
     var that = this;
     var list = new Array();
+    var unreadCnt = 0;
     results.forEach(function (item) {
       console.log(item)
       var publisherId = item.get("fid");
@@ -59,6 +61,8 @@ Page({
       var typeName = getTypeName(typeId); //根据类型id获取消息类型名称
       var isRead = item.get("is_read"); 
       var pastTime = util.pastTime(item.updatedAt);
+      if (isRead == false) unreadCnt++;
+       
       // var _url = null
       // var ava = item.get("avatar");
       // if (ava) {
@@ -66,6 +70,7 @@ Page({
       // }
       var jsonA;
       jsonA = {
+        "id": item.id,
         "publisherId": publisherId || '',
         "noticeId": noticeId || '',
         "noticeTitle": noticeTitle || '',
@@ -84,7 +89,8 @@ Page({
     }, 500);
 
     that.setData({
-      messageList: list
+      messageList: list,
+      unread: unreadCnt
     })
   },
 
@@ -103,7 +109,14 @@ Page({
         query.get(objectId).then(res => {
           console.log(res);
           res.set('is_read', true);
-          res.save();
+          res.save({
+            success: function (res) {
+              console.log(res);
+            },
+            fail: function (err) {
+              console.log(err);
+            }
+          });
         })
 
         wx.showToast({
@@ -111,9 +124,11 @@ Page({
           duration: 1200
         })
       }
+      var unreadcnt = --that.data.unread;
       that.setData({
         [now]: false,
         [ifread]: true,
+        unread: unreadcnt
       })
       
       //TODO 数据库操作

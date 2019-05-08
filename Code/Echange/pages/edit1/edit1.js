@@ -29,29 +29,21 @@ Page({
     price: null,
 
     address: "",
-    longitude: 0,
-    latitude: 0,
+    longitude: null,
+    latitude: null,
 
     isModify: false,
     objectId: ''
   },
 
   onLoad: function (options) {
-
     if (options.data) {
       //修改已保存的信息
       console.log(options.data);
-      this.setOldData(options.data);
-      this.setData({
-        isModify: true
-      })
+      this.setOldData(options.data); // 设置已有数据
     }
-
-    var that = this;
-    that.setData({
-      src: "",
-      isSrc: false,
-
+    
+    this.setData({
       types: app.globalData.typeList
     })
     console.log(this.data.types)
@@ -92,11 +84,11 @@ Page({
         type: 'wgs84',
         success(res) {
           console.log(res)
-          var latitude = res.latitude
-          var longitude = res.longitude
+          // var latitude = res.latitude
+          // var longitude = res.longitude
           that.setData({
             latitude: res.latitude,
-            longitude: res.longitude
+            longitude: res.longitude,
           })
           // 调用接口转换成具体位置
           mapManager.reverseGeocoder({
@@ -106,8 +98,9 @@ Page({
             },
             success: function (res) {
               console.log(res.result);
+              var address = res.result.formatted_addresses.recommend;
               that.setData({
-                address: res.result.formatted_addresses.recommend
+                address: address
               })
             },
             fail: function (res) {
@@ -193,7 +186,7 @@ Page({
 
   //删除图片
   clearPic: function () {
-    that.setData({
+    this.setData({
       isSrc: false,
       src: ""
     })
@@ -267,7 +260,14 @@ Page({
   setOldData: function (data) {
     var data = JSON.parse(data);
     console.log(data);
+    if (data.pic == null || data.pic == '') {
+      var isSrc = false;
+    } else {
+      var isSrc = true;
+    }
     this.setData({
+      isModify: true,
+
       title: data.title,
       description: data.description,
       noteNowLen: data.description.length,
@@ -276,11 +276,12 @@ Page({
       address: data.address,
       longitude: data.longitude,
       latitude: data.latitude,
-      isSrc: true,
+      isSrc: isSrc,
       src: data.pic || '',
 
       objectId: data.id
     })
+    this.oldSrc = data.pic;
   },
 
   // 修改
@@ -295,13 +296,15 @@ Page({
         result.set('description', that.data.description)
         result.set('price', that.data.price)
         result.set('typeId', parseInt(that.data.typeIndex));
-        // 图片上传
-        if (that.data.isSrc == true) {
-          var name = that.data.src;
-          var file = new Bmob.File(name, that.data.src);
-          file.save();
-          
-          result.set('pic1', file);
+        
+        if (that.oldSrc != that.data.src) {
+          // 新图片上传
+          if (that.data.isSrc == true) {
+            var name = that.data.src;
+            var file = new Bmob.File(name, that.data.src);
+            file.save();
+            result.set('pic1', file);
+          }
         }
 
         result.save().then((res) => {

@@ -1,18 +1,25 @@
 /*悬浮按钮*/
-.searchBtn {
+.searchBtn, .refreshBtn {
   position: fixed;
   width: 100rpx;
   height: 100rpx;
   display: block;
   padding: 0;
   background-size: cover;
-  background-color: #1296db;
   right: 30rpx;
-  bottom: 40rpx;
   border-radius: 50%;
   z-index: 999; 
 }
-.icon-search {
+.searchBtn {
+  background-color: #1296db;
+  bottom: 40rpx;
+}
+.refreshBtn {
+  bottom: 160rpx;
+  background-color: #f3f3f3;
+  border: 1rpx solid #1296db;
+}
+.icon-search, .icon-refresh {
   width: 40rpx;
   height: 40rpx;
   padding: 30rpx;

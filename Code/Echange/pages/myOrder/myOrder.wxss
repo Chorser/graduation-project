@@ -1,0 +1,50 @@
+.list-title-content {
+  padding: 16rpx 0rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 99;
+  left: 60rpx;
+  top: 80rpx;
+}
+
+.list-title-content text {
+  font-size: 48rpx;
+  line-height: 48rpx;
+  color: #fff;
+}
+.list-title-content text {
+  font-size: 48rpx;
+  line-height: 48rpx;
+  color: #fff;
+}
+
+.list-title-line {
+  width: 95px;
+  padding: 16rpx 0rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  border-bottom: 1px solid #fff;
+  z-index: 2;
+  left: 64rpx;
+  top: 140rpx;
+}
+
+.list-title-brief {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 2;
+  left: 60rpx;
+  top: 180rpx;
+}
+
+.list-title-brief text {
+  font-size: 32rpx;
+  line-height: 32rpx;
+  color: #fff;
+}

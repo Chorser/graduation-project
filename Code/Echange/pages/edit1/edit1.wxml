@@ -45,7 +45,7 @@
     <!-- 点击自动获取定位，无准确颗点击图标 地图选点 -->
     <input type='text' style='flex:1; padding-left:20px;' bindtap='getPosition' 
     bindinput='setAddress' value='{{address}}' placeholder='获取位置' />
-    <image class="map" mode="aspectFill" src="/images/navbar/map_white.png" style='float:right;width:30px;height:30px;background-color:blue;'/>
+    <image class="map" mode="aspectFill" src="/images/map.png" style='float:right;width:30px;height:30px;'/>
   </view>
 
 

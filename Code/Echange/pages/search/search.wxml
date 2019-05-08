@@ -16,9 +16,16 @@
 <template is="wxSearch" data="{{wxSearchData}}" />
 <view class="scontainer">
   <view class="choose_type">
-    <view style="border-bottom:1rpx solid #e6e6e6;" wx:for="{{types}}" wx:key="index">
-      <view class="choose_type_item" style="color:#{{typeId==index?'fff':'118fff'}};background:#{{typeId==index?'118fff':'fff'}};" bindtap="chooseType" id="index">{{index==0?'全部':types[index]}}</view>
-    </view>
+      <view class="choose_type_item" style="color:#{{typeId==0?'fff':'118fff'}};background:#{{typeId==0?'118fff':'fff'}};" bindtap="chooseType" id="0">全部</view>
+      <view class="choose_type_item" style="color:#{{typeId==1?'fff':'118fff'}};background:#{{typeId==1?'118fff':'fff'}};" bindtap="chooseType" id="1">生活用品</view>
+      <view class="choose_type_item" style="color:#{{typeId==2?'fff':'118fff'}};background:#{{typeId==2?'118fff':'fff'}};" bindtap="chooseType" id="2">学习用品</view>
+      <view class="choose_type_item" style="color:#{{typeId==3?'fff':'118fff'}};background:#{{typeId==3?'118fff':'fff'}};" bindtap="chooseType" id="3">美妆服饰</view>
+      <view class="choose_type_item" style="color:#{{typeId==4?'fff':'118fff'}};background:#{{typeId==4?'118fff':'fff'}};" bindtap="chooseType" id="4">电子产品</view>
+      <view class="choose_type_item" style="color:#{{typeId==5?'fff':'118fff'}};background:#{{typeId==5?'118fff':'fff'}};" bindtap="chooseType" id="5">二手书籍</view>
+    <!-- <view style="border-bottom:1rpx solid #e6e6e6;" wx:for="{{types}}"> -->
+
+      <!-- <view class="choose_type_item" style="color:#{{typeId==index?'fff':'118fff'}};background:#{{typeId==index?'118fff':'fff'}};" bindtap="chooseType" id="index">{{index==0?'全部':types[index]}}</view> -->
+    <!-- </view> -->
   </view>
 
   <!-- 排序方式选择 -->
@@ -35,7 +42,7 @@
   </view>
 
   <!-- 搜索结果列表 -->
-  <view class="index-container" style='width:90%;'>
+  <view class="index-container" style='width:95%;'>
     <!--无记录-->
     <view wx:if="{{noticeList.length == 0}}">
       <view class="imgitem">
@@ -48,11 +55,14 @@
 
     <view wx:if="{{noticeList.length > 0}}">
       <view class="notices" wx:for="{{noticeList}}" wx:key="index">
-        <view class="notice notice_block" index="{{index}}" data-index='{{index}}' bindtap='showPostDetail'>
-          <image class='avatar' src="{{ item.publisherPic }}"></image>
-          <view class='block1'>
-            <text class='pName'>{{item.publisherName}}</text>
-            <view class='time'> {{item.pastTime}}发布 </view>
+        <view class="notice notice_block" index="{{index}}" data-index='{{index}}' bindtap='showPostDetail' >
+          <view class style='display: flex;'>
+            <image class='avatar'  src="{{ item.publisherPic }}"></image>
+            <view class='block1' style='flex:1' >
+              <text class='pName'>{{item.publisherName}}</text>
+              <view class='time' > {{item.pastTime}}发布 </view>
+            </view>
+            <view wx:if='{{op==1}}' class='distance' style='flex:1;font-size:16px;text-align:right;'>  {{item.distance=='999999'?'遥不可及':'距我' + item.distance + 'km' }} </view>
           </view>
 
           <!-- <view wx:if="{{item._url!=''}}"> -->

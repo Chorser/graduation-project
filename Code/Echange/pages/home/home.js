@@ -23,7 +23,7 @@ Page({
     //分页加载
     currentPage: 0, //当前页
     isLastPage: false, // 标记是否是最后一页
-    limitPage: 5,//每页显示几条信息
+    limitPage: 10,//每页显示几条信息
     lastPageNum: 0, //最后一页显示的信息数量
     totalPage: 0, //发布的信息总页数
 
@@ -126,7 +126,7 @@ Page({
       success: function (count) {
         var totalPage = 0;
         var lastPageNum = 0;
-        if (count % that.data.limitPage == 0) {
+        if (count % that.data.limitPage == 0) { //刚好取余
           totalPage = parseInt(count / that.data.limitPage);
         } else {
           var lowPage = parseInt(count / that.data.limitPage);
@@ -261,6 +261,7 @@ Page({
     if (that.data.isLastPage) {
       return;
     }
+    
     wx.showLoading({
       title: '正在加载',
       mask: true
@@ -268,11 +269,12 @@ Page({
     setTimeout(function () {
       wx.hideLoading();
     }, 1000);
+
     that.setData({
       currentPage: that.data.currentPage + 1
     });
     //判断是不是最后一页
-    if (that.data.currentPage + 1 >= that.data.totalPage) {
+    if (that.data.currentPage + 1 == that.data.totalPage) {
       that.setData({
         isLastPage: true
       })
@@ -303,10 +305,16 @@ Page({
     })
     this.onShow();
 
+    // setTimeout(function () {
+      // wx.stopPullDownRefresh(); //处理完终止下拉刷新
+    // }, 500);
+    wx.showLoading({
+      title: '正在刷新',
+      mask: true
+    });
     setTimeout(function () {
-      wx.stopPullDownRefresh(); //处理完终止下拉刷新
+      wx.hideLoading();
     }, 500);
-
   },
 
   //跳转详情页

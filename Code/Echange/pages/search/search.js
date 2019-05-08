@@ -44,6 +44,15 @@ Page({
       types: app.globalData.typeList
     })
     console.log(this.data.types)
+
+    wx.getLocation({
+      success: function (res) {
+        that.setData({
+          mylatitude: res.latitude,
+          mylongitude: res.longitude,
+        });
+      }
+    })
   },
 
   //选择要查询的商品类型
@@ -67,6 +76,10 @@ Page({
       this.setData({
         noticeList: this.data.type4List
       });
+    else if (typeId == 5)
+      this.setData({
+        noticeList: this.data.type5List
+      });
     this.setData({
       typeId: typeId
     })
@@ -85,9 +98,9 @@ Page({
     }
     else if (op == 1) {
       // TODO 计算距离
-
-      mapManager
-    
+      this.setData({
+        noticeList: this.data.noticeList.sort(sortBy('distance', true)),
+      })
     }
 
     else if (op == 2) {
@@ -116,6 +129,7 @@ Page({
         var type2List = new Array(); //学习用品
         var type3List = new Array(); //美妆服饰
         var type4List = new Array(); //电子产品
+        var type5List = new Array(); //二手书籍
 
         for (var i in list) {
           // console.log(list[i])
@@ -123,6 +137,7 @@ Page({
           else if (list[i].typeId == 2) type2List.push(list[i]);
           else if (list[i].typeId == 3) type3List.push(list[i]);
           else if (list[i].typeId == 4) type4List.push(list[i]);
+          else if (list[i].typeId == 5) type5List.push(list[i]);
         }
         that.setData({
           noticeList: list,
@@ -130,6 +145,7 @@ Page({
           type2List: type2List,
           type3List: type3List,
           type4List: type4List,
+          type5List: type5List,
         })
 
         allList = list;
@@ -180,6 +196,7 @@ Page({
   dealWithData: function(results) {
     var that = this;
     var list = new Array();
+    
     results.forEach(function(item) {
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
@@ -191,10 +208,23 @@ Page({
       var longitude = item.get("longitude");
       var latitude = item.get("latitude");
 
-      // var toAddress = { longitude: longitude, latitude: latitude};
-      var toAddress = longitude + ',' + latitude;
-      console.log(toAddress);
-      that.calculateDistance(toAddress);
+      // 距离计算
+      // var distance = -1;
+      // // var toAddress = { longitude: longitude, latitude: latitude};
+      // if (longitude && latitude) {
+      //   var toAddress = longitude + ',' + latitude;
+      //   console.log(toAddress);
+      //   distance =  that.calculateDistance(toAddress);
+      // }
+      // console.log(latitude , longitude)
+      if (latitude == undefined || longitude == undefined) {
+        var dis = 999999;
+      } else {
+        var dis = getDistance(that.data.mylatitude, that.data.mylongitude, longitude, latitude) / 1000000;
+      }
+      // console.log("distance:", dis);
+      var tmp = dis.toString();
+      var distance = tmp.substring(0, 6);
 
       // var isLike = 0;
       // var commentnum = item.get("commentnum");
@@ -245,6 +275,7 @@ Page({
         "address": address,
         "latitude": latitude,
         "longitude": longitude,
+        "distance": distance
       }
       list.push(jsonA);
     });
@@ -285,6 +316,7 @@ Page({
     })
   },
 
+
   calculateDistance: function (dest) {
     var that = this;
     //调用距离计算接口
@@ -298,11 +330,13 @@ Page({
         var res = res.result;
         var dis = [];
         for (var i = 0; i < res.elements.length; i++) {
+          var x = res.elements[i].distance;
           dis.push(res.elements[i].distance); //将返回数据存入dis数组，
         }
         // that.setData({ //设置并更新distance数据
         //   distance: dis
         // });
+        return x;
       },
       fail: function (error) {
         console.error(error);
@@ -354,6 +388,21 @@ function getTypeName(typeId) {
   return typeName;
 }
 
+function getDistance(lat1, lng1, lat2, lng2) {
+  lat1 = lat1 || 0;
+  lng1 = lng1 || 0;
+  lat2 = lat2 || 0;
+  lng2 = lng2 || 0;
+
+  var rad1 = lat1 * Math.PI / 180.0;
+  var rad2 = lat2 * Math.PI / 180.0;
+  var a = rad1 - rad2;
+  var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+  var r = 6378137;
+  var distance = r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)));
+
+  return distance;
+}
 
 /**数组根据数组对象中的某个属性值进行排序的方法 
      * 使用例子：newArray.sort(sortBy('number',false)) //表示根据number属性降序排列;若第二个参数不传递，默认表示升序排序

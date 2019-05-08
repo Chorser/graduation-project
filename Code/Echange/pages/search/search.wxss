@@ -470,7 +470,7 @@ swiper-item, swiper-item image {
 .notice_block .block1 {
   width: 150px;
   height: 60px;
-  margin-left: 70px;
+  margin-left: 10px;
 }
 
 .notice_block .pName {

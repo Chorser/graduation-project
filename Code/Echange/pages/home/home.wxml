@@ -7,6 +7,10 @@
     <image class='icon-search' src='../../images/search.png'/>
   </div>
 
+  <div class='refreshBtn' bindtap='refresh'>
+    <image class='icon-refresh' src='../../images/refresh.png'/>
+  </div>
+
 <!-- <view class='header'>
     <view bindtap='openMap'>
       <view wx:if="{{!addressName}}">

@@ -11,7 +11,7 @@
     </view>
     <view class="list-title-line"></view>
     <view class="list-title-brief">
-      <text>共有{{messageList.length}}条未读消息</text>
+      <text>共有{{messageList.length}}条消息  {{ unread }}条未读</text>
     </view>
   </view>
 
