@@ -21,7 +21,7 @@
     </view>
     <view class='content'> {{notice.description}} </view>
 
-    <!--定位  收藏-->
+    <!--tool:定位、收藏-->
     <view class="tool">
       <view class='tool-item location' catchtap='onLocationTap'>
         <image wx:if="{{notice.address}}" src="/images/map.png"></image>
@@ -48,11 +48,24 @@
   <!-- 留言墙 -->
   <view class='block commentBoard'>
     <view class='commentBoardTitle'>
-      留言板
-      <view class='commentBtn' style="" bindtap='openMessage'>我要留言</view>
+      留言板 <view class='commentBtn' bindtap='openComment'>我要留言</view>
     </view>
 
-    <view class='font-minor no-comment' style=''>还没有人留言，快来抢个沙发吧！</view>
+    <view wx:if='{{commentList.length > 0}}'>
+    <!-- 留言列表 -->
+      <view class='comment_block' wx:for="{{ commentList }}" wx:key="index" bindtap='' data-index='{{index}}'>
+        <view class='block1'>
+          <image class='comment_avatar' src="{{ item.pAvatar }}"></image>
+          <view class='pName'>{{ item.pName }}</view>
+          <view class='font-minor time' style=""> {{ item.pastTime }}来过 </view>
+        </view>
+        <view class='content'>{{ item.content}}</view>
+
+        <view class='block-line'></view>
+      </view>
+    </view>
+
+    <view wx:else class='font-minor no-comment'>还没有人留言，快来抢个沙发吧！</view>
 
     <modal hidden="{{hideModal}}" id="modal" title="留言内容" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
       <textarea class='weui-textarea' bindinput='setComment' style="height: 4em" placeholder='输入你的留言' />

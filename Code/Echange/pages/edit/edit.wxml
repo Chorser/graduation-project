@@ -8,7 +8,7 @@
     <!-- <view style='  text-align: center;'>发布与招募须知</view> -->
     <view style='  text-align: center;'>发布须知</view>
     <!-- <view>一、发布与招募原则</view> -->
-    <view>1. 每个用户可以发布自己闲置物品转让信息或自己需要的二手物品；</view>
+    <view>1. 每个用户可以发布自己闲置物品转让信息；</view>
     <view>2. 发布物品时必须上传实物图片，不得使用虚假图片；</view>
     <view>3. 同一物品只能发布一次，不得重复发布；</view>
     <view>4. 不允许发布广告商品或信息，一经发现予以删除与封禁；</view>

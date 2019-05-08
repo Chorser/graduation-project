@@ -45,14 +45,14 @@ Page({
           item.viewCount = item.viewCount || 0;
           item.likeCount = item.likeCount || 0;
 
-          var isLiked = false;
-          if (item.liker) {
-            item.liker.forEach(function(i) {
-              if (i == app.globalData.currentUser.id) {
-                isLiked = true;
-              }
-            })
-          }
+          var isLiked = true;
+          // if (item.liker) {
+          //   item.liker.forEach(function(i) {
+          //     if (i == app.globalData.currentUser.id) {
+          //       isLiked = true;
+          //     }
+          //   })
+          // }
           item.isLiked = isLiked;
 
           var publisherId = item.publisher.objectId;

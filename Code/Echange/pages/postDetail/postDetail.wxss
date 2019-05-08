@@ -45,29 +45,6 @@ swiper {
   padding-left: 10px;
 }
 
-.block_bottom {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  margin-bottom: 0;
-}
-.block_bottom .price {
-  line-height: 40px;
-  width: 60%;
-  color: red;
-  display: inline-block;
-  font-size: 20px;
-  vertical-align: middle;
-}
-.block_bottom button {
-  width: 40%;
-  display: inline-block;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-right: 0;
-}
-
-
 .tool {
   height: 64rpx;
   text-align: right;
@@ -95,12 +72,17 @@ swiper {
   text-overflow: ellipsis;
 }
 
+/* 评论 */
+.commentBoard {
+  margin-bottom: 40px;
+}
 .commentBoardTitle {
   width: 100%; 
   text-align: center; 
   font-size: 40rpx;  
   display: inline-block;
   margin: auto;
+  border-bottom: 1rpx solid #DDD;
 }
 .commentBtn {
   font-size: 30rpx; 
@@ -114,4 +96,56 @@ swiper {
 .no-comment {
   padding: 10rpx ;
   border-top: 1rpx solid #DDD;
+}
+.comment_block .block1 {
+  font-size: 32rpx;
+}
+
+.comment_avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin: 10px 0;
+  vertical-align: middle;
+  display: inline-block;
+}
+.comment_block .block1 .pName {
+  margin-left: 10px;
+  display: inline-block;
+}
+.comment_block .block1 .time {
+  display: inline-block;
+  margin-left: 40%;
+  font-size: 28rpx;
+  width: 120px;
+  text-align: right;
+}
+.block-line {
+  width: 100%;
+  /* height: 0.1px; */
+  background-color: rgb(255, 255, 255);
+  border: 1px #ccc dashed;
+}
+
+.block_bottom {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0;
+  border-top:1px solid #DDD;
+}
+.block_bottom .price {
+  line-height: 40px;
+  width: 60%;
+  color: red;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: middle;
+}
+.block_bottom button {
+  width: 40%;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
 }

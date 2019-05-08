@@ -230,6 +230,7 @@ Page({
 
       notice.set('viewCount', 0);
       notice.set('likeCount', 0);
+      notice.set('status', 0);
       
       if (that.data.isSrc == true) {
         var name = that.data.src;

@@ -1,5 +1,6 @@
-var Bmob = require('../../utils/bmob.js');
 const app = getApp()
+var Bmob = require('../../utils/bmob.js');
+var util = require('../../utils/util.js');
 
 Page({
   data: {
@@ -24,7 +25,9 @@ Page({
 
     hideModal: true, //隐藏留言输入框
     buyModal: true, //隐藏购买框
-    comment: ''
+    comment: '' ,
+    
+    commentList: [], //评论
   },
 
   onLoad: function(options) {
@@ -63,6 +66,8 @@ Page({
     })
 
     console.log(this.data.notice)
+
+    this.getCommentList();
   },
 
   //预览图片,多图可左右滑动
@@ -90,7 +95,7 @@ Page({
   // 更改收藏状态
   onCollectionTap: function() {
     var that = this;
-    var isLiked = that.data.isLiked || false ; //是否是收藏状态
+    var isLiked = that.data.isLiked; //是否已是收藏状态
 
     var userId = app.globalData.currentUser.id;
     var isme = new Bmob.User();
@@ -99,14 +104,12 @@ Page({
     var wid = that.data.notice.id; //商品Id
     var wTitle = that.data.notice.title; //商品名称
     var Notice = Bmob.Object.extend("Published_notice");
-    var noticePointer = new Notice();
-    noticePointer.id = wid;
+
     var publisherId = that.data.notice.publisherId;
 
     //数据库操作
-    var query = new Bmob.Query(Notice);
-    query.get(wid).then(res => {
-      // 修改Likes表数据
+    var noticeQuery = new Bmob.Query(Notice);
+    noticeQuery.get(wid).then(res => {
       var Like = Bmob.Object.extend("Likes");
 
       var Message = Bmob.Object.extend("Message");
@@ -116,11 +119,13 @@ Page({
 
       var likerList = res.get('liker') || [];
       if (!isLiked) { //非收藏状态
+        likerList.push(app.globalData.currentUser.id); // 在liker[]里加入我的Id
+        var likecount = res.get('likeCount') + 1; // likecount数 + 1
         //增
-        likerList.push(app.globalData.currentUser.id);
-        var likecount = res.get('likeCount') + 1;
+        // 向Likes表里添加数据
+        var noticePointer = new Notice();
+        noticePointer.id = wid;
 
-        // 向likes表里添加数据
         var like = new Like();
         like.set('user', isme);
         like.set('notice', noticePointer);
@@ -150,13 +155,14 @@ Page({
               message.set("userName", username); // 我的名称
               message.set("user", isme);
               message.set("wid", wid); //商品ID
-              messge.set("wTitle", wTitle);
+              message.set("wTitle", wTitle);
               message.set("fid", publisherId);
               message.set("is_read", false); //是否已读 boolean
               message.save().then((res) => {
-                console.log("消息已生成 ", res);
+                console.log("消息生成成功 ", res);
               });
             } else {
+              console.log("消息表中已存在该条消息，不生成新消息");
               console.log(result);
             }
           }
@@ -166,30 +172,33 @@ Page({
       } else { // 已是收藏状态
         // 删
         var index = contains(likerList, userId);
-        likerList.splice(index, 1);
-        var likecount = res.get('likeCount') - 1;
-        res.set('liker', likerList)
-        res.set('likeCount', likecount)
-        res.save().then((res) => {
-          console.log("likes表数据删除 ", res);
+        likerList.splice(index, 1); // 在liker[]里除去我的Id
+        var likecount = res.get('likeCount') - 1; // likecount数 - 1
+
+        // likes表里删除数据
+        // 获取objectId再destroy
+        var likeQuery = new Bmob.Query(Like);
+        likeQuery.equalTo("user", isme);
+        likeQuery.equalTo("notice", wid);
+        // 查询所有数据
+        likeQuery.find({
+          success: function (results) {
+            // console.log("likes表里要删除的数据：", results);
+            let res = results[0];
+           
+            res.destroy().then(res => {
+              console.log(res)
+            }).ctach(err => {
+              console.log(err)
+            })
+            console.log("likes表里删除数据成功 ", res)
+           
+          },
+          fail: function (error) {
+            console.log("查询失败: ", error.code, " ", error.message);
+          }
         });
 
-        // likes表里删除数据？？怎么删
-        // 获取objectId再destroy
-        if (!this.likeObjectId) {
-          var likeQuery = new Bmob.Query(Like);
-          likeQuery.equalTo("user", isme);
-          likeQuery.equalTo("notice", wid);
-          // 查询所有数据
-          likeQuery.find({
-            success: function(results) {
-              console.log(results);
-            },
-            fail: function(error) {
-              console.log("查询失败: ", error.code, " ", error.message);
-            }
-          });
-        }
 
         messageQuery.equalTo("msgType", 2);
         messageQuery.find({
@@ -214,6 +223,11 @@ Page({
           }
         })
       }
+      res.set('liker', likerList)
+      res.set('likeCount', likecount)
+      res.save().then((res) => {
+        console.log("修改该商品的收藏数据 ", res);
+      });
     })
 
     that.setData({
@@ -232,22 +246,64 @@ Page({
     var event = new Events();
     event.id = optionId;
     var Likes = Bmob.Object.extend("Likes");
-    var like = new Bmob.Query(Likes);
-    like.equalTo("liker", me);
-    like.equalTo("event", event);
-    like.destroyAll({
-      success: function() {
-        console.log("删除点赞表中的数据成功");
+    var likeQuery = new Bmob.Query(Likes);
+    likeQuery.equalTo("liker", me);
+    likeQuery.equalTo("event", event);
+    likeQuery.find({
+      success: function(res) {
+
+        console.log("删除收藏表中的数据成功");
       },
       error: function(error) {
-        console.log("删除点赞表的数据失败");
+        console.log("删除收藏表的数据失败");
         console.log(error);
       }
     })
   },
 
+  // 获取已有留言记录
+  getCommentList: function() {
+    var that = this;
+    var Comments = Bmob.Object.extend("Comments");
+    var commentQuery = new Bmob.Query(Comments);
+
+    var Notice = Bmob.Object.extend("Published_notice");
+    var notice = new Notice();
+    notice.id = this.data.notice.id;
+    commentQuery.equalTo('notice', notice);
+    commentQuery.include("publisher"); // 同时获取发布者信息
+    commentQuery.descending('createdAt');
+    commentQuery.find({
+      success: function(res) {
+        var list = [];
+        console.log("getCommentList", res);
+        res.forEach(function (item) {
+          var pAvatar = item.get('publisher').avatar.url;
+          var pName = item.get('publisher').nickName;
+          var createdAt = item.createdAt;
+          var pastTime = util.pastTime(createdAt);
+
+          var content = item.get('content');
+
+          var jsonA;
+          jsonA = {
+            "pAvatar": pAvatar || '',
+            "pName": pName || '',
+            "content": content || '',
+            "pastTime": pastTime || '', 
+          }
+          list.push(jsonA);
+        })
+        
+        that.setData({
+          commentList: list
+        })
+      }
+    })
+  },
+
   // 留言
-  openMessage: function() {
+  openComment: function() {
     this.setData({
       hideModal: false
     })
@@ -308,6 +364,28 @@ Page({
           comment.save(null, {
             success: function(res) {
               // TODO 显示留言
+
+              var user = app.globalData.currentUser;
+              var pAvatar = user.get("avatar")._url;
+              var pName = user.get("nickName");
+              // var createdAt = item.createdAt;
+              // var pastTime = util.pastTime(createdAt);
+              // var content = item.get('content');
+
+              var jsonA;
+              jsonA = {
+                "pAvatar": pAvatar || '',
+                "pName": pName || '',
+                "content": str || '',
+                "pastTime": '刚刚',
+              }
+              // 数据插入需要放在数组第一位
+              // list.push(jsonA);
+              var list = [jsonA].concat(that.data.commentList);
+
+              that.setData({
+                commentList: list
+              })
             }
           })
 

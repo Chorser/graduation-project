@@ -236,9 +236,9 @@ Page({
         "pic": _url || '',
         "price": price || '',
         // "commentnum": commentnum,
+        "viewCount": viewCount || 0,
+        "likeCount": likeCount || 0,
         "isLiked": isLiked, //是否被本用户收藏
-        "viewCount": viewCount,
-        "likeCount": likeCount,
         // "liker": liker,
         "status": status,
         "address": address,
