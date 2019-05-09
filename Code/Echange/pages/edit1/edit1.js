@@ -114,6 +114,23 @@ Page({
       })
     }
   },
+  openMap: function () {
+    var that = this;
+    //选择地点
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          address: res.name,
+          latitude: res.latitude,
+          longitude: res.longitude,
+        })
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
+  },
 
   bindTypeChange: function (e) {
     this.setData({
