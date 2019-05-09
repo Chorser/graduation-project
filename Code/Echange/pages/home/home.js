@@ -298,7 +298,7 @@ Page({
       noticeList: [],
       currentPage: 0,
       isLastPage: false,
-      limitPage: 5,
+      limitPage: 10,
       // totalCount: 0,
       lastPageNum: 0,
       totalPage: 0
@@ -352,12 +352,13 @@ Page({
 })
 
 function getTypeName(type) {
+  var list = app.globalData.typeList;
+  return list[type];
+  
   // var typeName = "";
   // if (type == 1) typeName = "	生活用品";
   // else if (type == 2) typeName = "学习用品";
   // else if (type == 3) typeName = "美妆服饰";
   // else if (type == 4) typeName = "电子产品";
   // return typeName;
-  var list = app.globalData.typeList;
-  return list[type];
 }

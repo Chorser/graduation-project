@@ -26,6 +26,7 @@ Page({
       query.get(objectId, {
         success: function(result) {
           app.globalData.currentUser = result;
+          console.log("currentUser", result)
         }
       })
 
@@ -47,8 +48,8 @@ Page({
             console.log(user)
             if (user.get("nickName")) {
               //更新缓存中的openid
-              console.log("openid:", user.id)
-              wx.setStorageSync('openid', user.id)
+              console.log("openid:", user.get('authData').weapp.openid);
+              wx.setStorageSync('openid', user.get('authData').weapp.openid);
             } else {
               //从微信端获取用户信息
               wx.getUserInfo({
@@ -73,7 +74,7 @@ Page({
                       result.set("gender", gender);
                       result.set("city", city);
                       result.set("province", province);
-                      // result.set("openid", user.id); //openId 就是objectId
+                      // result.set("openid", user.id); //objectId是id
                       result.save();
 
                       wx.switchTab({

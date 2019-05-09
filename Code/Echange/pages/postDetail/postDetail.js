@@ -1,6 +1,8 @@
 const app = getApp()
 var Bmob = require('../../utils/bmob.js');
 var util = require('../../utils/util.js');
+Bmob.initialize(
+  "9a68cce6689ca69dcd286c4e4eba7d07", "a5e489144f78cfd52d57e71375bda36d");
 
 Page({
   data: {
@@ -149,19 +151,6 @@ Page({
               var username = app.globalData.currentUser.nickName;
               console.log(app.globalData.currentUser);
 
-              // var message = new Message();
-              // message.set("msgType", 1); // 1为收藏
-              // message.set("avatar", value); //我的头像
-              // message.set("userName", username); // 我的名称
-              // message.set("user", isme);
-              // message.set("wid", wid); //商品ID
-              // message.set("wTitle", wTitle);
-              // message.set("fid", publisherId);
-              // message.set("is_read", false); //是否已读 boolean
-              // message.save().then((res) => {
-              //   console.log("消息生成成功 ", res);
-              // });
-
               // 发消息
               createMessage({
                 type: 1, // 5为购买
@@ -248,7 +237,7 @@ Page({
     })
   },
 
-  //取消收藏 向liker 表中删除数据
+  //取消收藏 liker 表中删除数据
   downLike: function(ress) {
     var me = new Bmob.User();
     me.id = ress.data;
@@ -425,8 +414,12 @@ Page({
   },
 
   //订购确认
-  toBuy: function() {
+  bindFormSubmit: function(e) {
     var that = this;
+    // 获取表单id
+    var formId = e.detail.formId;
+    // 非真机运行时 formId 为 the formId is a mock one
+    console.log('表单id:', formId);
 
     var price = this.data.notice.price;
     if (price == null || price == '') {
@@ -447,10 +440,10 @@ Page({
             var notice = new Notice();
             notice.id = that.data.notice.id;
 
-            var noticeQuery = new Bmob.Query(Notice);
-            noticeQuery.get(that.data.notice.id).then(res => {
-              res.set("status", 1);
-              res.save();
+            // var noticeQuery = new Bmob.Query(Notice);
+            // noticeQuery.get(that.data.notice.id).then(res => {
+            //   res.set("status", 1);
+            //   res.save();
 
               let temp =  that.data.notice;
               temp.status = 1;
@@ -466,22 +459,60 @@ Page({
               seller.id = that.data.notice.publisherId;
 
               // 增加订单
-              createOrder({
-                publisherId: seller.id,
-                price: that.data.notice.price,
-                notice: notice,
-                isme: isme,
-                seller: seller
-              })
+              // createOrder({
+              //   publisherId: seller.id,
+              //   price: that.data.notice.price,
+              //   notice: notice,
+              //   isme: isme,
+              //   seller: seller
+              // })
 
               // 发消息
-              createMessage({
-                type: 5, // 5为购买
-                isme: isme,
-                wid: notice.id,
-                wTitle: that.data.notice.title,
-                publisherId: seller.id
-              });
+              // createMessage({
+              //   type: 5, // 5为购买
+              //   isme: isme,
+              //   wid: notice.id,
+              //   wTitle: that.data.notice.title,
+              //   publisherId: seller.id
+              // });
+            // });
+
+            // 消息推送 每个应用，每天有100条的免费额度
+            var currentU = Bmob.User.current();
+            var temp = {
+              "touser": wx.getStorageSync('openid'),  //that.data.notice.publisherId, //发送给哪个用户
+              "template_id": "4ED5irRHc_ZAbF3wf_S9KYs-NdHsWs5O8w-WQ61H5Z4",
+              "form_id": formId,
+              // "url": "https://www.bmob.cn/",
+              "page": '',
+              "data": {
+                "keyword1": { //时间
+                  "value": util.formatTime(new Date())
+                },
+                "keyword2": {  //商品编号
+                  "value": notice.id
+                },
+                "keyword3": { //  商品名称
+                  "value": that.data.notice.title
+                },
+                "keyword4": { //购买人姓名
+                  "value": app.globalData.currentUser.get("nickName")
+                },
+                "keyword5": { //价格
+                  "value": that.data.notice.price
+                },
+                // "remark": {
+                //   "value": "如果您十分钟内再次收到此信息，请及时处理。"
+                // }
+              },
+              "emphasis_keyword": "keyword2.DATA"
+
+            }
+            console.log(temp);
+            Bmob.sendMessage(temp).then(function (obj) {
+              console.log('发送成功', obj);
+            }, function (err) {
+              console.log('失败', err);
             });
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -508,7 +539,7 @@ function createOrder(data) {
   var Order = Bmob.Object.extend("Order")
   var order = new Order();  
   data.isme.username = app.globalData.currentUser.get("nickName");
-  data.isme.avatar = app.globalData.currentUser.get("avatar");
+  data.isme.avatar = app.globalData.currentUser.get("avatar").url;
 
   order.set('totalPrice', data.price);
   order.set('buyer', data.isme);

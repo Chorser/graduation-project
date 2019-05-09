@@ -144,9 +144,7 @@ swiper {
   vertical-align: middle;
 }
 .block_bottom button {
-  width: 40%;
+  width: 35%;
   display: inline-block;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-right: 0;
+  margin: 0;
 }

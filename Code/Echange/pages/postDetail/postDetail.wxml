@@ -17,7 +17,7 @@
     <view class='title'> {{notice.title}} </view>
     <view>
       <view class='time' style='display:inline-block'> {{notice.pastTime}}发布</view>
-      <view class='viewcount' style='display:inline-block'>{{notice.viewCount}}人浏览</view>
+      <view class='viewcount' style='display:inline-block'>{{notice.viewCount}}次浏览</view>
     </view>
     <view class='content'> {{notice.description}} </view>
 
@@ -74,7 +74,14 @@
 
   <view wx:if='{{!isMyPost}}' class='block block_bottom'>
     <view class='price'>{{notice.price==''?'价格可商议':'需付： ' + notice.price + '元'}}</view>
-    <button wx:if='{{!isSoldOut}}' bindtap='toBuy' class='btn-blue'>我想买</button>
+    
+    <!-- <form bindsubmit='setElement' report-submit>
+      <button wx:if='{{!isSoldOut}}' bindtap='toBuy' class='btn-blue'>我想买</button>
+    </form> -->
+    <form wx:if='{{!isSoldOut}}' bindsubmit="bindFormSubmit"  report-submit="true" >
+      <button form-type='submit' class='btn-blue'>我要买</button>
+    </form>
+
   </view>
 
   <view wx:if='{{isMyPost}}' class='block block_bottom'>

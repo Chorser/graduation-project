@@ -109,29 +109,28 @@ Page({
         query.get(objectId).then(res => {
           console.log(res);
           res.set('is_read', true);
-          res.save({
+          res.save(null, {
             success: function (res) {
-              console.log(res);
+              // console.log(res);
+              wx.showToast({
+                title: '标记为已读',
+                duration: 1200
+              })
             },
             fail: function (err) {
               console.log(err);
             }
           });
         })
-
-        wx.showToast({
-          title: '标记已读',
-          duration: 1200
-        })
       }
+
       var unreadcnt = --that.data.unread;
       that.setData({
         [now]: false,
         [ifread]: true,
         unread: unreadcnt
       })
-      
-      //TODO 数据库操作
+
     } else {
       console.log("折叠");
       that.setData({
@@ -146,7 +145,7 @@ Page({
 function getTypeName(type) {
   var typeName = "";
   if (type == 1) typeName = "	收藏 ";
-  else if (type == 2) typeName = "取消收藏";//?取消收藏 就删除收藏消息
+  else if (type == 2) typeName = "取消收藏";//? 取消收藏 就删除收藏消息
   else if (type == 3) typeName = "评论";
   else if (type == 4) typeName = "回复";
   else if (type == 5) typeName = "购买";
