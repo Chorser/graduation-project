@@ -58,13 +58,13 @@
   color: #fff;
 }
 
-
 image.cover {
   width: 100%;
   height: 250rpx;
   filter: blur(1px);
   border-radius: 10px;
 }
+
 
 .notice {
   margin: 0;

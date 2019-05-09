@@ -22,15 +22,8 @@ Page({
     avatarUrl: '',
     nickName: '',
     gender: 1,
-    items: [{
-        name: '男',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        name: '女',
-        value: 2
-      },
+    items: [{ name: '男', value: 1, checked: 'true' },
+            { name: '女', value: 2 },
     ],
 
     school: ''
@@ -181,6 +174,9 @@ Page({
 
           app.globalData.currentUser = Bmob.User.current();
         })
+      },
+      fail: function(error) {
+        console.log("保存失败：", error);
       }
     })
   },

@@ -258,9 +258,10 @@ Page({
             mask: true
           });
           
-          wx.navigateTo({
-            url: '../myPost/myPost',
-          })
+          // wx.navigateTo({
+          //   url: '../myPost/myPost',
+          // })
+          wx.navigateBack();
         },
         error: function (result, error) {
           console.log("发布失败=", error);
