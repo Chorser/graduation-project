@@ -74,7 +74,7 @@ Page({
                       result.set("gender", gender);
                       result.set("city", city);
                       result.set("province", province);
-                      // result.set("openid", user.id); //objectId是id
+                      // result.set("openid", wx.getStorageSync("openid")); //objectId是id, oepnid是另外的
                       result.save();
 
                       wx.switchTab({

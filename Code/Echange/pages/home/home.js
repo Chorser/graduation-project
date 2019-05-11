@@ -187,6 +187,7 @@ Page({
     var currentPageList = new Array();
     results.forEach(function (item) {
       var publisherId = item.get("publisher").objectId;
+      // var publisherOpenId = item.get("publisher").openId;
       var title = item.get("title");
       var description = item.get("description");
       var typeId = item.get("typeId");

@@ -222,11 +222,10 @@ Page({
       var user = Bmob.User.current();
       var me = new Bmob.User();
       me.id = user.id;
-      me.avatar = user.get("avatarUrl");
-      // console.log(me.avatar)
+
       var Notice = Bmob.Object.extend("Published_notice");
       var notice = new Notice();
-      
+    
       notice.set('publisher', me)
       notice.set('userId', user.id) //方便判断
       notice.set('title', this.data.title)
@@ -238,9 +237,9 @@ Page({
       notice.set('latitude', this.data.latitude)
       notice.set('longitude', this.data.longitude)
 
-      notice.set('viewCount', 0);
-      notice.set('likeCount', 0);
-      notice.set('status', 0);
+      notice.set('viewCount', 0)
+      notice.set('likeCount', 0)
+      notice.set('status', 0)
       
       if (that.data.isSrc == true) {
         var name = that.data.src;
@@ -264,7 +263,7 @@ Page({
           wx.navigateBack();
         },
         error: function (result, error) {
-          console.log("发布失败=", error);
+          console.log("发布失败 ", error);
           wx.showToast({
             title: '发布失败',
             icon: 'none'
