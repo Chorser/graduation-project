@@ -16,6 +16,9 @@ Page({
     totalCount: 0,
     limit: 10,
     unread: 0,
+
+    delBtnWidth: 160,
+
   },
 
   /**
@@ -25,11 +28,95 @@ Page({
     this.getList();
   },
 
+  // 列表实现左滑删除
+  drawStart: function (e) {
+    // console.log("drawStart", e.touches);  
+    var touch = e.touches[0]
+
+    for (var index in this.data.messageList) {
+      var item = this.data.messageList[index]
+      item.right = 0
+    }
+    this.setData({
+      messageList: this.data.messageList,
+      startX: touch.clientX
+    })
+
+  },
+  drawMove: function (e) {
+    var touch = e.touches[0]
+    var item = this.data.messageList[e.currentTarget.dataset.index]
+    var disX = this.data.startX - touch.clientX
+
+    if (disX >= 20) {
+      if (disX > this.data.delBtnWidth) {
+        disX = this.data.delBtnWidth
+      }
+      item.right = disX
+      this.setData({
+        isScroll: false,
+        messageList: this.data.messageList
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        isScroll: true,
+        messageList: this.data.messageList
+      })
+    }
+  },
+  drawEnd: function (e) {
+    var item = this.data.messageList[e.currentTarget.dataset.index]
+    // 距离超过一半就显示按钮
+    if (item.right >= this.data.delBtnWidth / 2) {   
+      item.right = this.data.delBtnWidth
+      this.setData({
+        isScroll: true,
+        messageList: this.data.messageList,
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        isScroll: true,
+        messageList: this.data.messageList,
+      })
+    }
+  },
+
+  deleteItem: function (e) {
+    var that = this;
+    // 软删除
+    console.log(e.currentTarget.dataset.index);
+    var item = this.data.messageList[e.currentTarget.dataset.index]
+    // console.log(item.id)
+    var Message = Bmob.Object.extend("Message");
+    var messageQuery = new Bmob.Query(Message);
+    messageQuery.get(item.id).then(res => {
+      // console.log(res);
+      res.set('is_delete', true);
+      res.save(null, {
+        success: function (res) {
+          wx.showToast({
+            title: '删除成功',
+            duration: 1200
+          });
+
+          that.getList();
+        },
+        fail: function (err) {
+          console.log(err);
+        }
+      });
+    })
+  },
+
+
   getList: function () {
     var that = this;
     var Message = Bmob.Object.extend("Message");
     var messageQuery = new Bmob.Query(Message);
     messageQuery.equalTo("fid", app.globalData.currentUser.id);
+    messageQuery.equalTo("is_delete", false);
     messageQuery.descending('updatedAt');
     // messageQuery.limit(that.data.limit);
 
@@ -47,10 +134,11 @@ Page({
   //处理数据
   dealWithData: function (results) {
     var that = this;
+
     var list = new Array();
     var unreadCnt = 0;
     results.forEach(function (item) {
-      console.log(item)
+      // console.log(item)
       var publisherId = item.get("fid");
       var noticeId = item.get("wid");
       var noticeTitle = item.get("wTitle");
@@ -84,11 +172,7 @@ Page({
       list.push(jsonA);
     });
 
-    setTimeout(function () {
-      wx.hideLoading();
-    }, 500);
-
-    that.setData({
+    that.setData({ 
       messageList: list,
       unread: unreadCnt
     })
@@ -111,10 +195,15 @@ Page({
           res.set('is_read', true);
           res.save(null, {
             success: function (res) {
-              // console.log(res);
               wx.showToast({
                 title: '标记为已读',
                 duration: 1200
+              });
+
+              var unreadcnt = --that.data.unread;
+              that.setData({
+                [ifread]: true,
+                unread: unreadcnt,
               })
             },
             fail: function (err) {
@@ -124,11 +213,8 @@ Page({
         })
       }
 
-      var unreadcnt = --that.data.unread;
       that.setData({
         [now]: false,
-        [ifread]: true,
-        unread: unreadcnt
       })
 
     } else {
@@ -150,6 +236,4 @@ function getTypeName(type) {
   else if (type == 4) typeName = "回复";
   else if (type == 5) typeName = "购买";
   return typeName;
-  // var list = app.globalData.typeList;
-  // return list[type];
 }

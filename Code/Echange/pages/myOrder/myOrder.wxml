@@ -10,30 +10,38 @@
     </view>
     <view class="list-title-content">
       <text>我的订单</text>
+
     </view>
-    <view class="list-title-line"></view>
+    <!-- <view class="list-title-line"></view>
     <view class="list-title-brief">
-      <!-- <text>共发布过{{totalCount}}个商品</text> -->
-    </view>
+      <text> 共购买过 {{ totalCount }} 个商品 </text>
+    </view> -->
+  </view>
+
+
+  <view class="nav">
+    <view class="{{selected?'red':'default'}}" bindtap="selected"> 我买到的 </view>
+    <view class="{{selected1?'red':'default'}}" bindtap="selected1"> 我卖出的 </view>
   </view>
 
   <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
-    <block wx:if="{{noticeList.length > 0}}">
-      <view class='notice weui-cells' wx:for="{{noticeList}}" wx:key="index" bindtap='showPostDetail' data-index='{{index}}'>
+    <block wx:if="{{orderList.length > 0}}">
+      <view class='order weui-cells' wx:for="{{orderList}}" wx:key="index" bindtap='showOrder' data-index='{{index}}'>
+        <view class='orderId'> {{item.orderId}} </view>
+        <view class='pic'> {{item.pic1.url}} </view>
         <view class='title'> {{item.title}} </view>
-        <view class='content'> {{item.description}} </view>
-        <view class='time'> {{item.createdAt}} </view>
-        <image class='soldout' wx:if="{{item.status == 1}}" src="/images/soldout.png"></image>
+        <!-- <view class='content'> {{item.description}} </view>
+        <view class='time'> {{item.createdAt}} </view> -->
       </view>
     </block>
 
     <block wx:else>
       <view class="weui-media-box weui-media-box_text">
-        <view class="font-minor weui-media-box__title weui-media-box__title_in-text">
-          暂无内容，请点击右下角添加</view>
+        <view class="font-minor weui-media-box__title weui-media-box__title_in-text" style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
+          暂无内容，先去集市逛逛吧</view>
         <view class="weui-media-box__desc"></view>
-
       </view>
     </block>
+
   </scroll-view>
 </view>

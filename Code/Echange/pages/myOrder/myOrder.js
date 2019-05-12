@@ -15,61 +15,107 @@ Page({
     // 此页面 页面内容距最顶部的距离
     height: app.globalData.height * 2 + 20,
 
+    selected: true,
+    selected1: false,
+    orderList: [],
+    buyList: [],
+    sellList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
+    var Order = Bmob.Object.extend("Order");
 
+    var userId = app.globalData.currentUser.id;
+    var isme = new Bmob.User();
+    isme.id = userId;
+    // 我买到的
+    var orderQuery = new Bmob.Query("Order");
+    orderQuery.equalTo("seller", isme);
+    orderQuery.include("notice");
+    orderQuery.descending('createdAt');
+    orderQuery.find({
+      success: function (results) {
+        console.log("buy Order list :", results);
+        that.dealWithData(results, 1);
+      },
+      error: function (error) {
+        console.log("查询失败： ", error.code + " " + error.message);
+      }
+    })
+    // 我卖出的
+    var orderQuery2 = new Bmob.Query("Order");
+    orderQuery.equalTo("buyer", isme);
+    orderQuery.include("notice");
+    orderQuery.descending('createdAt');
+    orderQuery.find({
+      success: function (results2) {
+        console.log("sell Order list :", results2);
+        that.dealWithData(results2, 2);
+      },
+      error: function (error) {
+        console.log("查询失败： ", error.code + " " + error.message);
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  //处理数据
+  dealWithData: function (results, flag) {
+    var that = this;
+    var list = new Array();
+    results.forEach(function (item) {
+      console.log(item)
+      var orderId = item.id;
+      var wTitle = item.get("notice").title;
+      var price = item.get("notice").price;
 
+      var _url = null;
+      var pic = item.get("notice").pic1;
+      if (pic) {
+        _url = pic.url;
+      }
+
+      var jsonA;
+      jsonA = {
+        "orderId": orderId,
+        "title": wTitle || '',
+        "pic1": _url,
+        "price": price,
+      }
+      list.push(jsonA);
+    });
+
+    console.log(list)
+    if (flag == 1) {
+      that.setData({
+        buyList: list,
+        orderList: list
+      })
+    } else {
+      that.setData({
+        sellList: list,
+      })
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  selected: function () {
+    //并更改list
+    this.setData({
+      selected: true,
+      selected1: false,
+      orderList: this.data.buyList
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  selected1: function () {
+    //并更改list
+    this.setData({
+      selected: false,
+      selected1: true,
+      orderList: this.data.sellList
+    })
   }
 })

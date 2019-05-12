@@ -4,6 +4,7 @@ image.cover {
   filter: blur(1px);
   border-radius: 10px;
 }
+
 .list-title-content {
   padding: 16rpx 0rpx;
   overflow: hidden;
@@ -47,4 +48,63 @@ image.cover {
   font-size: 32rpx;
   line-height: 32rpx;
   color: #fff;
+}
+
+
+
+/* nav切换栏 */
+.nav {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.default {
+  line-height: 100rpx;
+  text-align: center;
+  flex: 1;
+  border-right: 1px solid gainsboro;
+  color: #000;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.red {
+  line-height: 100rpx;
+  text-align: center;
+  color: #fc5558;
+  flex: 1;
+  border-right: 1px solid gainsboro;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.show {
+  display: block;
+  text-align: center;
+  line-height: 200rpx;
+}
+
+.hidden {
+  display: none;
+  text-align: center;
+  line-height: 200px;
+}
+
+.order {
+  margin: 0;
+  padding: 15px;
+  height: 100rpx;
+}
+
+.order .pic {
+  width: 80rpx;
+  height: 80rpx;
+  display: inline-block;
+}
+.order .title {
+  font-size: 32rpx;
+  padding: 15rpx;
+  display: inline-block;
 }

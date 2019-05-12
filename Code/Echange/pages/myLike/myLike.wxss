@@ -51,6 +51,7 @@ image.cover {
   color: #fff;
 }
 
+/* 列表样式 */
 .like {
   margin: 0;
   padding: 15px;

@@ -216,7 +216,8 @@ Page({
               message.set("uid", isme);
               message.set("wid", wid); //活动ID
               message.set("fid", publisherId); //发布人Id
-              message.set("is_read", false); //是否已读,0代表没有,1代表读了
+              message.set("is_read", false); //是否已读
+              message.set("is_delete", false); //是否删除 
               message.save();
             }
           }
@@ -439,10 +440,10 @@ Page({
             var notice = new Notice();
             notice.id = that.data.notice.id;
 
-            // var noticeQuery = new Bmob.Query(Notice);
-            // noticeQuery.get(notice.id).then(res => {
-            //   res.set("status", 1);   // 物品状态改为已出售
-            //   res.save();
+            var noticeQuery = new Bmob.Query(Notice);
+            noticeQuery.get(notice.id).then(res => {
+              res.set("status", 1);   // 物品状态改为已出售
+              res.save();
 
               let t = that.data.notice;
               t.status = 1;
@@ -468,15 +469,15 @@ Page({
               });
 
             // 发消息
-            //   that.createMessage({
-            //     type: 5, // 5为购买
-            //     isme: isme,
-            //     wid: notice.id,
-            //     wTitle: that.data.notice.title,
-            //     publisherId: seller.id
-            //   });
+              that.createMessage({
+                type: 5, // 5为购买
+                isme: isme,
+                wid: notice.id,
+                wTitle: that.data.notice.title,
+                publisherId: seller.id
+              });
 
-            // });
+            });
 
             // 获取发布人的openId
             var User = Bmob.Object.extend("_User");
@@ -504,7 +505,6 @@ Page({
                 },
               },
               "emphasis_keyword": "keyword3.DATA" //模板需要放大的关键词，不填则默认无放大
-
             }
             console.log(temp);
             Bmob.sendMessage(temp).then(function (obj) {
@@ -559,7 +559,8 @@ Page({
     message.set("wid", data.wid); //商品ID
     message.set("wTitle", data.wTitle); // 商品发布标题
     message.set("fid", data.publisherId);
-    message.set("is_read", false); //是否已读 boolean
+    message.set("is_read", false); //是否已读
+    message.set("is_delete", false);
     message.save().then((res) => {
       console.log("创建消息成功", res);
     });

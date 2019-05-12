@@ -17,13 +17,15 @@
 
   <scroll-view lower-threshold="5" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{windowHeight-height-30}}px;">
     <block wx:if="{{messageList.length > 0}}">
-      <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showFold' data-index='{{index}}'>
+      <view class='message weui-cells' wx:for="{{messageList}}" wx:key="index" bindtap='showFold' data-index='{{index}}'
+       bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" style="right:{{item.right}}rpx" >
         <view class='msg'>
           <image class='un-read' wx:if="{{item.isRead == false}}" style='' src='/images/redpoint.png' /> 用户 {{item.userName}} {{item.typeName}}了 您的商品 {{item.noticeTitle}}
+          <!-- ×××收藏了 ××× -->
+          <!-- ×××购买了 ××× -->
         </view>
         <view class='time'> {{item.pastTime}} </view>
-        <!-- ×××收藏了 ××× -->
-        <!-- ×××购买了 ××× -->
+        <view class="remove" catchtap='deleteItem' data-index='{{index}}'>删除</view>
 
         <view hidden='{{item.hidden}}'>
           <!-- <view>折叠</view> -->

@@ -61,8 +61,8 @@ Page({
   },
 
   onShow: function () {
-    this.getAll(); // 获取页数
-    this.getList();
+    // this.getAll(); // 获取页数
+    // this.getList();
   },
 
   handleChange: function (e) {
@@ -168,12 +168,7 @@ Page({
     query.find({
       success: function (results) {
         var currentPageList = that.dealWithData(results);
-
         that.onSetData(currentPageList, that.data.currentPage);
-
-        setTimeout(function () {
-          wx.hideLoading();
-        }, 900);
       },
       error: function (error) {
         console.log("查询失败： ", error.code + " " + error.message);

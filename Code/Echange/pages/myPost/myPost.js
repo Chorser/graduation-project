@@ -48,7 +48,10 @@ Page({
     this.setData({
       limit: limit
     })
-    this.onShow()
+    
+    // this.getMyAll();
+    if (this.data.totalCount > this.data.noticeList.length)
+      this.getList();
   },
 
   //获取总的发布数

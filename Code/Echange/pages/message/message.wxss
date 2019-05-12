@@ -82,3 +82,17 @@ image .pic {
   height: 200rpx;
   float: right;
 }
+
+/* item删除btn */
+.remove{  
+  width: 160rpx;  
+  height: 100%;  
+  background-color: red; 
+  color: white; 
+  position: absolute;  
+  top: 0;  
+  right: -160rpx;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+}  
