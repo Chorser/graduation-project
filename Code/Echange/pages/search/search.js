@@ -27,6 +27,7 @@ Page({
     buttonClicked: false, //是否点击跳转
     typeId: 0, //选择的分类ID
     op: 0, //排序方式ID
+    
     noticeList: [],
     isEmpty: true,
     loading: false,
