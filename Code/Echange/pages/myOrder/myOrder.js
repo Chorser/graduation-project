@@ -34,7 +34,7 @@ Page({
     isme.id = userId;
     // 我买到的
     var orderQuery = new Bmob.Query("Order");
-    orderQuery.equalTo("seller", isme);
+    orderQuery.equalTo("buyer", isme);
     orderQuery.include("notice");
     orderQuery.descending('createdAt');
     orderQuery.find({
@@ -48,7 +48,7 @@ Page({
     })
     // 我卖出的
     var orderQuery2 = new Bmob.Query("Order");
-    orderQuery.equalTo("buyer", isme);
+    orderQuery.equalTo("seller", isme);
     orderQuery.include("notice");
     orderQuery.descending('createdAt');
     orderQuery.find({

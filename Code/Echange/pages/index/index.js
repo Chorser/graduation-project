@@ -69,8 +69,13 @@ Page({
                   query.get(user.id, {
                     success: function(result) {
                       // 自动绑定之前的账号
-                      result.set('nickName', nickName);
+                      result.set("nickName", nickName);
                       result.set("avatarUrl", avatarUrl);
+
+                      var file = new Bmob.File(avatarUrl, avatarUrl);
+                      file.save();
+                      result.set("avatar", file);
+
                       result.set("gender", gender);
                       result.set("city", city);
                       result.set("province", province);

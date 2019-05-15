@@ -69,7 +69,6 @@ Page({
       sizeType: ['compressed'], // 指定是压缩图
       sourceType: ['album', 'camera'], // 指定来源是相册和相机
       success: function(res) {
-        var urlArr = new Array();
         var tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths)
 
