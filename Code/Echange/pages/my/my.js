@@ -19,7 +19,7 @@ Page({
     }
     // console.log(this.currentUser)
     this.setData({
-      avatar: this.currentUser.get("avatar")._url || '/images/avatar1.jpg',
+      avatar: this.currentUser.get("avatar")._url || this.currentUser.get("avatarUrl") || '/images/avatar1.jpg',
       nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
     });
   },
