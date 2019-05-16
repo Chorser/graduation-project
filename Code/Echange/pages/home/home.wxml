@@ -74,7 +74,7 @@
             <text>{{item.viewCount}}</text>
           </view>
           <view class="tool-item">
-            <image wx:if="{{item.isLiked}}" src="/images/tool/like2.png"></image>
+            <image wx:if="{{item.isLiked}}" src="/images/tool/like3.png"></image>
             <image wx:else src="/images/tool/like1.png"></image>
             <text>{{item.likeCount}}</text>
           </view>

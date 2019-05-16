@@ -32,7 +32,7 @@
         <text>{{post.upNum}}</text>
       </view> -->
       <view wx:if="{{!isMyPost}}" class="tool-item" catchtap='onCollectionTap' data-post-id="{{notice.objectId}}">
-        <image wx:if="{{isLiked}}" src="/images/tool/like2.png"></image>
+        <image wx:if="{{isLiked}}" src="/images/tool/like3.png"></image>
         <image wx:else src="/images/tool/like1.png"></image>
         <text>收藏</text>
       </view>

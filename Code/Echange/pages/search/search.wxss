@@ -512,6 +512,7 @@ swiper-item, swiper-item image {
   height: 64rpx;
   text-align: right;
   line-height: 64rpx;
+  font-size: 24rpx;
   /* margin: 20rpx 0rpx 20rpx 0; */
 }
 
@@ -526,6 +527,9 @@ swiper-item, swiper-item image {
   width: 50rpx;
   vertical-align: middle;
   margin-right: 10rpx;
+}
+.tool-item text {
+  vertical-align: middle;
 }
 
 .order {

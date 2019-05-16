@@ -56,6 +56,21 @@ Page({
     })
   },
 
+  //回到顶部
+  goTop: function (e) {
+    if (wx.pageScrollTo) {
+      //   基础库 1.4.0 开始支持，低版本需做兼容处理
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
+      })
+    }
+  },
+  
   //选择要查询的商品类型
   chooseType: function(e) {
     var typeId = e.currentTarget.id;
@@ -199,6 +214,7 @@ Page({
     var list = new Array();
     
     results.forEach(function(item) {
+      console.log(item);
       var publisherId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
@@ -238,7 +254,14 @@ Page({
         _url = pic._url;
       }
       var publisherName = item.get("publisher").nickName;
-      var publisherPic = item.get("publisher").avatar.url;
+
+      var publisherPic = null;
+      if (item.get("publisher").avatar) {
+        publisherPic = item.get("publisher").avatar.url;
+      }
+      else {
+        publisherPic = item.get("publisher").avatarUrl;
+      }
 
       var viewCount = item.get("viewCount") || 0;
       var likeCount = item.get("likeCount") || 0;
@@ -389,6 +412,7 @@ function getTypeName(typeId) {
   return typeName;
 }
 
+// 计算两点位置距离（直线距离）
 function getDistance(lat1, lng1, lat2, lng2) {
   lat1 = lat1 || 0;
   lng1 = lng1 || 0;
@@ -399,7 +423,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
   var rad2 = lat2 * Math.PI / 180.0;
   var a = rad1 - rad2;
   var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
-  var r = 6378137;
+  var r = 6378137; //地球半径
   var distance = r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)));
 
   return distance;

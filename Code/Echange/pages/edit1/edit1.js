@@ -77,7 +77,6 @@ Page({
 
   getPosition: function () {
     var that = this;
-    // console.log(this.data.address)
     if (!this.data.address || this.data.address == ''){
       //获取当前位置
       wx.getLocation({
@@ -103,17 +102,18 @@ Page({
                 address: address
               })
             },
-            fail: function (res) {
-              console.log(res);
+            fail: function (err) {
+              console.log(err);
             },
           })
         },
-        fail: function (res) {
-          console.log(res);
+        fail: function (err) {
+          console.log(err);
         },
       })
     }
   },
+
   openMap: function () {
     var that = this;
     //选择地点
@@ -304,6 +304,10 @@ Page({
   // 修改
   save: function () {
     var that = this;
+    // 校验
+    if (!this.validate()) {
+      return;
+    }
     var Notice = Bmob.Object.extend("Published_notice");
     var query = new Bmob.Query(Notice);
 
@@ -311,9 +315,9 @@ Page({
       success: function (result) {
         result.set('title', that.data.title)
         result.set('description', that.data.description)
-        result.set('price', that.data.price)
+        result.set('price', parseFloat(that.data.price))
         result.set('typeId', parseInt(that.data.typeIndex));
-        
+        result.set('address', that.data.address)
         if (that.oldSrc != that.data.src) {
           // 新图片上传
           if (that.data.isSrc == true) {
@@ -327,6 +331,7 @@ Page({
         result.save().then((res) => {
           wx.showToast({
             title: '修改成功！',
+            mask: true,
             duration: 1500
           })
 
@@ -344,18 +349,36 @@ Page({
     if (this.data.title == '') {
       wx.showToast({
         title: '请输入标题',
+        mask: true,
         icon: 'none'
       })
       return false;
-    } else if (this.data.description == '') {
+    }
+    if (this.data.description == '') {
       wx.showToast({
         title: '请输入物品描述',
+        mask: true,
+        icon: 'none'
+      })
+      return false;
+    }
+    if (this.data.typeIndex == 0) {
+      wx.showToast({
+        title: '请选择物品分类',
+        mask: true,
+        icon: 'none'
+      })
+      return false;
+    }
+    if (this.data.address == null || this.data.address == '') {
+      wx.showToast({
+        title: '请选择定位',
+        mask: true,
         icon: 'none'
       })
       return false;
     }
     //TODO 更多校验
-    
     return true;
   }
 })

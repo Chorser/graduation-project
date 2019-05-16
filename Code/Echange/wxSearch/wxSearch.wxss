@@ -1,4 +1,4 @@
-.wxSearch{
+.wxSearch {
   position: absolute;
   top: 43px;
   left: 0;
@@ -7,38 +7,42 @@
   border-top: 1px #eee solid;
   background-color: rgba(0, 0, 0, 0.2);
 }
-.wxSearchInner{
+
+.wxSearchInner {
   background-color: #fff;
 }
-.wxSearch-section{
+
+.wxSearch-section {
   background-color: #fff;
   padding: 5px 10px;
   border: 1px #eee solid;
 }
-.wxSearch-pancel{
+
+.wxSearch-pancel {
   display: flex;
   flex-direction: row;
 }
-.wxSearch-input{
-  flex: 8; 
+
+.wxSearch-input {
+  flex: 8;
   background-color: #eee;
   padding: 5px 10px;
 }
-.wxSearch-button{
+
+.wxSearch-button {
   flex: 1;
   border: none !important;
   color: cornflowerblue !important;
 }
 
-.wxSearchTitle{
+.wxSearchTitle {
   display: block;
   padding: 10px 5px 5px 10px;
   font-size: 12px;
   text-align: center;
 }
 
-
-.wxSearchMindKeyItem{
+.wxSearchMindKeyItem {
   padding: 10px 5px;
   border-bottom: 1px solid #eee;
   display: flex;
@@ -46,7 +50,7 @@
   color: cornflowerblue;
 }
 
-.wxSearchKeyList{
+.wxSearchKeyList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -55,25 +59,28 @@
   justify-content: center;
 }
 
-.wxSearchKeyItem{
+.wxSearchKeyItem {
   flex: 0 0 20%;
   font-size: 14px;
   text-align: center;
-  border: 1px solid #eee;
+  border: 1px solid #dadada;
   margin: 5px;
   padding: 5px 10px;
   border-radius: 5px;
 }
-.wxSearchHistoryItem{
-  padding: 10px 5px;
+
+.wxSearchHistoryItem {
+  padding: 10px;
   border-bottom: 1px solid #eee;
   display: flex;
 }
-.wxSearchHistoryItemText{
+
+.wxSearchHistoryItemText {
   flex: 8;
   font-size: 14px;
 }
-.wxSearchHistoryItemDel{
+
+.wxSearchHistoryItemDel {
   flex: 1;
   font-size: 12px;
   text-align: center;
@@ -81,16 +88,17 @@
   border: 1px solid #eee;
   border-radius: 5px;
 }
-.wxSearchHistoryEmpty{
+
+.wxSearchHistoryEmpty {
   text-align: center;
   height: 50px;
   line-height: 50px;
-  font-size: 12px;
-}
-.wxSearchDeleteAllBtn{
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
   font-size: 12px;
 }
 
+.wxSearchDeleteAllBtn {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 12px;
+}

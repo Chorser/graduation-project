@@ -202,9 +202,13 @@ Page({
         _url = pic._url;
       }
       var publisherName = item.get("publisher").nickName;
-      if (item.get("publisher").avatar)
-        var publisherPic = item.get("publisher").avatar.url;
-
+      var publisherPic = null;
+      if (item.get("publisher").avatar) {
+        publisherPic = item.get("publisher").avatar.url;
+      }
+      else {
+        publisherPic = item.get("publisher").avatarUrl;
+      }
       var viewCount = item.get("viewCount") || 0;
       var likeCount = item.get("likeCount") || 0;
       var liker = item.get("liker"); //收藏用户ID数组
@@ -298,7 +302,8 @@ Page({
       // totalCount: 0,
       lastPageNum: 0,
       totalPage: 0
-    })
+    });
+    this.goTop();
     this.onShow();
 
     // setTimeout(function () {
@@ -311,6 +316,21 @@ Page({
     setTimeout(function () {
       wx.hideLoading();
     }, 500);
+  },
+
+  //回到顶部
+  goTop: function (e) {
+    if (wx.pageScrollTo) {
+      //   基础库 1.4.0 开始支持，低版本需做兼容处理
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
+      })
+    }
   },
 
   //跳转详情页
