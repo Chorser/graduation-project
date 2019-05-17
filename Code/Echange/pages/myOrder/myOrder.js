@@ -36,6 +36,7 @@ Page({
     var orderQuery = new Bmob.Query("Order");
     orderQuery.equalTo("buyer", isme);
     orderQuery.include("notice");
+    orderQuery.include("seller");
     orderQuery.descending('createdAt');
     orderQuery.find({
       success: function (results) {
@@ -70,7 +71,9 @@ Page({
       console.log(item)
       var orderId = item.id;
       var wTitle = item.get("notice").title;
+      var publisherName = item.get("seller").nickName;
       var price = item.get("notice").price;
+      var time = item.createdAt;
 
       var _url = null;
       var pic = item.get("notice").pic1;
@@ -84,6 +87,8 @@ Page({
         "title": wTitle || '',
         "pic1": _url,
         "price": price,
+        "publisher": publisherName,
+        "time": time
       }
       list.push(jsonA);
     });

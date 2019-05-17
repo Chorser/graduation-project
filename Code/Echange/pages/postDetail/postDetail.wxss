@@ -64,6 +64,9 @@ swiper {
   vertical-align: middle;
   margin-right: 10rpx;
 }
+.tool-item text {
+  vertical-align: middle;
+}
 .location {
   float: left; 
   /* width:70%;  */

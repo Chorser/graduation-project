@@ -32,6 +32,10 @@
   flex: 1;
 }
 
+.item text {
+  color: #3d3d3d;
+}
+
 .item image {
   width: 50rpx;
   height: 50rpx;

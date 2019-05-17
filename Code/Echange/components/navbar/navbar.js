@@ -45,7 +45,7 @@ Component({
     // 组件所在页面的生命周期函数
     show() {
       var that = this;
-      if(that.data.navbarData.isHomePage) {
+      if(that.data.navbarData.isHomePage && that.data.address == null) {
         // 自动定位
         mapManager.search({
           keyword: '大学',

@@ -33,7 +33,7 @@ Page({
   },
 
   onLoad: function (options) {
-
+    console.log(options)
     if (options.isMyPost) {
       //用户查看自己的发布商品详情 特殊处理
       this.setData({
@@ -185,10 +185,13 @@ Page({
             // console.log("likes表里要删除的数据：", results);
             let res = results[0];
 
-            res.destroy().then(res => {
-              console.log(res)
-            }).ctach(err => {
-              console.log(err)
+            res.destroy({
+              success: function (res) {
+                console.log(res);
+              },
+              fail: function (err) {
+                console.log(err);
+              }
             })
             console.log("likes表里删除数据成功 ", res)
 
@@ -528,8 +531,8 @@ Page({
     var that = this;
     var Order = Bmob.Object.extend("Order");
     var order = new Order();
-    data.isme.username = app.globalData.currentUser.get("nickName");
-    data.isme.avatar = app.globalData.currentUser.get("avatar").url;
+    // data.isme.username = app.globalData.currentUser.get("nickName");
+    // data.isme.avatar = app.globalData.currentUser.get("avatar").url;
 
     order.set('totalPrice', data.price);
     order.set('buyer', data.isme);
@@ -552,7 +555,14 @@ Page({
     var Message = Bmob.Object.extend("Message");
     var message = new Message();
     message.set("msgType", data.type);
-    message.set("avatarUrl", app.globalData.currentUser.get("avatar").url); //我的头像
+    
+    var url = null;
+    var user = app.globalData.currentUser;
+    if (user.get("avatar"))
+      url = user.url;
+    else 
+      url = user.get("avatarUrl");
+    message.set("avatarUrl", url); //我的头像
     message.set("userName", app.globalData.currentUser.get("nickName")); // 我的名称
 
     message.set("user", data.isme);
@@ -565,7 +575,6 @@ Page({
       console.log("创建消息成功", res);
     });
   }
-
 
 })
 
