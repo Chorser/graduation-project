@@ -107,6 +107,7 @@ Page({
     var that = this;
     var list = new Array();
     results.forEach(function (item) {
+      console.log(item);
       var myId = item.get("publisher").objectId;
       var title = item.get("title");
       var description = item.get("description");
@@ -114,6 +115,10 @@ Page({
       // var typeName = getTypeName(typeId); //根据类型id获取类型名称
       var price = item.get("price");
       var status = item.get("status");
+      
+      var address = item.get("address");
+      var latitude = item.get("latitude");
+      var longitude = item.get("longitude");
 
       var id = item.id;
       var pastTime = util.pastTime(item.createdAt);
@@ -131,8 +136,16 @@ Page({
 
       var viewCount = item.get("viewCount") || 0;
 
+      // console.log("user ",that.user);
       var myName = that.user.get("nickName"); //item.get("publisher").nickName;
       var myPic = that.user.get("avatarUrl"); //item.get("publisher").avatarUrl;
+      var myPic = null;
+      if (that.user.get("avatar")) {
+        myPic = that.user.get("avatar")._url;
+      }
+      else {
+        myPic = that.user.get("avatarUrl");
+      }
 
       var jsonA;
       jsonA = {
@@ -147,6 +160,9 @@ Page({
         "pastTime": pastTime || '',
         "createdAt": createdAt || '',
         "viewCount": viewCount,
+        "address": address,
+        "latitude": latitude,
+        "longitude": longitude,
 
         "pic": _url || '',
         "price": price || '',

@@ -64,6 +64,12 @@ Page({
               if (result.get("avatar")) {
                 item.publisherPic = result.get("avatar")._url;
               }
+              // that.setData({
+              //   likeList: list,
+              //   totalCount: list.length
+              // })
+              // wx.hideLoading();
+              // console.log(that.data.likeList);
             },
           })
           list.push(item);
@@ -75,7 +81,8 @@ Page({
             totalCount: list.length
           })
           wx.hideLoading();
-        }, 1000);
+          console.log(that.data.likeList);
+        }, 1200);
       },
       fail: function(res) {
         console.log(res)

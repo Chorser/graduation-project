@@ -31,8 +31,17 @@ Page({
 
   onLoad: function(options) {
     this.currentUser = app.globalData.currentUser;
+    console.log(this.currentUser);
+
+    var avatarUrl = null;
+    if (this.currentUser.get("avatar")) {
+      avatarUrl = this.currentUser.get("avatar")._url;
+    } else {
+      avatarUrl = this.currentUser.get("avatarUrl") || '/images/avatar1.jpg';
+    }
+
     this.setData({
-      avatarUrl: this.currentUser.get("avatar")._url || '',
+      avatarUrl: avatarUrl,
       nickName: this.currentUser.get("nickName") || '',
       gender: this.currentUser.get("gender") || 1,
       school: this.currentUser.get("school") || ''

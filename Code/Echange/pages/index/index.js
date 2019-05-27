@@ -45,7 +45,7 @@ Page({
         success: function(res) {
           var user = new Bmob.User(); //实例化
           user.loginWithWeapp(res.code).then(function(user) { //返回的是Bmob里存储的_User信息
-            console.log(user)
+            console.log("loginWithWeapp result ", user);
             if (user.get("nickName")) {
               //更新缓存中的openid
               console.log("openid:", user.get('authData').weapp.openid);

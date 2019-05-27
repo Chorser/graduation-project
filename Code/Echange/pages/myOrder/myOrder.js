@@ -49,10 +49,11 @@ Page({
     })
     // 我卖出的
     var orderQuery2 = new Bmob.Query("Order");
-    orderQuery.equalTo("seller", isme);
-    orderQuery.include("notice");
-    orderQuery.descending('createdAt');
-    orderQuery.find({
+    orderQuery2.equalTo("seller", isme);
+    orderQuery2.include("notice");
+    orderQuery2.include("buyer");
+    orderQuery2.descending('createdAt');
+    orderQuery2.find({
       success: function (results2) {
         console.log("sell Order list :", results2);
         that.dealWithData(results2, 2);
@@ -72,6 +73,7 @@ Page({
       var orderId = item.id;
       var wTitle = item.get("notice").title;
       var publisherName = item.get("seller").nickName;
+      var buyerName = item.get("buyer").nickName;
       var price = item.get("notice").price;
       var time = item.createdAt;
 
@@ -88,6 +90,7 @@ Page({
         "pic1": _url,
         "price": price,
         "publisher": publisherName,
+        "buyer": buyerName,
         "time": time
       }
       list.push(jsonA);
@@ -108,19 +111,66 @@ Page({
 
   selected: function () {
     //并更改list
-    this.setData({
-      selected: true,
-      selected1: false,
-      orderList: this.data.buyList
-    });
+    var that = this;
+    var Order = Bmob.Object.extend("Order");
+
+    var userId = app.globalData.currentUser.id;
+    var isme = new Bmob.User();
+    isme.id = userId;
+    // 我买到的
+    var orderQuery = new Bmob.Query("Order");
+    orderQuery.equalTo("buyer", isme);
+    orderQuery.include("notice");
+    orderQuery.include("seller");
+    orderQuery.descending('createdAt');
+    orderQuery.find({
+      success: function (results) {
+        console.log("buy Order list :", results);
+        that.dealWithData(results, 1);
+
+        that.setData({
+          selected: true,
+          selected1: false,
+          orderList: that.data.buyList
+        });
+      },
+      error: function (error) {
+        console.log("查询失败： ", error.code + " " + error.message);
+      }
+    })
+
   },
 
   selected1: function () {
-    //并更改list
-    this.setData({
-      selected: false,
-      selected1: true,
-      orderList: this.data.sellList
+    //更改list
+    // 我卖出的
+    var that = this;
+    var Order = Bmob.Object.extend("Order");
+
+    var userId = app.globalData.currentUser.id;
+    var isme = new Bmob.User();
+    isme.id = userId;
+
+    var orderQuery2 = new Bmob.Query("Order");
+    orderQuery2.equalTo("seller", isme);
+    orderQuery2.include("notice");
+    orderQuery2.include("buyer");
+    orderQuery2.descending('createdAt');
+    orderQuery2.find({
+      success: function (results2) {
+        console.log("sell Order list :", results2);
+        that.dealWithData(results2, 2);
+
+        that.setData({
+          selected: false,
+          selected1: true,
+          orderList: that.data.sellList
+        })
+      },
+      error: function (error) {
+        console.log("查询失败： ", error.code + " " + error.message);
+      }
     })
+    
   }
 })

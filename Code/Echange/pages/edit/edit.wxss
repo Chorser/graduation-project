@@ -3,6 +3,10 @@
   font-size: .9rem
 }
 
+.notice view {
+  padding: 0 5px;
+}
+
 button {
   border-radius: 100%;
   width: 85px;

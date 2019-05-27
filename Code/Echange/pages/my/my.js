@@ -14,12 +14,17 @@ Page({
   },
 
   onShow: function(options) {
-    if (!this.currentUser) {
-      this.currentUser = app.globalData.currentUser;
-    }
+    this.currentUser = app.globalData.currentUser;
+    
     // console.log(this.currentUser)
+    var avatarUrl = null;
+    if (this.currentUser.get("avatar")) {
+      avatarUrl = this.currentUser.get("avatar")._url;
+    } else {
+      avatarUrl = this.currentUser.get("avatarUrl") || '/images/avatar1.jpg';
+    }
     this.setData({
-      avatar: this.currentUser.get("avatar")._url || this.currentUser.get("avatarUrl") || '/images/avatar1.jpg',
+      avatar: avatarUrl,
       nickName: app.globalData.currentUser.get("nickName") || '未设置昵称'
     });
   },

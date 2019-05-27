@@ -218,6 +218,10 @@ Page({
     }
     else {
       console.log("校验完毕");
+      wx.showLoading({
+        title: '正在加载',
+        mask: true
+      });
 
       var user = Bmob.User.current();
       var me = new Bmob.User();
@@ -251,16 +255,19 @@ Page({
       //向数据库添加数据
       notice.save(null, {
         success: function (result) {
+         
+            wx.hideLoading();
+
           console.log('发布成功')
           wx.showToast({
             title: '发布成功',
             mask: true
           });
           
-          // wx.navigateTo({
-          //   url: '../myPost/myPost',
-          // })
-          wx.navigateBack();
+          wx.navigateTo({
+            url: '../myPost/myPost',
+          })
+          // wx.navigateBack();
         },
         error: function (result, error) {
           console.log("发布失败 ", error);
